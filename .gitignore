@@ -1,0 +1,71 @@
+# ASP.NET Core
+bin/
+obj/
+.vscode/
+.vs/
+wwwroot/node_modules/
+wwwroot/lib/
+appsettings*.json
+
+# Configuration files
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Local.json
+appsettings.Staging.json
+secrets.json
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific folders
+.idea/
+.vscode/
+.vs/
+_ReSharper.*
+
+# Build folders
+bin/
+obj/
+Debug/
+Release/
+TestResults/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+
+# npm packages
+node_modules/
+jspm_packages/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.vspscc
+
+# Rider
+.idea/
+.idea_modules/
+
+# Visual Studio
+.vscode/
+.vs/
+.vscode/settings.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
