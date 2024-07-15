@@ -27,12 +27,12 @@ namespace DataAccess.Mapper
             var Routine = new Routine()
             {
                 Id = int.Parse(result["Id"].ToString()),
-                ExerciseName = result["Nombre"].ToString(),
-                ExerciseType = result["Descripcion"].ToString(),
-                Sets = int.Parse(result["Id"].ToString()),
-                Weight = decimal.Parse(result["Id"].ToString()),
-                TimeDuration = TimeSpan.Parse(result["Id"].ToString()),
-                Machine = result["exercise_name"].ToString(),
+                ExerciseName = result["exercise_name"].ToString(),
+                ExerciseType = result["exercise_type"].ToString(),
+                Sets = result.ContainsKey("sets") && !string.IsNullOrEmpty(result["sets"].ToString()) ? int.Parse(result["sets"].ToString()) : 0,
+                Weight = result.ContainsKey("weight") && !string.IsNullOrEmpty(result["weight"].ToString()) ? decimal.Parse(result["weight"].ToString()) : 0.0m,
+                TimeDuration = result.ContainsKey("time_duration") && TimeSpan.TryParse(result["time_duration"].ToString(), out var timeDuration) ? timeDuration : TimeSpan.Zero,
+                Machine = result["machine"].ToString()
             };
 
             return Routine;
