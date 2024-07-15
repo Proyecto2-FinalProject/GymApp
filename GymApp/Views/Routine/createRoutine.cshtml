@@ -1,12 +1,6 @@
 @{
     ViewData["Title"] = "Create Routine";
-    var apiBaseUrl = "https://localhost:7280/api/Routine/CreateRoutine"; // Reemplaza esta URL con la correcta para tu API
-
 } 
-<script>
-    const API_BASE_URL = "@apiBaseUrl";
-
-</script>
 <script src="~/js/pages/Routine/createRoutines.js" defer></script>
         <div class="logo">
             <img src="" alt="Alternate Text" />
@@ -26,11 +20,11 @@
         <form class="form-group" id="createRoutineForm" action="submit">
             <div class="divInterno">
                 <label for="exercise_name">Exercise Name</label>
-            <input type="text" id="exercise_name" name="exercise_name" class="form-control" required>
+            <input type="text" id="exercisename" name="exercisename" class="form-control" required>
             </div>
             <div class="divInterno">
             <label for="exercise_type">Exercise Type</label>
-            <input type="text" id="exercise_type" name="exercise_type" class="form-control" required>
+            <input type="text" id="exercisetype" name="exercisetype" class="form-control" required>
             </div>
             <div class="divInterno">
                 <label for="sets">Sets</label>
@@ -42,7 +36,7 @@
             </div>
             <div class="divInterno">
                 <label for="time_duration">Time</label>
-                <input type="text" id="time_duration" name="time_duration" class="form-control" required>
+                <input type="text" id="timeduration" name="timeduration" class="form-control" required>
             </div>
             <div class="divInterno">
                 <label for="machine">Machine</label>

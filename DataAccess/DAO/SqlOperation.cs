@@ -38,6 +38,15 @@ namespace DataAccess.Dao
                 Value = paramValue
             });
         }
+        public void AddTimeSpanParam(string parameterName, TimeSpan paramValue)
+        {
+            parameters.Add(new SqlParameter("@" + parameterName, paramValue));
+        }
+
+        public void AddDecimalParam(string parameterName, Decimal paramValue)
+        {
+            parameters.Add(new SqlParameter("@" + parameterName, paramValue));
+        }
     }
 }
 

@@ -4,11 +4,11 @@ const handleCreateRoutine = (event) => {
     //Recopilar la informacion y mandarla al API
 
     const routine = {}
-    routine.exercise_name = $("#exercise_name").val()
-    routine.exercise_type = $("#exercise_type").val()
+    routine.exercisename = $("#exercisename").val()
+    routine.exercisetype = $("#exercisetype").val()
     routine.sets = $("#sets").val()
     routine.weight = $("#weight").val()
-    routine.time_duration = $("#time_duration").val()
+    routine.timeduration = $("#timeduration").val()
     routine.machine = $("#machine").val()
 
     const apiUrl = API_BASE_URL + "/Routine/CreateRoutine"

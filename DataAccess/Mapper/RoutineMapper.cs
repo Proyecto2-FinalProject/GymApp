@@ -1,5 +1,6 @@
 using DataAccess.Dao;
 using DTO;
+using System.Reflection.PortableExecutable;
 
 
 namespace DataAccess.Mapper
@@ -26,12 +27,12 @@ namespace DataAccess.Mapper
             var Routine = new Routine()
             {
                 Id = int.Parse(result["Id"].ToString()),
-                exercise_name = result["exercise_name"].ToString(),
-                exercise_type = result["exercise_type"].ToString(),
-                sets = result.ContainsKey("sets") && !string.IsNullOrEmpty(result["sets"].ToString()) ? int.Parse(result["sets"].ToString()) : 0,
-                weight = result.ContainsKey("weight") && !string.IsNullOrEmpty(result["weight"].ToString()) ? decimal.Parse(result["weight"].ToString()) : 0.0m,
-                time_duration = result.ContainsKey("time_duration") && TimeSpan.TryParse(result["time_duration"].ToString(), out var timeDuration) ? timeDuration : TimeSpan.Zero,
-                machine = result["machine"].ToString()
+                ExerciseName = result["Nombre"].ToString(),
+                ExerciseType = result["Descripcion"].ToString(),
+                Sets = int.Parse(result["Id"].ToString()),
+                Weight = decimal.Parse(result["Id"].ToString()),
+                TimeDuration = TimeSpan.Parse(result["Id"].ToString()),
+                Machine = result["exercise_name"].ToString(),
             };
 
             return Routine;
@@ -47,12 +48,12 @@ namespace DataAccess.Mapper
 
             Routine Routine = (Routine)entityDTO;
 
-            operation.AddVarcharParam("exercise_name", Routine.exercise_name);
-            operation.AddVarcharParam("exercise_type", Routine.exercise_type);
-            operation.AddIntegerParam("sets", Routine.sets);
-            operation.AddDecimalParam("weight", Routine.weight);
-            operation.AddTimeSpanParam("time_duration", Routine.time_duration);
-            operation.AddVarcharParam("machine", Routine.machine);
+            operation.AddVarcharParam("exercise_name", Routine.ExerciseName);
+            operation.AddVarcharParam("exercise_type", Routine.ExerciseType);
+            operation.AddIntegerParam("sets", Routine.Sets);
+            operation.AddDecimalParam("weight", Routine.Weight);
+            operation.AddTimeSpanParam("time_duration", Routine.TimeDuration);
+            operation.AddVarcharParam("machine", Routine.Machine);
 
             return operation;
         }

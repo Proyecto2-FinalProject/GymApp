@@ -12,13 +12,16 @@
     <None Remove="Views\User\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\js\Pages\" />
     <Folder Include="Views\User\" />
     <Folder Include="wwwroot\js\Pages\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\Pages\" />
     <Content Remove="wwwroot\js\Pages\User\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Routine\createRoutine.cshtml" />
+    <None Include="wwwroot\js\Pages\Routine\createRoutines.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.7.1" />

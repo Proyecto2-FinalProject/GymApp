@@ -2,12 +2,12 @@ namespace DTO
 {
     public class Routine : BaseClass
     {
-        public string exercise_name { get; set; }
-        public string exercise_type { get; set; }
-        public int sets { get; set; }
-        public decimal weight { get; set; }
-        public TimeSpan time_duration { get; set; }
-        public string machine { get; set; }
+        public string ExerciseName { get; set; }
+        public string ExerciseType { get; set; }
+        public int Sets { get; set; }
+        public decimal Weight { get; set; }
+        public TimeSpan TimeDuration { get; set; }
+        public string Machine { get; set; }
     }
 }
 
