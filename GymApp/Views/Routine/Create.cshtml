@@ -1,47 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Create Routine";
+    Layout = "../Shared/_LayoutRoutines.cshtml";
 }
 <script src="~/js/pages/Routines/createRoutines.js" defer></script>
 <link rel="stylesheet" href="~/css/routines.css" />
-<body>
     <div class="container">
-        <header>
-            <img src="~/css/Img/LogoFitness.png" alt="Logo" class="logo">
-            <nav>
-                <a href="#">
-                    <img src="~/css/Img/LogoFitness.png" alt="Profile Icon">
-                    <span>Profile</span>
-                </a>
-                <a href="#">
-                    <img src="~/css/Img/LogoFitness.png" alt="Notifications Icon">
-                    <span>Notifications</span>
-                </a>
-                <a href="/RoutineHistory.html">
-                    <img src="~/css/Img/LogoFitness.png" alt="Routines Icon">
-                    <span>Routines</span>
-                </a>
-                <a href="#">
-                    <img src="~/css/Img/LogoFitness.png" alt="Classes Icon">
-                    <span>Classes</span>
-                </a>
-                <a href="#">
-                    <img src="~/css/Img/LogoFitness.png" alt="Log Out Icon">
-                    <span>Log Out</span>
-                </a>
-            </nav>
-        </header>
         <main>
             <h1>Create Routine</h1>
             <div class="form-container">
-                <form>
+                <form id="createRoutineForm" action="submit">
                     <label for="exercise-name">Instructor Name</label>
-                    <input type="text" id="instructor-name" name="instructor-name">
+                    <input type="text" id="instructor_name" name="instructor_name">
 
-                    <label for="exercise-name">Exercise List</label>
-                    <input type="text" id="exercise-list" name="exercise-list">
+                    <label for="exercise-name">Exercise Name</label>
+                    <input type="text" id="exercise_name" name="exercise_name">
 
                     <label for="exercise-type">Exercise Type</label>
-                    <input type="text" id="exercise-type" name="exercise-type">
+                    <input type="text" id="exercise_type" name="exercise_type">
 
                     <label for="sets">Sets</label>
                     <input type="text" id="sets" name="sets">
@@ -49,8 +24,8 @@
                     <label for="weight">Weight</label>
                     <input type="text" id="weight" name="weight">
 
-                    <label for="time">Time</label>
-                    <input type="text" id="time" name="time">
+                    <label for="time">Time Duration</label>
+                    <input type="text" id="time_duration" name="time_duration">
 
                     <label for="machine">Machine</label>
                     <input type="text" id="machine" name="machine">
@@ -62,4 +37,3 @@
             </div>
         </main>
     </div>
-</body>

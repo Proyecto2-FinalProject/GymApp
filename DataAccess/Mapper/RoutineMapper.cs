@@ -27,6 +27,7 @@ namespace DataAccess.Mapper
             var Routine = new Routine()
             {
                 Id = int.Parse(result["Id"].ToString()),
+                InstructorName = result["instructor_name"].ToString(),
                 ExerciseName = result["exercise_name"].ToString(),
                 ExerciseType = result["exercise_type"].ToString(),
                 Sets = result.ContainsKey("sets") && !string.IsNullOrEmpty(result["sets"].ToString()) ? int.Parse(result["sets"].ToString()) : 0,
@@ -46,8 +47,8 @@ namespace DataAccess.Mapper
             operation.ProcedureName = "dbo.sp_addRoutine";
 
             Routine Routine = (Routine)entityDTO;
-            
 
+            operation.AddVarcharParam("instructor_name", Routine.InstructorName);
             operation.AddVarcharParam("exercise_name", Routine.ExerciseName);
             operation.AddVarcharParam("exercise_type", Routine.ExerciseType);
             operation.AddIntegerParam("sets", Routine.Sets);

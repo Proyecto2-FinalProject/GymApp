@@ -10,7 +10,7 @@ const handleCreateRoutine = (event) => {
     routine.timeduration = $("#timeduration").val()
     routine.machine = $("#machine").val()
 
-    const apiUrl = API_BASE_URL + "/Routine/CreateRoutine"
+    const apiUrl = API_BASE_URL + "/Routine/Create"
     $.ajax({
         url: apiUrl,
         method: "POST",

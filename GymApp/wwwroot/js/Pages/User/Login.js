@@ -23,6 +23,9 @@
             title: 'Mensaje',
             text: 'Welcome to the Fitness Center',
             icon: 'info'
+        }).then(() => {
+            // Redirigir a la vista Create.cshtml
+            window.location.href = '/Routine/Create'; // Cambia esto según tu ruta
         });
     }).fail(function (jqXHR, textStatus, errorThrown) {
         // Extraer información de error y mostrarla

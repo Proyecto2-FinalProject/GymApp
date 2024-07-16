@@ -2,6 +2,7 @@
 {
     public class Routine : BaseClass
     {
+        public string InstructorName { get; set; }
         public string ExerciseName { get; set; }
         public string ExerciseType { get; set; }
         public int Sets { get; set; }
