@@ -4,6 +4,12 @@
 }
 <script src="~/js/pages/Routines/createRoutines.js" defer></script>
 <link rel="stylesheet" href="~/css/routines.css" />
+<!-- Incluir SweetAlert desde un CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Incluir jQuery desde un CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     <div class="container">
         <main>
             <h1>Create Routine</h1>
@@ -22,7 +28,7 @@
                     <input type="text" id="sets" name="sets">
 
                     <label for="weight">Weight</label>
-                    <input type="text" id="weight" name="weight">
+                    <input type="number" id="weight" name="weight">
 
                     <label for="time">Time Duration</label>
                     <input type="text" id="time_duration" name="time_duration">

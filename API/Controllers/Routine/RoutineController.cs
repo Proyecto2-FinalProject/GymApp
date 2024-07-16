@@ -5,7 +5,7 @@ using DTO;
 
 namespace API.Controllers.Routines
 { 
-    [EnableCors("ExampleCorsPolicy")]
+    [EnableCors("MyCorsPolicy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class RoutineController : Controller

@@ -3,14 +3,15 @@ const handleCreateRoutine = (event) => {
     //Recopilar la informacion y mandarla al API
 
     const routine = {}
-    routine.exercisename = $("#exercisename").val()
-    routine.exercisetype = $("#exercisetype").val()
+    routine.instructorname = $("#instructor_name").val()
+    routine.exercisename = $("#exercise_name").val()
+    routine.exercisetype = $("#exercise_type").val()
     routine.sets = $("#sets").val()
-    routine.weight = $("#weight").val()
-    routine.timeduration = $("#timeduration").val()
+    routine.weight = $("#weight").val() 
+    routine.timeduration = $("#time_duration").val()
     routine.machine = $("#machine").val()
 
-    const apiUrl = API_BASE_URL + "/Routine/Create"
+    const apiUrl = API_URL_BASE + "/api/Routine/CreateRoutine";
     $.ajax({
         url: apiUrl,
         method: "POST",
@@ -18,8 +19,7 @@ const handleCreateRoutine = (event) => {
         data: JSON.stringify(routine),
         contentType: "application/json;charset=utf-8",
         dataType: "json",
-      })
-        .done( (result) => {
+      }).done( (result) => {
             console.log(result);
              Swal.fire({
                title: "Mensaje",
