@@ -3,34 +3,63 @@
 }
 <script src="~/js/pages/Routines/createRoutines.js" defer></script>
 <link rel="stylesheet" href="~/css/routines.css" />
-<div>
-    <h2>Crear Rutina</h2>
-    <form class="form-group" id="createRoutineForm" action="submit">
-        <div  class="divInterno">
-            <label for="name">Exercise Name</label>
-            <input type="text" id="exercisename" name="exercisename"  class="form-control" required>
-        </div>
-        <div class="divInterno">
-            <label for="description">Exercise Type</label>
-            <input type="text" id="exercisetype" name="exercisetype"  class="form-control" required>
-        </div>
-        <div class="divInterno">
-            <label for="country">Sets</label>
-            <input type="text" id="sets" name="sets"  class="form-control"required>
-        </div>
-        <div class="divInterno">
-            <label for="popularity">Weight</label>
-            <input type="text" id="weight" name="weight"  class="form-control" required>
-        </div>
-        <div class="divInterno">
-            <label for="popularity">Time Duration</label>
-            <input type="text" id="timeduration" name="timeduration"  class="form-control" required>
-        </div>
-        <div class="divInterno">
-            <label for="popularity">Machine</label>
-            <input type="text" id="machine" name="machine" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+<body>
+    <div class="container">
+        <header>
+            <img src="~/css/Img/LogoFitness.png" alt="Logo" class="logo">
+            <nav>
+                <a href="#">
+                    <img src="~/css/Img/LogoFitness.png" alt="Profile Icon">
+                    <span>Profile</span>
+                </a>
+                <a href="#">
+                    <img src="~/css/Img/LogoFitness.png" alt="Notifications Icon">
+                    <span>Notifications</span>
+                </a>
+                <a href="/RoutineHistory.html">
+                    <img src="~/css/Img/LogoFitness.png" alt="Routines Icon">
+                    <span>Routines</span>
+                </a>
+                <a href="#">
+                    <img src="~/css/Img/LogoFitness.png" alt="Classes Icon">
+                    <span>Classes</span>
+                </a>
+                <a href="#">
+                    <img src="~/css/Img/LogoFitness.png" alt="Log Out Icon">
+                    <span>Log Out</span>
+                </a>
+            </nav>
+        </header>
+        <main>
+            <h1>Create Routine</h1>
+            <div class="form-container">
+                <form>
+                    <label for="exercise-name">Instructor Name</label>
+                    <input type="text" id="instructor-name" name="instructor-name">
 
-    </form>
-</div>
+                    <label for="exercise-name">Exercise List</label>
+                    <input type="text" id="exercise-list" name="exercise-list">
+
+                    <label for="exercise-type">Exercise Type</label>
+                    <input type="text" id="exercise-type" name="exercise-type">
+
+                    <label for="sets">Sets</label>
+                    <input type="text" id="sets" name="sets">
+
+                    <label for="weight">Weight</label>
+                    <input type="text" id="weight" name="weight">
+
+                    <label for="time">Time</label>
+                    <input type="text" id="time" name="time">
+
+                    <label for="machine">Machine</label>
+                    <input type="text" id="machine" name="machine">
+
+                    <div class="button-container">
+                        <button type="submit">Create</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>

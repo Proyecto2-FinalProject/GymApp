@@ -23,7 +23,7 @@ const handleCreateRoutine = (event) => {
             console.log(result);
              Swal.fire({
                title: "Mensaje",
-               text: "routine created successfully",
+               text: "Routine created successfully",
                icon: "success",
            })
         }).fail((responseData) => {
