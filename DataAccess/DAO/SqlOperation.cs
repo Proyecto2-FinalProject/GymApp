@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 namespace DataAccess.Dao
 {
@@ -30,25 +27,13 @@ namespace DataAccess.Dao
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
-
-        public void AddVarbinaryParam(string parameterName, byte[] paramValue)
-        {
-            parameters.Add(new SqlParameter("@" + parameterName, SqlDbType.VarBinary)
-            {
-                Value = paramValue
-            });
-        }
         public void AddTimeSpanParam(string parameterName, TimeSpan paramValue)
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
-
         public void AddDecimalParam(string parameterName, Decimal paramValue)
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
     }
 }
-
-
-

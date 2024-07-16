@@ -20,8 +20,8 @@
     <Content Remove="wwwroot\js\Pages\User\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\Routine\Create.cshtml" />
     <None Include="wwwroot\js\Pages\Routines\createRoutines.js" />
+    <None Include="wwwroot\js\Pages\Routines\searchSports.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.7.1" />

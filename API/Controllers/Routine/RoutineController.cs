@@ -1,10 +1,10 @@
-﻿using BL;
+﻿using Microsoft.AspNetCore.Mvc;
+using BL;
 using Microsoft.AspNetCore.Cors;
 using DTO;
-using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Routines
-{
+{ 
     [EnableCors("ExampleCorsPolicy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -19,7 +19,6 @@ namespace API.Controllers.Routines
         [HttpPost]
         public ActionResult CreateRoutine(Routine Routine)
         {
-
             RoutineManager manager = new RoutineManager();
             manager.CreateRoutine(Routine);
 
@@ -41,6 +40,7 @@ namespace API.Controllers.Routines
 
             return routineList;
         }
-    }
+        
 
+    }
 }

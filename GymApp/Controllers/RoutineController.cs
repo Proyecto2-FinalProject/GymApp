@@ -1,14 +1,19 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace GymApp.Controllers;
-
-public class RoutineController : Controller
+namespace EjemploMVC_SCV0.Controllers
 {
-   
-    public async Task<IActionResult> Create()
+    public class RoutineController : Controller
     {
-        return View();
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+        public async Task<IActionResult> Search()
+        {
+            return View();
+        }
     }
+
 
 }

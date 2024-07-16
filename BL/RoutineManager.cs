@@ -1,4 +1,4 @@
-
+﻿
 using DTO;
 using DataAccess.CRUD;
 
@@ -24,5 +24,6 @@ namespace BL
             RoutineCrudFactory ex_crud = new RoutineCrudFactory();
             return ex_crud.RetrieveAll<Routine>();
         }
+
     }
 }

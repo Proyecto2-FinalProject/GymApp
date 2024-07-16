@@ -1,4 +1,4 @@
-namespace DTO
+﻿namespace DTO
 {
     public class Routine : BaseClass
     {
@@ -10,6 +10,3 @@ namespace DTO
         public string Machine { get; set; }
     }
 }
-
-
-

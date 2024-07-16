@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data.SqlClient;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace DataAccess.Dao
 {
     public class SqlDao
     {
         private static SqlDao instance = new SqlDao();
-
-        private string _connectionString = "Server=localhost; Database=FitnessCenterDB;Trusted_Connection=True";
+        private string _connString = "Server=localhost;Database=FitnessCenterDB;Trusted_Connection=True";
 
         public static SqlDao GetInstance()
         {
@@ -18,17 +15,15 @@ namespace DataAccess.Dao
             return instance;
         }
 
-        //Metodo que conecta a la Base de Datos, ejecuta un stored procedure
-        //que no devuelve ningun dato a la applicacion
         public void ExecuteStoredProcedure(SqlOperation operation)
         {
             //hacer la conexion
-            string connectionString = _connectionString;
-            SqlConnection connection = new SqlConnection(connectionString);
+            string connectionString = _connString;
+            SqlConnection conn = new SqlConnection(connectionString);
 
             //Armar el query
             SqlCommand command = new SqlCommand();
-            command.Connection = connection;
+            command.Connection = conn;
             command.CommandText = operation.ProcedureName;
             command.CommandType = CommandType.StoredProcedure;
 
@@ -37,17 +32,15 @@ namespace DataAccess.Dao
             {
                 command.Parameters.Add(p);
             }
-
-            //Abrir la conexion
-            connection.Open();
+            //abrir conexion
+            conn.Open();
             //Ejecutar el comando
-            command.ExecuteNonQuery(); 
-
+            command.ExecuteNonQuery();
         }
 
         public List<Dictionary<string, object>> ExecuteStoredProcedureWithQuery(SqlOperation operation)
         {
-            var conn = _connectionString;
+            var conn = _connString;
             List<Dictionary<string, object>> lstResults = new List<Dictionary<string, object>>();
 
             var connection = new SqlConnection(conn);
@@ -87,7 +80,7 @@ namespace DataAccess.Dao
 
         public Dictionary<string, object> ExecuteStoredProcedureWithUniqueResult(SqlOperation operation)
         {
-            var conn = _connectionString;
+            var conn = _connString;
             List<Dictionary<string, object>> lstResults = new List<Dictionary<string, object>>();
 
             var connection = new SqlConnection(conn);
@@ -124,5 +117,6 @@ namespace DataAccess.Dao
             return null;
         }
     }
-}
 
+
+}

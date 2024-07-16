@@ -1,6 +1,6 @@
-using DataAccess.Dao;
+﻿using DataAccess.Dao;
 using DTO;
-using System.Reflection.PortableExecutable;
+using System.Diagnostics.Metrics;
 
 
 namespace DataAccess.Mapper
@@ -40,13 +40,13 @@ namespace DataAccess.Mapper
 
 
 
-
         public SqlOperation GetCreateStatement(BaseClass entityDTO)
         {
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "dbo.sp_addRoutine";
 
             Routine Routine = (Routine)entityDTO;
+            
 
             operation.AddVarcharParam("exercise_name", Routine.ExerciseName);
             operation.AddVarcharParam("exercise_type", Routine.ExerciseType);
@@ -80,7 +80,6 @@ namespace DataAccess.Mapper
 
             return operation;
         }
-
         public SqlOperation GetUpdateStatement(BaseClass entityDTO)
         {
             throw new NotImplementedException();

@@ -1,4 +1,3 @@
-
 const handleCreateRoutine = (event) => {
     event.preventDefault()
     //Recopilar la informacion y mandarla al API
@@ -23,9 +22,9 @@ const handleCreateRoutine = (event) => {
         .done( (result) => {
             console.log(result);
              Swal.fire({
-             title: "Mensaje",
-             text: "Routine created successfully",
-             icon: "success",
+               title: "Mensaje",
+               text: "routine created successfully",
+               icon: "success",
            })
         }).fail((responseData) => {
             if (responseData.responseCode) {
