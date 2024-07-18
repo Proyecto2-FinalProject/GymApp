@@ -1,18 +1,21 @@
 
-let table = new DataTable('#sportTable', {
+let table = new DataTable('#routineTable', {
     data: [],
     columns: [
-        { data: 'name' },
-        { data: 'description' },
-        { data: 'country' },
-        { data: 'popularity' },
+        { data: 'instructorName' },
+        { data: 'exerciseName' },
+        { data: 'exerciseType' },
+        { data: 'sets' },
+        { data: 'weight' },
+        { data: 'timeDuration' },
+        { data: 'machine' },
     ]
 });
 
 const successAlert = () => {
     Swal.fire({
-        title: "Listados",
-        text: "Operacion Exitosa",
+        title: "Routine Listings",
+        text: "Success",
         icon: "success",
     })
 }
@@ -26,7 +29,7 @@ const errorAlert = () => {
 }
 
 const handleClick = () => {
-    const apiUrl = API_BASE_URL + "/Sport/GetAllSports"
+    const apiUrl = API_URL_BASE + "/api/Routine/GetAllRoutines"
     $.ajax({
         url: apiUrl,
       })
@@ -49,4 +52,4 @@ const handleClick = () => {
 
 $("#searchAllBtn").click(handleClick)
 
-$("#searchSportForm").on("submit", handleSubmit)
+$("#searchRoutineForm").on("submit", handleSubmit)

@@ -2,54 +2,26 @@
     ViewData["Title"] = "Routines History";
     Layout = "../Shared/_LayoutRoutines.cshtml";
 }
-<body>
-    <div class="container">
-        <main>
-            <h1>Routines History</h1>
-            <div class="routine-list">
-                <div class="routine-card">
-                    <h2>Routine 1</h2>
-                    <p><strong>Instructor name:</strong></p>
-                    <p><strong>Sets:</strong></p>
-                    <p><strong>Exercises List:</strong></p>
-                    <p><strong>Weight:</strong></p>
-                </div>
-                <div class="routine-card">
-                    <h2>Routine 1</h2>
-                    <p><strong>Instructor name:</strong></p>
-                    <p><strong>Sets:</strong></p>
-                    <p><strong>Exercises List:</strong></p>
-                    <p><strong>Weight:</strong></p>
-                </div>
-                <div class="routine-card">
-                    <h2>Routine 1</h2>
-                    <p><strong>Instructor name:</strong></p>
-                    <p><strong>Sets:</strong></p>
-                    <p><strong>Exercises List:</strong></p>
-                    <p><strong>Weight:</strong></p>
-                </div>
-                <div class="routine-card">
-                    <h2>Routine 1</h2>
-                    <p><strong>Instructor name:</strong></p>
-                    <p><strong>Sets:</strong></p>
-                    <p><strong>Exercises List:</strong></p>
-                    <p><strong>Weight:</strong></p>
-                </div>
-                <div class="routine-card">
-                    <h2>Routine 1</h2>
-                    <p><strong>Instructor name:</strong></p>
-                    <p><strong>Sets:</strong></p>
-                    <p><strong>Exercises List:</strong></p>
-                    <p><strong>Weight:</strong></p>
-                </div>
-                <div class="routine-card">
-                    <h2>Routine 1</h2>
-                    <p><strong>Instructor name:</strong></p>
-                    <p><strong>Sets:</strong></p>
-                    <p><strong>Exercises List:</strong></p>
-                    <p><strong>Weight:</strong></p>
-                </div>
-            </div>
-        </main>
+<link rel="stylesheet" href="~/css/routinesHistory.css" />
+<script src="~/js/pages/Routines/routineHistory.js" defer></script>
+
+<div>
+    <h2>Routines</h2>
+    <div class="d-flex justify-content-around align-items-center">
+        <button class="btn btn-primary" id="searchAllBtn">List All</button>
     </div>
-</body>
+
+    <table id="routineTable" class="display">
+        <thead>
+            <tr>
+                <th>Instructor Name</th>
+                <th>Exercise Name</th>
+                <th>Exercise Type</th>
+                <th>Sets</th>
+                <th>Weight</th>
+                <th>Time Duration</th>
+                <th>Machine</th>
+            </tr>
+        </thead>
+    </table>
+</div>
