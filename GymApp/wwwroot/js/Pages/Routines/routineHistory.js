@@ -1,55 +1,38 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // URL de tu API o endpoint donde se obtienen las rutinas
+    const apiUrl = '/api/Routine/GetAllRoutines';
 
-let table = new DataTable('#routineTable', {
-    data: [],
-    columns: [
-        { data: 'instructorName' },
-        { data: 'exerciseName' },
-        { data: 'exerciseType' },
-        { data: 'sets' },
-        { data: 'weight' },
-        { data: 'timeDuration' },
-        { data: 'machine' },
-    ]
-});
+    // Función para obtener los datos de las rutinas desde el servidor
+    function fetchRoutines() {
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                populateTable(data);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
 
-const successAlert = () => {
-    Swal.fire({
-        title: "Routine Listings",
-        text: "Success",
-        icon: "success",
-    })
-}
+    // Función para llenar la tabla con los datos obtenidos
+    function populateTable(data) {
+        const tableBody = document.querySelector("#exerciseTable tbody");
+        tableBody.innerHTML = ''; // Limpiar el contenido existente
 
-const errorAlert = () => {
-    Swal.fire({
-        title: "Listos",
-        text: "Busqueda fallida",
-        icon: "error",
-    }) 
-}
+        data.forEach(item => {
+            const row = document.createElement("tr");
 
-const handleClick = () => {
-    const apiUrl = API_URL_BASE + "/api/Routine/GetAllRoutines"
-    $.ajax({
-        url: apiUrl,
-      })
-        .done( (result) => {
-            console.log(result.length);
-            table.clear().rows.add(result).draw();
-            if (result.length == 0) {
-                errorAlert()
-            }
-            else {
-            successAlert()
-            }
-        }).fail((responseData) => {
-            console.error(responseData.statusCode);
-            errorAlert()
+            Object.values(item).forEach(text => {
+                const cell = document.createElement("td");
+                cell.textContent = text;
+                row.appendChild(cell);
+            });
+
+            tableBody.appendChild(row);
         });
-        
-}
+    }
 
+    // Llamar a la función para obtener y llenar los datos al cargar la página
+    fetchRoutines();
 
-$("#searchAllBtn").click(handleClick)
-
-$("#searchRoutineForm").on("submit", handleSubmit)
+    // Añadir evento al botón "List All" para recargar los datos
+    document.querySelector(".btn-list-all").addEventListener("click", fetchRoutines);
+});

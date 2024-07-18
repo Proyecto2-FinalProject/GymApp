@@ -5,13 +5,10 @@
 <link rel="stylesheet" href="~/css/routinesHistory.css" />
 <script src="~/js/pages/Routines/routineHistory.js" defer></script>
 
-<div>
-    <h2>Routines</h2>
-    <div class="d-flex justify-content-around align-items-center">
-        <button class="btn btn-primary" id="searchAllBtn">List All</button>
-    </div>
-
-    <table id="routineTable" class="display">
+<div class="container">
+    <h1>Routines</h1>
+    <button class="btn-list-all">List All</button>
+    <table id="exerciseTable">
         <thead>
             <tr>
                 <th>Instructor Name</th>
@@ -23,5 +20,8 @@
                 <th>Machine</th>
             </tr>
         </thead>
+        <tbody>
+            <!-- Las filas se llenarán dinámicamente -->
+        </tbody>
     </table>
 </div>
