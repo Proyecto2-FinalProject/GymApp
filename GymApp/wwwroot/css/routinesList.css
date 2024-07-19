@@ -1,0 +1,5 @@
+.background-table {
+    background-image: url('Img/FonRoutines.png');
+    background-size: cover; /* Ajusta la imagen al tamaño de la tabla */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}

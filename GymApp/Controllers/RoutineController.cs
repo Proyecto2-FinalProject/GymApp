@@ -9,7 +9,7 @@ namespace EjemploMVC_SCV0.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> routinesHistory()
+        public async Task<IActionResult> routinesList()
         {
             return View();
         }

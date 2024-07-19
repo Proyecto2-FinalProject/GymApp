@@ -7,29 +7,31 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GymUI.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap">
+
 </head>
 <body>
     <header>
-        <img src="/css/Img/LogoFitness.png" alt="Logo" class="logo">
+        <img src="/css/Img/LogoFitnessCenter.png" alt="Logo" class="logo">
         <nav>
             <a href="#">
-                <img src="/css/Img/LogoFitness.png" alt="Profile Icon">
+                <img src="/css/Img/Profile.png" alt="Profile Icon">
                 <span>Profile</span>
             </a>
             <a href="#">
-                <img src="/css/Img/LogoFitness.png" alt="Notifications Icon">
+                <img src="/css/Img/Notifications.png" alt="Notifications Icon">
                 <span>Notifications</span>
             </a>
-            <a asp-controller="Routine" asp-action="routinesHistory">
-                <img src="/css/Img/LogoFitness.png" alt="Routines Icon">
+            <a asp-controller="Routine" asp-action="routinesList">
+                <img src="/css/Img/Routines.png" alt="Routines Icon">
                 <span>Routines</span>
             </a>
             <a href="#">
-                <img src="/css/Img/LogoFitness.png" alt="Classes Icon">
+                <img src="/css/Img/Classes.png" alt="Classes Icon">
                 <span>Classes</span>
             </a>
             <a href="#">
-                <img src="/css/Img/LogoFitness.png" alt="Log Out Icon">
+                <img src="/css/Img/LogOut.png" alt="Log Out Icon">
                 <span>Log Out</span>
             </a>
         </nav>
@@ -52,6 +54,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
