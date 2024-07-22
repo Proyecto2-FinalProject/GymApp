@@ -7,9 +7,9 @@ namespace BL
 {
     public class UserManager
     {
-        //Este Clase se encarga de recibir el request del API y comunicarse con el DataAccs
+        //Clase encargada de recibir el request del API y comunicarse con el DataAccs
 
-        //Meto para registrar usuario: recibe la informacion del Api y la pasa al backend 
+        //Metodo para registrar usuario: recibe la informacion del Api y la pasa al backend 
         public void RegisterUser(User user)
         {
             //Se realiza proceso de encriptar la contrasena.
@@ -17,7 +17,7 @@ namespace BL
             byte[] salt = passwordHelper.GenerateSalt();
             byte[] hashedPassword = passwordHelper.HashPassword(user.Password, salt);
 
-            //Se agrega un role predefinido. 
+            //Se agrega un role predefinido. Role 1 = Usuario general.  
             user.Role_id = 1;
 
             //Se envia el usuario, la contraseña encriptada al backend y se obtine el userId.

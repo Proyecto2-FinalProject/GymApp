@@ -17,7 +17,7 @@ public class UsersController : Controller
         return "Hola desde el controlador de Usuarios";
     }
 
-    //Metodo para gestirar usuarios: recibismo los datos del UI y los pasamos al User manager
+    //Metodo para registrar usuarios: recibismo los datos del UI y los pasamos al User manager
     [HttpPost]
     public ActionResult RegisterUser(User user)
     {
@@ -50,6 +50,13 @@ public class UsersController : Controller
         }          
 
         return Ok(user);
+    }
+
+    [HttpGet]
+    public IActionResult ResetPassword(string token)
+    {
+
+        return null;
     }
 
     //Metodo para obtener usuarios por Id: recibismo los datos del UI y los pasamos al User manager

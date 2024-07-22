@@ -20,9 +20,14 @@
         hasContent: true
     }).done(function (data) {
         Swal.fire({
-            title: 'Mensaje',
-            text: 'Welcome to the Fitness Center',
-            icon: 'info'
+            title: 'Welcome Back',
+            text: 'Fitness Center Gym',
+            icon: 'success'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir a la página BasePage del miembro
+                window.location.href = "/Member/MemberPage";
+            }
         });
     }).fail(function (jqXHR, textStatus, errorThrown) {
         // Extraer información de error y mostrarla

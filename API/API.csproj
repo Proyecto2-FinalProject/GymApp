@@ -14,9 +14,11 @@
 
   <ItemGroup>
     <None Remove="Controllers\Users\" />
+    <None Remove="Controllers\MessageEmail\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Users\" />
+    <Folder Include="Controllers\MessageEmail\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj">
