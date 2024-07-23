@@ -9,7 +9,8 @@ namespace DataAccess.Dao
     {
         private static SqlDao instance = new SqlDao();
 
-        private string _connectionString = "Server=localhost; Database=FitnessCenterDB; User Id=SA; Password=Persy2024!;";
+        private string _connectionString = "Server=DESKTOP-001594K\\SQLEXPRESS; Database=FitnessCenterDB; Integrated Security=True;";
+
 
         public static SqlDao GetInstance()
         {
