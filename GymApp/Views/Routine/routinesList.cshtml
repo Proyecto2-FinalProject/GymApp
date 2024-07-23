@@ -6,24 +6,25 @@
 <script src="~/js/pages/Routines/routinesList.js" defer></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap">
 
+<body>
+    <div>
+        <h2>Routines</h2>
+        <div class="container">
+            <div class="btn" id="searchAllBtn"><a>List All</a></div>
+        </div>
 
-<div>
-    <h2>Routines</h2>
-    <div class="d-flex justify-content-around align-items-center">
-        <button class="btn btn-primary" id="searchAllBtn">List All</button>
+        <table id="routineTable" class="display background-table">
+            <thead>
+                <tr>
+                    <th>Instructor Name</th>
+                    <th>Exercise Name</th>
+                    <th>Exercise Type</th>
+                    <th>Sets</th>
+                    <th>Weight</th>
+                    <th>Time Duration</th>
+                    <th>Machine</th>
+                </tr>
+            </thead>
+        </table>
     </div>
-
-    <table id="routineTable" class="display background-table">
-        <thead>
-            <tr>
-                <th>Instructor Name</th>
-                <th>Exercise Name</th>
-                <th>Exercise Type</th>
-                <th>Sets</th>
-                <th>Weight</th>
-                <th>Time Duration</th>
-                <th>Machine</th>
-            </tr>
-        </thead>
-    </table>
-</div>
+</body>
