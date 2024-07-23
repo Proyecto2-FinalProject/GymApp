@@ -1,17 +1,19 @@
 const handleCreateRoutine = (event) => {
-    event.preventDefault()
-    //Recopilar la informacion y mandarla al API
+    event.preventDefault();
 
-    const routine = {}
-    routine.instructorname = $("#instructor_name").val()
-    routine.exercisename = $("#exercise_name").val()
-    routine.exercisetype = $("#exercise_type").val()
-    routine.sets = $("#sets").val()
-    routine.weight = $("#weight").val() 
-    routine.timeduration = $("#time_duration").val()
-    routine.machine = $("#machine").val()
+    // Recopilar la información y mandarla al API
+    const routine = {
+        instructorname: $("#instructor_name").val(),
+        exercisename: $("#exercise_name").val(),
+        exercisetype: $("#exercise_type").val(),
+        sets: $("#sets").val(),
+        weight: $("#weight").val(),
+        timeduration: $("#time_duration").val(),
+        machine: $("#machine").val()
+    };
 
     const apiUrl = API_URL_BASE + "/api/Routine/CreateRoutine";
+
     $.ajax({
         url: apiUrl,
         method: "POST",
@@ -19,19 +21,23 @@ const handleCreateRoutine = (event) => {
         data: JSON.stringify(routine),
         contentType: "application/json;charset=utf-8",
         dataType: "json",
-      }).done( (result) => {
-            console.log(result);
-             Swal.fire({
-               title: "Mensaje",
-               text: "Routine created successfully",
-               icon: "success",
-           })
-        }).fail((responseData) => {
-            if (responseData.responseCode) {
-                console.error(responseData.responseCode);
-            }
+    }).done((result) => {
+        console.log(result);
+        Swal.fire({
+            title: "Routine Creation",
+            text: "Routine Created Successfully",
+            icon: "success",
         });
-        
-}
+    }).fail((jqXHR, textStatus, errorThrown) => {
+        console.error(textStatus, errorThrown);
+        Swal.fire({
+            title: "Error",
+            text: "Failed to create routine. Please try again.",
+            icon: "error",
+        });
+    });
+};
 
-$("#createRoutineForm").on("submit", handleCreateRoutine)
+$(document).ready(() => {
+    $("#createRoutineForm").on("submit", handleCreateRoutine);
+});

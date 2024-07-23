@@ -17,13 +17,23 @@ namespace API.Controllers.Routines
         }
 
         [HttpPost]
-        public ActionResult CreateRoutine(Routine Routine)
+        public IActionResult CreateRoutine([FromBody] Routine routine)
         {
-            RoutineManager manager = new RoutineManager();
-            manager.CreateRoutine(Routine);
+            try
+            {
+                RoutineManager manager = new RoutineManager();
+                manager.CreateRoutine(routine);
 
-            return Ok();
+                // Devolver una respuesta JSON con un mensaje de éxito
+                return Json(new { success = true, message = "Routine created successfully" });
+            }
+            catch (Exception ex)
+            {
+                // Manejar el error y devolver una respuesta JSON con un mensaje de error
+                return Json(new { success = false, message = ex.Message });
+            }
         }
+
         [HttpGet]
         public Routine GetRoutine(int id)
         {
