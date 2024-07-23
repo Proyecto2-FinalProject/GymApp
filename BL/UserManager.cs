@@ -9,6 +9,7 @@ namespace BL
     {
         //Clase encargada de recibir el request del API y comunicarse con el DataAccs
 
+
         //Metodo para registrar usuario: recibe la informacion del Api y la pasa al backend 
         public void RegisterUser(User user)
         {
@@ -20,7 +21,7 @@ namespace BL
             //Se agrega un role predefinido. Role 1 = Usuario general.  
             user.Role_id = 1;
 
-            //Se envia el usuario, la contraseña encriptada al backend y se obtine el userId.
+            //Se envia el usuario, la contraseña encriptada al backend y se obtiene el userId.
             UserCrudFactory us_crud = new UserCrudFactory();
             string baseStringPassword = Convert.ToBase64String(hashedPassword);
             int userId = us_crud.RegisterUser(user, baseStringPassword);
@@ -30,12 +31,11 @@ namespace BL
             us_crud.RegisterSalt(userId, baseStringSalt);
         }
 
+        //Metodo para hacer login
         public User Login(string username, string password)
         {
             UserCrudFactory us_crud = new UserCrudFactory();
-
             User user = (User)us_crud.RetrieveUserByUsername(username);
-
             if(user == null)
             {
                 return null;
@@ -61,6 +61,45 @@ namespace BL
             }  
         }
 
+        //Metodo para uactualizar la contraseña con el token y new password 
+        public bool UpdatePassword(string token, string newPassword)
+        {
+            //Generamos la Salt y encriptamos la nueva contrasenña
+            var passwordHelper = new PasswordHelper();
+            byte[] salt = passwordHelper.GenerateSalt();
+            byte[] hashedPassword = passwordHelper.HashPassword(newPassword, salt);
+
+            //Convertirmos la salt y la nuewva contrasena a string 
+            string baseStringPassword = Convert.ToBase64String(hashedPassword);
+            string baseStringSalt = Convert.ToBase64String(salt);
+
+            //Enviamos el token, la contrasenña y la salt al crud 
+            UserCrudFactory us_crud = new UserCrudFactory();
+            return us_crud.UpdatePasswordByToken(token, baseStringPassword, baseStringSalt);
+        }
+
+        //Metodo para obtener el Usuario por el Email 
+        public User GetUserByEmail(string email)
+        {
+            UserCrudFactory us_crud = new UserCrudFactory();
+            return (User)us_crud.RetrieveByEmail(email);
+        }
+
+        //Metodo para guardar el token de restablecimento en la tabla usuario
+        public bool AddResetToken(int userId, string token)
+        {
+            UserCrudFactory us_crud = new UserCrudFactory();
+            return us_crud.AddResetToken(userId, token);
+        }
+
+        //Metodo para obtener el Usuario por el Username 
+        public User GetUserByUsername(string username)
+        {
+            UserCrudFactory us_crud = new UserCrudFactory();
+            return (User)us_crud.RetrieveByEmail(username);
+        }
+
+        //Metodo para obtener el Usuario por el Id  
         public User GetUserById(int id)
         {
             UserCrudFactory us_crud = new UserCrudFactory();

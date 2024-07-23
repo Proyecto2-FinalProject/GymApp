@@ -8,26 +8,20 @@ namespace API.Controllers.Users;
 [EnableCors("MyCorsPolicy")]
 [Route("api/[controller]/[action]")]
 [ApiController]
-
 public class UsersController : Controller
 {
-    [HttpGet]
-    public string Prueba()
-    {
-        return "Hola desde el controlador de Usuarios";
-    }
 
     //Metodo para registrar usuarios: recibismo los datos del UI y los pasamos al User manager
     [HttpPost]
     public ActionResult RegisterUser(User user)
     {
+        UserManager manager = new UserManager();
+        manager.RegisterUser(user);
+
         if (user == null)
         {
             return BadRequest("User data is null.");
         }
-
-        UserManager manager = new UserManager();
-        manager.RegisterUser(user);
 
         return Ok(new { message = "User registered successfully" });
     }
@@ -36,13 +30,13 @@ public class UsersController : Controller
     [HttpPost]
     public IActionResult Login([FromBody] LoginRequest request)
     {
-        if(request == null)
+        UserManager manager = new UserManager();
+        User user = manager.Login(request.Username, request.Password);
+
+        if (request == null)
         {
             return BadRequest("Invalid login request.");
         }
-
-       UserManager manager = new UserManager();
-       User user = manager.Login(request.Username, request.Password);
 
         if (user == null)
         {
@@ -52,11 +46,23 @@ public class UsersController : Controller
         return Ok(user);
     }
 
-    [HttpGet]
-    public IActionResult ResetPassword(string token)
+    [HttpPost]
+    public IActionResult ResetPassword([FromBody] ResetPasswordRequest request)
     {
+        //Validamos que el request no sea null y que tenga un token y un new password 
+        if (request == null || string.IsNullOrEmpty(request.Token) || string.IsNullOrEmpty(request.NewPassword))
+        {
+            return BadRequest("Invalid password reset request.");
+        }
 
-        return null;
+        UserManager manager = new UserManager();
+        bool result = manager.UpdatePassword(request.Token, request.NewPassword);
+        if (!result)
+        {
+            return BadRequest("Invalid token or unable to reset password.");
+        }
+
+        return Ok(new { message = "Password reset successfully." });
     }
 
     //Metodo para obtener usuarios por Id: recibismo los datos del UI y los pasamos al User manager

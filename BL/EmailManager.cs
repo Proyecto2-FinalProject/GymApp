@@ -8,13 +8,13 @@ using sib_api_v3_sdk.Model;
 
 namespace BL
 {
-    public class EmailService
+    public class EmailManager
     {
         //Clase encargada de la lógica para enviar emails
 
         private readonly BrevoSettings _settings;
 
-        public EmailService(IOptions<BrevoSettings> settings)
+        public EmailManager(IOptions<BrevoSettings> settings)
         {
             _settings = settings.Value;
         }

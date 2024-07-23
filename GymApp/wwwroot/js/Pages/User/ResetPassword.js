@@ -4,7 +4,7 @@
     // Obtiene el email y se lo manda al Api 
     const email = $("#email").val()
 
-    var apiUrl = API_URL_BASE + "/api/Users/ResetPassword";
+    var apiUrl = API_URL_BASE + "/api/Messages/SendResetPasswordEmail";
 
             $.ajax({
                 headers: {
@@ -20,7 +20,7 @@
             }).done(function (data) {
                 Swal.fire({
                     title: 'Mensaje',
-                    text:   "We've sent an email with instructions.'",
+                    text:   "We've sent you an email with instructions.'",
                     icon: 'info'
                 });
             }).fail(function (xhr, status, error) {
@@ -38,12 +38,6 @@
                     icon: 'error'
                 });
             });
-        };
-
-        reader2.readAsDataURL(idImageFile);
-    };
-
-    reader.readAsDataURL(profileImageFile);
 };
 
 $("#btnResetPassword").click(handleResetPassword);

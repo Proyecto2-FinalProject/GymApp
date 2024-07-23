@@ -10,19 +10,22 @@
 <div class="form-group">
     <form class="frmUser" id="loginForm">
         <div>
-            <label for="username">Username:</label>
+            <label for="username">Username</label>
             <input id="username" type="text" class="form-control" required />
         </div>
 
         <div>
-            <label for="password">Password:</label>
+            <label for="password">Password</label>
             <input id="password" type="password" class="form-control" required />
         </div>
 
         <div class="form-group">
             <button type="button" class="btn btn-success" id="btnLogin">LOG IN</button>
         </div>
-
-        <p> Forgot your password? <a class="stretched-link" asp-area="" asp-controller="User" asp-action="ResetPassword">Reset it now.</a></p>
     </form>
+
+    <div>
+        <p> Forgot your password? <a  asp-area="" asp-controller="User" asp-action="ResetPassword">Reset it now.</a></p>
+    </div>
+    
 </div>

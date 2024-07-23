@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<BrevoSettings>(builder.Configuration.GetSection("Brevo"));
-builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<EmailManager>();
 
 builder.Services.AddCors(options =>
 {
@@ -39,7 +39,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors();
+app.UseCors("MyCorsPolicy");
 
 app.Run();
 
