@@ -6,7 +6,7 @@ namespace DataAccess.Dao
     public class SqlDao
     {
         private static SqlDao instance = new SqlDao();
-        private string _connString = "Server=localhost;Database=FitnessCenterDB;Trusted_Connection=True";
+        private string _connString = "Server=localhost; Database=FitnessCenterDB; User Id=sa; Password=Docker2024!";
 
         public static SqlDao GetInstance()
         {
