@@ -1,20 +1,19 @@
 ﻿const handleResetPassword = (event) => {
     event.preventDefault();
 
-    // Obtiene el password 
-    const password = $("#newPassword").val()
+    // Obtiene el email y se lo manda al Api 
+    const email = $("#email").val()
 
-    //Obtenemos el token de la URl 
-    var token = getQueryParam('token');
-    console.log("Token:", token);
+    //Construimos la URL de restablecimiento de contraseña
+    const resetLink = UI_URL_BASE + "/User/ResetPassword";
 
-    // Estructuramos el objeto de ResetPassword para enviar a la API
+    // Estructuramos el objeto de ResetPasswordRequest para enviar a la API
     const data = {
-        token: token,
-        newPassword: password
+        email: email,
+        resetUrl: resetLink
     }
 
-    var apiUrl = API_URL_BASE + "/api/Users/ResetPassword";
+    const apiUrl = API_URL_BASE + "/api/Emails/SendResetPasswordEmail";
 
             $.ajax({
                 headers: {
@@ -30,7 +29,7 @@
             }).done(function (data) {
                 Swal.fire({
                     title: 'Mensaje',
-                    text:   "Your Password have been successfully updated.",
+                    text:   "We've sent you an email with instructions to reset your password.",
                     icon: 'info'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -53,11 +52,6 @@
                     icon: 'error'
                 });
             });
-};
-
-function getQueryParam(param) {
-    var urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
 };
 
 $("#btnResetPassword").click(handleResetPassword);

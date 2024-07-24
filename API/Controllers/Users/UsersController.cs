@@ -47,7 +47,7 @@ public class UsersController : Controller
     }
 
     [HttpPost]
-    public IActionResult ResetPassword([FromBody] ResetPasswordRequest request)
+    public IActionResult ResetPassword([FromBody] ResetPassword request)
     {
         //Validamos que el request no sea null y que tenga un token y un new password 
         if (request == null || string.IsNullOrEmpty(request.Token) || string.IsNullOrEmpty(request.NewPassword))

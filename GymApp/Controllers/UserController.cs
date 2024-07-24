@@ -15,6 +15,11 @@ public class UserController : Controller
         return View();
     }
 
+    public IActionResult ResetPasswordRequest()
+    {
+        return View();
+    }
+
     public IActionResult ResetPassword()
     {
         return View();

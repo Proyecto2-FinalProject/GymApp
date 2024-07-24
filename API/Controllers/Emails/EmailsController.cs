@@ -3,32 +3,32 @@ using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BL;
 
-namespace API.Controllers.Messages;
+namespace API.Controllers.Emails;
 
 [EnableCors("MyCorsPolicy")]
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class EmailController : Controller
+public class EmailsController : Controller
 {
     private readonly EmailManager _emailService;
 
-    public EmailController(EmailManager emailService)
+    public EmailsController(EmailManager emailService)
     {
         _emailService = emailService;
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendResetPasswordEmail([FromBody] string email)
+    public async Task<IActionResult> SendResetPasswordEmail([FromBody] ResetPasswordRequest request)
     {
         //Verificamos que si se ingreso un email
-        if (string.IsNullOrEmpty(email))
+        if (string.IsNullOrEmpty(request.Email))
         {
             return BadRequest("Email is required.");
         }
 
         //Obtenemos el usuario por email y verificamos que existe
         UserManager manager = new UserManager();
-        User user = manager.GetUserByEmail(email);
+        User user = manager.GetUserByEmail(request.Email);
         if (user == null)
         {
             return BadRequest("User not found.");
@@ -39,15 +39,21 @@ public class EmailController : Controller
 
         //Enviamos el token en la tabla de usuario y verificamso que se guardo 
         bool tokenSaved = manager.AddResetToken(user.Id, resetToken);
+        if (!tokenSaved)
+        {
+            return StatusCode(500, "Unable to save the reset token.");
+        }
 
-        // Enviamos correo de restablecimiento
-        var resetLink = Url.Action("ResetPassword", "Users", new { token = resetToken }, protocol: HttpContext.Request.Scheme);
+        //Generamos el link de restablecimiento con el token 
+        var resetLink = $"{request.ResetUrl}?token={resetToken}";
+
+        //Url.Action("ResetPassword", "Users", new { token = resetToken }, protocol: HttpContext.Request.Scheme);
 
         // Obtenemos el cuerpo del correo electrónico usando la plantilla HTML
         var emailBody = _emailService.GetResetPasswordEmailBody(resetLink);
 
         // Enviamos el correo de restablecimiento
-        await _emailService.SendEmailAsync(email, "User", "Reset Password", emailBody);
+        await _emailService.SendEmailAsync(user.Email, "User", "Reset Password", emailBody);
 
         return Ok(new { Message = "Reset password email sent." });
     }

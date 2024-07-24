@@ -135,7 +135,7 @@ namespace DataAccess.Mapper
             operation.ProcedureName = "dbo.sp_updateUserPassword";
 
             operation.AddVarcharParam("token", token);
-            operation.AddVarcharParam("password", hasedPassword);
+            operation.AddVarcharParam("hashedPassword", hasedPassword);
             operation.AddVarcharParam("salt", salt);
 
             return operation;

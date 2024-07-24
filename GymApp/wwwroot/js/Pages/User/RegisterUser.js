@@ -41,6 +41,11 @@
                         title: 'Mensaje',
                         text: 'The User was Registered Successfully',
                         icon: 'info'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirigir a la página BasePage del miembro
+                            window.location.href = "/User/Login";
+                        }
                     });
                 }).fail(function (xhr, status, error) {
                     let errorMessage = "Unknown error";
