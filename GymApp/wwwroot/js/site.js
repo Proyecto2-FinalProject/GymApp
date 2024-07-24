@@ -3,4 +3,5 @@
 
 // Write your JavaScript code.
 var API_URL_BASE = "https://localhost:7280";
+var UI_URL_BASE = "http://localhost:5112";
 

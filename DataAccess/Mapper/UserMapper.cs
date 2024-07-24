@@ -8,7 +8,7 @@ namespace DataAccess.Mapper
     public class UserMapper : ICrudStatements, IObjectMapper
 
     {
-
+        //Metodo que construye una lista objetos tipo usuario 
         public List<BaseClass> BuildObjects(List<Dictionary<string, object>> objectRows)
         {
             //NO ESTA IMPLEMENTADO
@@ -17,6 +17,7 @@ namespace DataAccess.Mapper
             return UserList;
         }
 
+        //Metodo que construye un objeto tipo usuario 
         public BaseClass BuildObject(Dictionary<string, object> result)
         {
             var user = new User();
@@ -46,9 +47,9 @@ namespace DataAccess.Mapper
             return user;
         }
 
+        //Metodo para registrar un suario 
         public SqlOperation GetRegisterUser(BaseClass entityDTO, string hashedPassword, SqlParameter newUserIdParam)
         {
-    
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "dbo.sp_addUserAccount";
 
@@ -70,14 +71,83 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        //Metodo para registrar la Salt de la ocntraseña
         public SqlOperation GetRegisterSalt(int userId, string salt)
         {
-
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "dbo.sp_addUserSalt";
 
             operation.AddIntegerParam("user_id", userId);
             operation.AddVarcharParam("salt", salt);
+
+            return operation;
+        }
+
+        //Metodo que retorna un usuario por el email 
+        public SqlOperation GetRetrieveByEmailStatement(string email)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "dbo.sp_getUserByEmail";
+
+            operation.AddVarcharParam("Email", email);
+
+            return operation;
+        }
+
+        //Metodo que retorna un usuario por el username 
+        public SqlOperation GetRetrieveUserByUsername(string username)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "dbo.sp_getUserByUsername";
+
+            operation.AddVarcharParam("username", username);
+
+            return operation;
+        }
+
+        //Metodo que retorna un usuario por el id 
+        public SqlOperation GetRetrieveSaltByUserId(int userId)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "dbo.sp_getUserSaltByUserId";
+
+            operation.AddIntegerParam("user_id", userId);
+
+            return operation;
+        }
+
+        //Metodo para guardar la nueva contraseña
+        public SqlOperation GetRegisterToken(int userId, string token)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "dbo.sp_addUserToken";
+
+            operation.AddIntegerParam("user_id", userId);
+            operation.AddVarcharParam("token", token);
+
+            return operation;
+        }
+
+        //Metodo para uctualizar la nueva contraseña en la tabla usuario
+        public SqlOperation GetUpdatePasswordByToken(string token, string hasedPassword, string salt)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "dbo.sp_updateUserPassword";
+
+            operation.AddVarcharParam("token", token);
+            operation.AddVarcharParam("hashedPassword", hasedPassword);
+            operation.AddVarcharParam("salt", salt);
+
+            return operation;
+        }
+
+        //Metodo que retorna un usuario por el Id
+        public SqlOperation GetRetrieveByIdStatement(int Id)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "";
+
+            operation.AddIntegerParam("Id", Id);
 
             return operation;
         }
@@ -100,36 +170,6 @@ namespace DataAccess.Mapper
         public SqlOperation GetRetrieveAllStatement()
         {
             throw new NotImplementedException();
-        }
-
-        public SqlOperation GetRetrieveByIdStatement(int Id)
-        {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "";
-
-            operation.AddIntegerParam("Id", Id);
-
-            return operation;
-        }
-
-        public SqlOperation GetRetrieveUserByUsername(string username)
-        {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_getUserByUsername";
-
-            operation.AddVarcharParam("username", username);
-
-            return operation;
-        }
-
-        public SqlOperation GetRetrieveSaltByUserId(int userId)
-        {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_getUserSaltByUserId";
-
-            operation.AddIntegerParam("user_id", userId);
-
-            return operation;
         }
     }
 }
