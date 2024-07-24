@@ -9,7 +9,7 @@ namespace DataAccess.Dao
     {
         private static SqlDao instance = new SqlDao();
 
-        private string _connectionString = "Server=localhost; Database=FitnessCenterDB; User Id=SA; Password=Persy2024!;";
+        private string _conneString = "Server=localhost; Database=FitnessCenterDB; User Id=SA; Password=Persy2024!;";
 
         public static SqlDao GetInstance()
         {
@@ -23,7 +23,7 @@ namespace DataAccess.Dao
         public void ExecuteStoredProcedure(SqlOperation operation)
         {
             //hacer la conexion
-            string connectionString = _connectionString;
+            string connectionString = _conneString;
             SqlConnection connection = new SqlConnection(connectionString);
 
             //Armar el query
@@ -47,7 +47,7 @@ namespace DataAccess.Dao
 
         public List<Dictionary<string, object>> ExecuteStoredProcedureWithQuery(SqlOperation operation)
         {
-            var conn = _connectionString;
+            var conn = _conneString;
             List<Dictionary<string, object>> lstResults = new List<Dictionary<string, object>>();
 
             var connection = new SqlConnection(conn);
@@ -87,7 +87,7 @@ namespace DataAccess.Dao
 
         public Dictionary<string, object> ExecuteStoredProcedureWithUniqueResult(SqlOperation operation)
         {
-            var conn = _connectionString;
+            var conn = _conneString;
             List<Dictionary<string, object>> lstResults = new List<Dictionary<string, object>>();
 
             var connection = new SqlConnection(conn);
