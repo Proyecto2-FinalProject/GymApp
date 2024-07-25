@@ -3,8 +3,10 @@ using DTO;
 
 namespace DataAccess.Mapper
 {
+    // Clase que implementa ICrudStatements e IObjectMapper para manejar las operaciones CRUD de la entidad Equipment.
     public class EquipmentMapper : ICrudStatements, IObjectMapper
     {
+        // Método para construir una lista de objetos BaseClass a partir de una lista de diccionarios.
         public List<BaseClass> BuildObjects(List<Dictionary<string, object>> objectRows)
         {
             var list = new List<BaseClass>();
@@ -18,6 +20,7 @@ namespace DataAccess.Mapper
             return list;
         }
 
+        // Método para construir un objeto BaseClass a partir de un diccionario.
         public BaseClass BuildObject(Dictionary<string, object> row)
         {
             var equipment = new Equipment
@@ -32,6 +35,7 @@ namespace DataAccess.Mapper
             return equipment;
         }
 
+        // Método para obtener una declaración SQL para crear un nuevo equipo.
         public SqlOperation GetCreateStatement(BaseClass entity)
         {
             var operation = new SqlOperation
@@ -48,6 +52,7 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        // Método para obtener una declaración SQL para eliminar un equipo.
         public SqlOperation GetDeleteStatement(BaseClass entity)
         {
             var operation = new SqlOperation
@@ -61,6 +66,7 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        // Método para obtener una declaración SQL para recuperar todos los equipos.
         public SqlOperation GetRetrieveAllStatement()
         {
             var operation = new SqlOperation
@@ -71,6 +77,7 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        // Método para obtener una declaración SQL para recuperar un equipo por su ID.
         public SqlOperation GetRetrieveByIdStatement(int id)
         {
             var operation = new SqlOperation
@@ -83,6 +90,7 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        // Método para obtener una declaración SQL para actualizar un equipo existente.
         public SqlOperation GetUpdateStatement(BaseClass entity)
         {
             var operation = new SqlOperation

@@ -22,6 +22,7 @@ namespace API.Controllers.Equipments
         [HttpGet]
         public ActionResult GetAll()
         {
+            // Método para obtener todos los equipos: llamamos a GetAllEquipment del manager y devolvemos la lista
             var equipmentList = _equipmentManager.GetAllEquipment()
                 .Select(e => new Equipment
                 {
@@ -37,6 +38,7 @@ namespace API.Controllers.Equipments
         [HttpPost]
         public ActionResult Create([FromBody] Equipment equipment)
         {
+            // Método para crear un nuevo equipo: recibimos los datos del UI y los pasamos al EquipmentManager
             if (equipment == null)
             {
                 return BadRequest("Equipment data is null.");
@@ -49,6 +51,7 @@ namespace API.Controllers.Equipments
         [HttpPost]
         public IActionResult Edit([FromBody] Equipment equipment)
         {
+            // Método para actualizar un equipo: recibimos los datos del UI y los pasamos al EquipmentManager
             if (equipment == null)
             {
                 return BadRequest("Equipment data is null.");
@@ -61,9 +64,10 @@ namespace API.Controllers.Equipments
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
+            // Método para eliminar un equipo por ID: recibimos el ID del UI y lo pasamos al EquipmentManager
             _equipmentManager.DeleteEquipment(id);
             return Ok(new { message = "Equipment deleted successfully" });
         }
-
     }
 }
+ 
