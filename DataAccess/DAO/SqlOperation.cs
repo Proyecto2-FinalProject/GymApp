@@ -1,10 +1,13 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data;
+using System.Data.SqlClient;
 
 namespace DataAccess.Dao
 {
     public class SqlOperation
     {
         public string ProcedureName { get; set; }
+        public List<SqlParameter> Parameters { get; } = new List<SqlParameter>();
+        public List<SqlParameter> OutputParameters { get; } = new List<SqlParameter>();
 
         public List<SqlParameter> parameters;
 
@@ -12,7 +15,16 @@ namespace DataAccess.Dao
         {
             parameters = new List<SqlParameter>();
         }
+        public void AddOutputParameter(string name, SqlDbType type)
+        {
+            OutputParameters.Add(new SqlParameter(name, type) { Direction = ParameterDirection.Output });
+        }
 
+        public object GetOutputParameterValue(string name)
+        {
+            var param = OutputParameters.FirstOrDefault(p => p.ParameterName == name);
+            return param?.Value;
+        }
         public void AddVarcharParam(string parameterName, string paramValue)
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
@@ -35,5 +47,7 @@ namespace DataAccess.Dao
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
+        
+
     }
 }
