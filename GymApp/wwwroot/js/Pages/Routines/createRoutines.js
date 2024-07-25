@@ -3,13 +3,12 @@ const handleCreateRoutine = (event) => {
 
     // Recopilar la información y mandarla al API
     const routine = {
-        instructorname: $("#instructor_name").val(),
-        exercisename: $("#exercise_name").val(),
-        exercisetype: $("#exercise_type").val(),
-        sets: $("#sets").val(),
-        weight: $("#weight").val(),
-        timeduration: $("#time_duration").val(),
-        machine: $("#machine").val()
+        memberId: $("#member_id").val(),
+        instructorId: $("#instructor_id").val(),
+        measurementAppointmentId: $("#measurement_appointment_id").val(),
+        name: $("#name").val(),
+        description: $("#description").val(),
+        creationDate: $("#creation_date").val()
     };
 
     const apiUrl = API_URL_BASE + "/api/Routine/CreateRoutine";
@@ -27,12 +26,15 @@ const handleCreateRoutine = (event) => {
             title: "Routine Creation",
             text: "Routine Created Successfully",
             icon: "success",
+        }).then(() => {
+            // Redirigir a la vista para seleccionar ejercicios
+            window.location.href = '/Exercise/selectExercises';
         });
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.error(textStatus, errorThrown);
         Swal.fire({
             title: "Error",
-            text: "Failed to create routine. Please try again.",
+            text: "Failed to create Routine. Please try again.",
             icon: "error",
         });
     });

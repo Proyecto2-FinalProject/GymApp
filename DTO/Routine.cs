@@ -2,12 +2,11 @@
 {
     public class Routine : BaseClass
     {
-        public string InstructorName { get; set; }
-        public string ExerciseName { get; set; }
-        public string ExerciseType { get; set; }
-        public int Sets { get; set; }
-        public decimal Weight { get; set; }
-        public TimeSpan TimeDuration { get; set; }
-        public string Machine { get; set; }
+        public int memberId { get; set; }
+        public int instructorId { get; set; }
+        public int measurementAppointmentId { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public DateTime creationDate { get; set; }
     }
 }

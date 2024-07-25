@@ -24,20 +24,20 @@ namespace DataAccess.Mapper
 
         public BaseClass BuildObject(Dictionary<string, object> result)
         {
-            var Routine = new Routine()
+            var routine = new Routine()
             {
                 Id = int.Parse(result["Id"].ToString()),
-                InstructorName = result["instructor_name"].ToString(),
-                ExerciseName = result["exercise_name"].ToString(),
-                ExerciseType = result["exercise_type"].ToString(),
-                Sets = result.ContainsKey("sets") && !string.IsNullOrEmpty(result["sets"].ToString()) ? int.Parse(result["sets"].ToString()) : 0,
-                Weight = result.ContainsKey("weight") && !string.IsNullOrEmpty(result["weight"].ToString()) ? decimal.Parse(result["weight"].ToString()) : 0.0m,
-                TimeDuration = result.ContainsKey("time_duration") && TimeSpan.TryParse(result["time_duration"].ToString(), out var timeDuration) ? timeDuration : TimeSpan.Zero,
-                Machine = result["machine"].ToString()
+                memberId = int.Parse(result["member_id"].ToString()),
+                instructorId = int.Parse(result["instructor_id"].ToString()),
+                measurementAppointmentId = int.Parse(result["measurement_appointment_id"].ToString()),
+                name = result["name"].ToString(),
+                description = result["description"].ToString(),
+                // Asegúrate de que la fecha sea correctamente convertida
+                creationDate = DateTime.Parse(result["creation_date"].ToString(), null, System.Globalization.DateTimeStyles.RoundtripKind)
             };
-
-            return Routine;
+            return routine;
         }
+
 
 
 
@@ -48,13 +48,12 @@ namespace DataAccess.Mapper
 
             Routine Routine = (Routine)entityDTO;
 
-            operation.AddVarcharParam("instructor_name", Routine.InstructorName);
-            operation.AddVarcharParam("exercise_name", Routine.ExerciseName);
-            operation.AddVarcharParam("exercise_type", Routine.ExerciseType);
-            operation.AddIntegerParam("sets", Routine.Sets);
-            operation.AddDecimalParam("weight", Routine.Weight);
-            operation.AddTimeSpanParam("time_duration", Routine.TimeDuration);
-            operation.AddVarcharParam("machine", Routine.Machine);
+            operation.AddIntegerParam("member_id", Routine.memberId);
+            operation.AddIntegerParam("instructor_id", Routine.instructorId);
+            operation.AddIntegerParam("measurement_appointment_id", Routine.measurementAppointmentId);
+            operation.AddVarcharParam("name", Routine.name);
+            operation.AddVarcharParam("description", Routine.description);
+            operation.AddDateTimeParam("creation_date", Routine.creationDate);
 
             return operation;
         }

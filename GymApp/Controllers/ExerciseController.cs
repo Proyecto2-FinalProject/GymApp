@@ -2,18 +2,17 @@
 
 namespace GymApp.Controllers
 {
-    public class RoutineController : Controller
+    public class ExerciseController : Controller
     {
 
         public async Task<IActionResult> Create()
         {
             return View();
         }
-        public async Task<IActionResult> routinesList()
+        public async Task<IActionResult> SelectExercises()
         {
             return View();
         }
-        
     }
 
 
