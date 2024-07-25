@@ -24,10 +24,6 @@ namespace BL
             RoutineCrudFactory ex_crud = new RoutineCrudFactory();
             return ex_crud.RetrieveAll<Routine>();
         }
-        public void AddExerciseToRoutine(RoutineExercise routineExercise)
-        {
-            RoutineExerciseCrudFactory crudFactory = new RoutineExerciseCrudFactory();
-            crudFactory.Create(routineExercise);
-        }
+        
     }
 }
