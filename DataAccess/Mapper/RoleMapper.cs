@@ -21,6 +21,7 @@ namespace DataAccess.Mapper
         {
             return new Role
             {
+                Id = Convert.ToInt32(row["role_id"]),
                 Name = row["role_name"].ToString()
             };
         }
@@ -47,6 +48,15 @@ namespace DataAccess.Mapper
         List<BaseClass> IObjectMapper.BuildObjects(List<Dictionary<string, object>> rows)
         {
             return new List<BaseClass>(BuildObjects(rows));
+        }
+
+        // Método para obtener todos los roles
+        public SqlOperation GetRetrieveAllStatement()
+        {
+            return new SqlOperation
+            {
+                ProcedureName = "dbo.GetAllRoles"
+            };
         }
     }
 }

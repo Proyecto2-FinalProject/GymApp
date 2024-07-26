@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using DataAccess.Crud;
 using DataAccess.Dao;
@@ -106,7 +107,32 @@ namespace DataAccess.CRUD
 
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+            SqlOperation operation = _mapper.GetRetrieveAllStatement();
+            var results = dao.ExecuteStoredProcedureWithQuery(operation);
+            var users = _mapper.BuildObjects(results);
+
+            var castedUsers = new List<T>();
+            foreach (var user in users)
+            {
+                if (user is T castedUser)
+                {
+                    castedUsers.Add(castedUser);
+                }
+            }
+
+            return castedUsers;
+        }
+
+        public void AssignRole(int userId, int roleId)
+        {
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.AssignUserRole"
+            };
+
+            operation.AddIntegerParam("UserId", userId);
+            operation.AddIntegerParam("RoleId", roleId);
+            dao.ExecuteStoredProcedure(operation);
         }
     }
 }

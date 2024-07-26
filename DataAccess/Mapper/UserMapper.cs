@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-using DTO;
+﻿using System;
+using System.Collections.Generic;
 using DataAccess.Dao;
+using DTO;
 using System.Data.SqlClient;
 
 namespace DataAccess.Mapper
 {
     public class UserMapper : ICrudStatements, IObjectMapper
     {
-        public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rows)
+        public List<BaseClass> BuildObjects(List<Dictionary<string, object>> objectRows)
         {
             List<BaseClass> users = new List<BaseClass>();
 
-            foreach (var row in rows)
+            foreach (var row in objectRows)
             {
                 var user = BuildObject(row);
                 users.Add(user);
@@ -161,14 +162,37 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        public SqlOperation GetRetrieveByIdStatement(int Id)
+        public SqlOperation GetRetrieveByIdStatement(int id)
         {
             SqlOperation operation = new SqlOperation
             {
-                ProcedureName = ""
+                ProcedureName = "dbo.sp_getUserById"
             };
 
-            operation.AddIntegerParam("Id", Id);
+            operation.AddIntegerParam("Id", id);
+
+            return operation;
+        }
+
+        public SqlOperation GetRetrieveAllStatement()
+        {
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.GetAllUsers"
+            };
+
+            return operation;
+        }
+
+        public SqlOperation GetAssignRoleStatement(int userId, int roleId)
+        {
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.AssignUserRole"
+            };
+
+            operation.AddIntegerParam("UserId", userId);
+            operation.AddIntegerParam("RoleId", roleId);
 
             return operation;
         }
@@ -184,11 +208,6 @@ namespace DataAccess.Mapper
         }
 
         public SqlOperation GetDeleteStatement(BaseClass entityDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SqlOperation GetRetrieveAllStatement()
         {
             throw new NotImplementedException();
         }
