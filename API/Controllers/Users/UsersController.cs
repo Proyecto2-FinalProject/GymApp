@@ -37,7 +37,7 @@ public class UsersController : Controller
         {
             return BadRequest("Invalid login request.");
         }
-
+    
         if (user == null)
         {
             return Unauthorized();
