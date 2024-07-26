@@ -25,6 +25,16 @@
             icon: 'success'
         }).then((result) => {
             if (result.isConfirmed) {
+
+                // Redirigir a la página basada en el rol del usuario
+                if (data.role === 'Admin') {
+                    window.location.href = "/Admin/AdminPage";
+                } else if (data.role === 'Member') {
+                    window.location.href = "/Member/MemberPage";
+                } else {
+                    window.location.href = "/Default/DefaultPage";
+                }
+
                 // Redirigir a la página BasePage del miembro
                 window.location.href = "/Member/MemberPage";
             }
@@ -47,6 +57,5 @@
         });
     });
 }
-
 
 $("#btnLogin").click(handleLogin)

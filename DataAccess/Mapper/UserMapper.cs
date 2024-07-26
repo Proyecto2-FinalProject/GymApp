@@ -1,57 +1,59 @@
-﻿using System.Data.SqlClient;
-using DataAccess.Dao;
+﻿using System.Collections.Generic;
 using DTO;
-
+using DataAccess.Dao;
+using System.Data.SqlClient;
 
 namespace DataAccess.Mapper
 {
     public class UserMapper : ICrudStatements, IObjectMapper
-
     {
-        //Metodo que construye una lista objetos tipo usuario 
-        public List<BaseClass> BuildObjects(List<Dictionary<string, object>> objectRows)
+        public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rows)
         {
-            //NO ESTA IMPLEMENTADO
-            List<BaseClass> UserList = new List<BaseClass>();
+            List<BaseClass> users = new List<BaseClass>();
 
-            return UserList;
+            foreach (var row in rows)
+            {
+                var user = BuildObject(row);
+                users.Add(user);
+            }
+
+            return users;
         }
 
-        //Metodo que construye un objeto tipo usuario 
-        public BaseClass BuildObject(Dictionary<string, object> result)
+        public BaseClass BuildObject(Dictionary<string, object> row)
         {
             var user = new User();
 
-            if (result.ContainsKey("user_id") && int.TryParse(result["user_id"].ToString(), out int userId))
+            if (row.ContainsKey("user_id") && int.TryParse(row["user_id"].ToString(), out int userId))
                 user.Id = userId;
 
-            if (result.ContainsKey("role_id") && int.TryParse(result["role_id"].ToString(), out int roleId))
+            if (row.ContainsKey("role_id") && int.TryParse(row["role_id"].ToString(), out int roleId))
                 user.Role_id = roleId;
 
-            user.First_name = result.ContainsKey("first_name") ? result["first_name"].ToString() : null;
-            user.Last_name = result.ContainsKey("last_name") ? result["last_name"].ToString() : null;
-            user.Username = result.ContainsKey("username") ? result["username"].ToString() : null;
-            user.Email = result.ContainsKey("email") ? result["email"].ToString() : null;
-            user.Password = result.ContainsKey("password") ? result["password"].ToString() : null;
-            user.Phone_number = result.ContainsKey("phone_number") ? result["phone_number"].ToString() : null;
+            user.First_name = row.ContainsKey("first_name") ? row["first_name"].ToString() : null;
+            user.Last_name = row.ContainsKey("last_name") ? row["last_name"].ToString() : null;
+            user.Username = row.ContainsKey("username") ? row["username"].ToString() : null;
+            user.Email = row.ContainsKey("email") ? row["email"].ToString() : null;
+            user.Password = row.ContainsKey("password") ? row["password"].ToString() : null;
+            user.Phone_number = row.ContainsKey("phone_number") ? row["phone_number"].ToString() : null;
 
-            if (result.ContainsKey("birthdate") && DateTime.TryParse(result["birthdate"].ToString(), out DateTime birthdate))
+            if (row.ContainsKey("birthdate") && DateTime.TryParse(row["birthdate"].ToString(), out DateTime birthdate))
                 user.Birthdate = birthdate;
             else
                 user.Birthdate = default;
 
-            user.Profile_image = result.ContainsKey("profile_image") ? result["profile_image"].ToString() : null;
-
-            user.Id_image = result.ContainsKey("id_image") ? result["id_image"].ToString() : null;
+            user.Profile_image = row.ContainsKey("profile_image") ? row["profile_image"].ToString() : null;
+            user.Id_image = row.ContainsKey("id_image") ? row["id_image"].ToString() : null;
 
             return user;
         }
 
-        //Metodo para registrar un suario 
         public SqlOperation GetRegisterUser(BaseClass entityDTO, string hashedPassword, SqlParameter newUserIdParam)
         {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_addUserAccount";
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_addUserAccount"
+            };
 
             User user = (User)entityDTO;
 
@@ -63,7 +65,7 @@ namespace DataAccess.Mapper
             operation.AddVarcharParam("password", hashedPassword);
             operation.AddVarcharParam("phone_number", user.Phone_number);
             operation.AddDateTimeParam("birthdate", user.Birthdate);
-            operation.AddVarcharParam("profile_image",user.Profile_image);
+            operation.AddVarcharParam("profile_image", user.Profile_image);
             operation.AddVarcharParam("id_image", user.Id_image);
 
             operation.parameters.Add(newUserIdParam);
@@ -71,11 +73,12 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        //Metodo para registrar la Salt de la ocntraseña
         public SqlOperation GetRegisterSalt(int userId, string salt)
         {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_addUserSalt";
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_addUserSalt"
+            };
 
             operation.AddIntegerParam("user_id", userId);
             operation.AddVarcharParam("salt", salt);
@@ -83,44 +86,60 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        //Metodo que retorna un usuario por el email 
+        public SqlOperation GetUserRoleName(int id)
+        {
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.GetUserRoleName"
+            };
+
+            operation.AddIntegerParam("user_id", id);
+
+            return operation;
+        }
+
         public SqlOperation GetRetrieveByEmailStatement(string email)
         {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_getUserByEmail";
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_getUserByEmail"
+            };
 
             operation.AddVarcharParam("Email", email);
 
             return operation;
         }
 
-        //Metodo que retorna un usuario por el username 
         public SqlOperation GetRetrieveUserByUsername(string username)
         {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_getUserByUsername";
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_getUserByUsername"
+            };
 
             operation.AddVarcharParam("username", username);
 
             return operation;
         }
 
-        //Metodo que retorna un usuario por el id 
         public SqlOperation GetRetrieveSaltByUserId(int userId)
         {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_getUserSaltByUserId";
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_getUserSaltByUserId"
+            };
 
             operation.AddIntegerParam("user_id", userId);
 
             return operation;
         }
 
-        //Metodo para guardar la nueva contraseña
         public SqlOperation GetRegisterToken(int userId, string token)
         {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_addUserToken";
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_addUserToken"
+            };
 
             operation.AddIntegerParam("user_id", userId);
             operation.AddVarcharParam("token", token);
@@ -128,24 +147,26 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        //Metodo para uctualizar la nueva contraseña en la tabla usuario
-        public SqlOperation GetUpdatePasswordByToken(string token, string hasedPassword, string salt)
+        public SqlOperation GetUpdatePasswordByToken(string token, string hashedPassword, string salt)
         {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_updateUserPassword";
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_updateUserPassword"
+            };
 
             operation.AddVarcharParam("token", token);
-            operation.AddVarcharParam("hashedPassword", hasedPassword);
+            operation.AddVarcharParam("hashedPassword", hashedPassword);
             operation.AddVarcharParam("salt", salt);
 
             return operation;
         }
 
-        //Metodo que retorna un usuario por el Id
         public SqlOperation GetRetrieveByIdStatement(int Id)
         {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "";
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = ""
+            };
 
             operation.AddIntegerParam("Id", Id);
 

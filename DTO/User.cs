@@ -14,6 +14,3 @@
         public string Id_image { get; set; }
     }
 }
-
-
-

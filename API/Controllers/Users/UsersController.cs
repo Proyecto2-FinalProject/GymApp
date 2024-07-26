@@ -3,79 +3,73 @@ using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BL;
 
-namespace API.Controllers.Users;
-
-[EnableCors("MyCorsPolicy")]
-[Route("api/[controller]/[action]")]
-[ApiController]
-public class UsersController : Controller
+namespace API.Controllers.Users
 {
-
-    //Metodo para registrar usuarios: recibismo los datos del UI y los pasamos al User manager
-    [HttpPost]
-    public ActionResult RegisterUser(User user)
+    [EnableCors("MyCorsPolicy")]
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class UsersController : Controller
     {
-        UserManager manager = new UserManager();
-        manager.RegisterUser(user);
-
-        if (user == null)
+        [HttpPost]
+        public ActionResult RegisterUser(User user)
         {
-            return BadRequest("User data is null.");
+            UserManager manager = new UserManager();
+            manager.RegisterUser(user);
+
+            if (user == null)
+            {
+                return BadRequest("User data is null.");
+            }
+
+            return Ok(new { message = "User registered successfully" });
         }
 
-        return Ok(new { message = "User registered successfully" });
-    }
-
-    //Metodo para Iniciar session: recibismo los datos del UI y los pasamos al User manager
-    [HttpPost]
-    public IActionResult Login([FromBody] LoginRequest request)
-    {
-        UserManager manager = new UserManager();
-        User user = manager.Login(request.Username, request.Password);
-
-        if (request == null)
+        [HttpPost]
+        public IActionResult Login([FromBody] LoginRequest request)
         {
-            return BadRequest("Invalid login request.");
+            UserManager manager = new UserManager();
+            User user = manager.Login(request.Username, request.Password);
+
+            if (request == null)
+            {
+                return BadRequest("Invalid login request.");
+            }
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var RoleName = manager.GetUserRoleName(user.Id);
+
+            return Ok(new { username = user.Username, role = RoleName });
         }
 
-        if (user == null)
+        [HttpPost]
+        public IActionResult ResetPassword([FromBody] ResetPassword request)
         {
-            return Unauthorized();
-        }          
+            if (request == null || string.IsNullOrEmpty(request.Token) || string.IsNullOrEmpty(request.NewPassword))
+            {
+                return BadRequest("Invalid password reset request.");
+            }
 
-        return Ok(user);
-    }
+            UserManager manager = new UserManager();
+            bool result = manager.UpdatePassword(request.Token, request.NewPassword);
+            if (!result)
+            {
+                return BadRequest("Invalid token or unable to reset password.");
+            }
 
-    [HttpPost]
-    public IActionResult ResetPassword([FromBody] ResetPassword request)
-    {
-        //Validamos que el request no sea null y que tenga un token y un new password 
-        if (request == null || string.IsNullOrEmpty(request.Token) || string.IsNullOrEmpty(request.NewPassword))
-        {
-            return BadRequest("Invalid password reset request.");
+            return Ok(new { message = "Password reset successfully." });
         }
 
-        UserManager manager = new UserManager();
-        bool result = manager.UpdatePassword(request.Token, request.NewPassword);
-        if (!result)
+        [HttpGet]
+        public User GetUser(int id)
         {
-            return BadRequest("Invalid token or unable to reset password.");
+            UserManager manager = new UserManager();
+            User user = manager.GetUserById(id);
+
+            return user;
         }
-
-        return Ok(new { message = "Password reset successfully." });
-    }
-
-    //Metodo para obtener usuarios por Id: recibismo los datos del UI y los pasamos al User manager
-    //No esta implementado 
-    [HttpGet]
-    public User GetUser(int id)
-    {
-        UserManager manager = new UserManager();
-        User user = manager.GetUserById(id);
-
-        return user;
     }
 }
-
-
-

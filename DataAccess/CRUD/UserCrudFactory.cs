@@ -31,69 +31,61 @@ namespace DataAccess.CRUD
             return userId;
         }
 
-        //Metodo para guardar la salt 
+        public string GetUserRoleName(int id)
+        {
+            SqlOperation operation = _mapper.GetUserRoleName(id);
+            Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
+            return result.ContainsKey("role_name") ? result["role_name"].ToString() : null;
+        }
+
         public void RegisterSalt(int userId, string salt)
         {
             SqlOperation operation = _mapper.GetRegisterSalt(userId, salt);
             dao.ExecuteStoredProcedure(operation);
         }
 
-        //Este metodo devuelve todo el usuario, se puede reutilizar para otra funcion. 
         public BaseClass RetrieveUserByUsername(string username)
         {
             SqlOperation operation = _mapper.GetRetrieveUserByUsername(username);
-
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
             var user = _mapper.BuildObject(result);
-
             return user;
         }
 
-        //Metodo que retorna la salt asociada a una contrasena por userId 
         public string RetrieveSaltByUserId(int userId)
         {
             SqlOperation operation = _mapper.GetRetrieveSaltByUserId(userId);
-
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
-
-            return result.ContainsKey("salt") ? result["salt"].ToString() : null; 
+            return result.ContainsKey("salt") ? result["salt"].ToString() : null;
         }
 
-        //Metodo para guardar el token en la tabla usuario
         public bool AddResetToken(int userId, string token)
         {
             SqlOperation operation = _mapper.GetRegisterToken(userId, token);
             dao.ExecuteStoredProcedure(operation);
-            return true; 
+            return true;
         }
 
-        //Metodo para actualizar la contrasenña en la tabla de usuario
         public bool UpdatePasswordByToken(string token, string hashedPassword, string salt)
         {
             SqlOperation operation = _mapper.GetUpdatePasswordByToken(token, hashedPassword, salt);
             dao.ExecuteStoredProcedure(operation);
-            return true; 
+            return true;
         }
 
-        //Metodo que retorna un Usuario por email 
         public BaseClass RetrieveByEmail(string email)
         {
             SqlOperation operation = _mapper.GetRetrieveByEmailStatement(email);
-
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
             var user = _mapper.BuildObject(result);
-
             return user;
         }
 
-        //Metodo que retorna un Usuario por Id 
         public override BaseClass RetrieveById(int id)
         {
             SqlOperation operation = _mapper.GetRetrieveByIdStatement(id);
-
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
             var excercise = _mapper.BuildObject(result);
-
             return excercise;
         }
 
@@ -116,8 +108,5 @@ namespace DataAccess.CRUD
         {
             throw new NotImplementedException();
         }
-
-      
-
     }
 }

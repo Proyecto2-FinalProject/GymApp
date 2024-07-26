@@ -1,10 +1,7 @@
 ﻿namespace DTO
 {
-    public class BaseClass
+    public abstract class BaseClass
     {
         public int Id { get; set; }
     }
 }
-
-
-

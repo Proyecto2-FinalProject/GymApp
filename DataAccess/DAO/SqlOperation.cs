@@ -1,11 +1,11 @@
-﻿using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DataAccess.Dao
 {
     public class SqlOperation
     {
         public string ProcedureName { get; set; }
-
         public List<SqlParameter> parameters;
 
         public SqlOperation()
@@ -27,10 +27,12 @@ namespace DataAccess.Dao
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
+
         public void AddTimeSpanParam(string parameterName, TimeSpan paramValue)
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
+
         public void AddDecimalParam(string parameterName, Decimal paramValue)
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
