@@ -1,5 +1,6 @@
 ﻿using DTO;
 using DataAccess.CRUD;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -25,9 +26,9 @@ namespace BL
 
         public string GetUserRoleName(int id)
         {
-            RoleCrudFactory roleCrud = new RoleCrudFactory(); // Cambiado a RoleCrudFactory
-            var role = roleCrud.GetRoleByUserId(id); // Obtenemos el rol completo
-            return role.Name; // Devolvemos el nombre del rol
+            RoleCrudFactory roleCrud = new RoleCrudFactory();
+            var role = roleCrud.GetRoleByUserId(id);
+            return role.Name;
         }
 
         public User Login(string username, string password)
@@ -93,6 +94,18 @@ namespace BL
         {
             UserCrudFactory us_crud = new UserCrudFactory();
             return (User)us_crud.RetrieveById(id);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            UserCrudFactory us_crud = new UserCrudFactory();
+            return us_crud.RetrieveAll<User>();
+        }
+
+        public void AssignRole(int userId, int roleId)
+        {
+            UserCrudFactory us_crud = new UserCrudFactory();
+            us_crud.AssignRole(userId, roleId);
         }
     }
 }

@@ -20,12 +20,14 @@
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Member\" />
     <Folder Include="Views\Receptionist\" />
+    <Folder Include="wwwroot\js\Pages\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\Pages\" />
     <Content Remove="wwwroot\js\Pages\Exercises\createExercises.js" />
     <Content Remove="wwwroot\js\Pages\Routines\selectExercises.js" />
     <Content Remove="wwwroot\js\Pages\User\" />
+    <Content Remove="wwwroot\js\Pages\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\Pages\Exercises\createExercises.js" />
