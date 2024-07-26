@@ -25,9 +25,9 @@ namespace BL
 
         public string GetUserRoleName(int id)
         {
-            UserCrudFactory us_crud = new UserCrudFactory();
-            var RoleName = us_crud.GetUserRoleName(id);
-            return RoleName;
+            RoleCrudFactory roleCrud = new RoleCrudFactory(); // Cambiado a RoleCrudFactory
+            var role = roleCrud.GetRoleByUserId(id); // Obtenemos el rol completo
+            return role.Name; // Devolvemos el nombre del rol
         }
 
         public User Login(string username, string password)

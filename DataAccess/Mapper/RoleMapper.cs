@@ -13,7 +13,7 @@ namespace DataAccess.Mapper
                 ProcedureName = "dbo.GetUserRoleName"
             };
 
-            operation.AddIntegerParam("user_id", userId);
+            operation.AddIntegerParam("UserId", userId);
             return operation;
         }
 
@@ -21,7 +21,6 @@ namespace DataAccess.Mapper
         {
             return new Role
             {
-                Id = Convert.ToInt32(row["role_id"]),
                 Name = row["role_name"].ToString()
             };
         }
