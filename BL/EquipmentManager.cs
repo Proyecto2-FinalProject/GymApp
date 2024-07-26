@@ -4,41 +4,43 @@ using DataAccess.CRUD;
 
 namespace BL
 {
-
     // Clase que gestiona las operaciones CRUD para la entidad Equipment.
     public class EquipmentManager
     {
-        private readonly EquipmentCrudFactory _crudFactory;
-
-        // Constructor que inicializa la instancia de EquipmentCrudFactory.
-        public EquipmentManager()
+        // Método para crear un nuevo equipo.
+        public void CreateEquipment(Equipment equipment)
         {
-            _crudFactory = new EquipmentCrudFactory();
+            EquipmentCrudFactory ex_crud = new EquipmentCrudFactory();
+            ex_crud.Create(equipment);
+        }
+
+        // Método para obtener un equipo por ID.
+        public Equipment GetEquipmentById(int id)
+        {
+            EquipmentCrudFactory ex_crud = new EquipmentCrudFactory();
+            return (Equipment)ex_crud.RetrieveById(id);
         }
 
         // Método para obtener todos los equipos.
         public List<Equipment> GetAllEquipment()
         {
-            return _crudFactory.RetrieveAll<Equipment>();
+            EquipmentCrudFactory ex_crud = new EquipmentCrudFactory();
+            return ex_crud.RetrieveAll<Equipment>();
         }
 
-        // Método para crear un nuevo equipo: recibimos los datos del UI y los pasamos al EquipmentCrudFactory.
-        public void CreateEquipment(Equipment equipment)
-        {
-            _crudFactory.Create(equipment);
-        }
-
-        // Método para actualizar un equipo: recibimos los datos del UI y los pasamos al EquipmentCrudFactory.
+        // Método para actualizar un equipo.
         public void UpdateEquipment(Equipment equipment)
         {
-            _crudFactory.Update(equipment);
+            EquipmentCrudFactory ex_crud = new EquipmentCrudFactory();
+            ex_crud.Update(equipment);
         }
 
-        // Método para eliminar un equipo por ID: recibimos el ID del UI y lo pasamos al EquipmentCrudFactory.
+        // Método para eliminar un equipo por ID.
         public void DeleteEquipment(int id)
         {
+            EquipmentCrudFactory ex_crud = new EquipmentCrudFactory();
             var equipment = new Equipment { EquipmentId = id };
-            _crudFactory.Delete(equipment);
+            ex_crud.Delete(equipment);
         }
     }
 }

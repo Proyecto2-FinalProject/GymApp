@@ -12,61 +12,87 @@ namespace API.Controllers.Equipments
     [ApiController]
     public class EquipmentsController : Controller
     {
-        private readonly EquipmentManager _equipmentManager;
-
-        public EquipmentsController(EquipmentManager equipmentManager)
-        {
-            _equipmentManager = equipmentManager;
-        }
-
+        // Método HTTP GET para obtener todos los equipos.
         [HttpGet]
-        public ActionResult GetAll()
+        public ActionResult<List<Equipment>> GetAllEquipment()
         {
-            // Método para obtener todos los equipos: llamamos a GetAllEquipment del manager y devolvemos la lista
-            var equipmentList = _equipmentManager.GetAllEquipment()
-                .Select(e => new Equipment
+            try
+            {
+                EquipmentManager equipmentManager = new EquipmentManager();
+                List<Equipment> equipmentList = equipmentManager.GetAllEquipment();
+
+                if (equipmentList == null || equipmentList.Count == 0)
                 {
-                    EquipmentId = e.EquipmentId,
-                    Name = e.Name,
-                    Description = e.Description,
-                    Quantity = e.Quantity,
-                    Status = e.Status
-                }).ToList();
-            return Ok(equipmentList);
-        }
+                    return NotFound("No equipment found.");
+                }
 
-        [HttpPost]
-        public ActionResult Create([FromBody] Equipment equipment)
-        {
-            // Método para crear un nuevo equipo: recibimos los datos del UI y los pasamos al EquipmentManager
-            if (equipment == null)
-            {
-                return BadRequest("Equipment data is null.");
+                return Ok(equipmentList);
             }
-
-            _equipmentManager.CreateEquipment(equipment);
-            return Ok(new { message = "Equipment created successfully" });
-        }
-
-        [HttpPost]
-        public IActionResult Edit([FromBody] Equipment equipment)
-        {
-            // Método para actualizar un equipo: recibimos los datos del UI y los pasamos al EquipmentManager
-            if (equipment == null)
+            catch (Exception ex)
             {
-                return BadRequest("Equipment data is null.");
+                return Json(new { success = false, message = ex.Message });
             }
-
-            _equipmentManager.UpdateEquipment(equipment);
-            return Ok(new { message = "Equipment updated successfully" });
         }
 
+        // Método HTTP POST para crear un nuevo equipo.
+        [HttpPost]
+        public IActionResult CreateEquipment([FromBody] Equipment equipment)
+        {
+            try
+            {
+                if (equipment == null)
+                {
+                    return Json(new { success = false, message = "Equipment data is null." });
+                }
+
+                EquipmentManager equipmentManager = new EquipmentManager();
+                equipmentManager.CreateEquipment(equipment);
+
+                return Json(new { success = true, message = "Equipment created successfully" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // Método HTTP POST para editar un equipo existente.
+        [HttpPost]
+        public IActionResult EditEquipment([FromBody] Equipment equipment)
+        {
+            try
+            {
+                if (equipment == null)
+                {
+                    return BadRequest("Equipment data is null.");
+                }
+
+                EquipmentManager equipmentManager = new EquipmentManager();
+                equipmentManager.UpdateEquipment(equipment);
+
+                return Json(new { success = true, message = "Equipment updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // Método HTTP DELETE para eliminar un equipo por su ID.
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult DeleteEquipment(int id)
         {
-            // Método para eliminar un equipo por ID: recibimos el ID del UI y lo pasamos al EquipmentManager
-            _equipmentManager.DeleteEquipment(id);
-            return Ok(new { message = "Equipment deleted successfully" });
+            try
+            {
+                EquipmentManager equipmentManager = new EquipmentManager();
+                equipmentManager.DeleteEquipment(id);
+
+                return Json(new { success = true, message = "Equipment deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
         }
     }
 }

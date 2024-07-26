@@ -44,14 +44,13 @@ namespace DataAccess.CRUD
         {
             var operation = _mapper.GetRetrieveAllStatement();
             var result = dao.ExecuteStoredProcedureWithQuery(operation);
-            var mappedEquipment = _mapper.BuildObjects(result);
+            var mappedEquipments = _mapper.BuildObjects(result);
             var equipmentList = new List<T>();
 
-            foreach (var equipment in mappedEquipment)
+            foreach (var equipment in mappedEquipments)
             {
                 var convertedEquipment = (T)Convert.ChangeType(equipment, typeof(T));
                 equipmentList.Add(convertedEquipment);
-
             }
 
             return equipmentList;
