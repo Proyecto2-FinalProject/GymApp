@@ -37,13 +37,21 @@ namespace API.Controllers.Exercises
             return exercise;
         }
         [HttpGet]
-        public List<Exercise> GetAllExercises()
+        public IActionResult GetAllExercises()
         {
-            ExerciseManager manager = new ExerciseManager();
-            List<Exercise> exerciseList = manager.GetAllExercises();
+            try
+            {
+                ExerciseManager manager = new ExerciseManager();
+                List<Exercise> exerciseList = manager.GetAllExercises();
 
-            return exerciseList;
+                return Ok(exerciseList); // Asegúrate de devolver un IActionResult
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message }); // Manejo de errores
+            }
         }
+
 
     }
 }

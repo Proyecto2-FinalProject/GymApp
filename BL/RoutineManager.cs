@@ -26,7 +26,7 @@ namespace BL
         }
         public void AddExerciseToRoutine(RoutineExercise routineExercise)
         {
-            RoutineExerciseCrudFactory crudFactory = new RoutineExerciseCrudFactory();
+            RoutineCrudFactory crudFactory = new RoutineCrudFactory();
             crudFactory.Create(routineExercise);
         }
     }
