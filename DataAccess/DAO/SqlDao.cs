@@ -56,7 +56,6 @@ namespace DataAccess.Dao
             {
                 command.Parameters.Add(p);
             }
-
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
 
@@ -118,6 +117,5 @@ namespace DataAccess.Dao
         }
 
     }
-
 
 }
