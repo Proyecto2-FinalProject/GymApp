@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using DTO;
 
 namespace API.Controllers.Routines
-{ 
+{
     [EnableCors("MyCorsPolicy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -25,10 +25,10 @@ namespace API.Controllers.Routines
                 }
 
                 RoutineManager manager = new RoutineManager();
-                int routineId = manager.CreateRoutine(routine);
+                manager.CreateRoutine(routine);
 
-                // Redirigir a la vista para agregar ejercicios a la rutina creada
-                return Json(new { success = true, message = "Routine created successfully", routineId = routineId });
+                // Devolver una respuesta JSON con un mensaje de éxito
+                return Json(new { success = true, message = "Routine created successfully" });
             }
             catch (Exception ex)
             {
@@ -36,6 +36,7 @@ namespace API.Controllers.Routines
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
 
         [HttpGet]
         public Routine GetRoutine(int id)
@@ -59,7 +60,7 @@ namespace API.Controllers.Routines
         {
             try
             {
-                RoutineManager manager = new RoutineManager();
+                RoutineExerciseManager manager = new RoutineExerciseManager();
                 manager.AddExerciseToRoutine(routineExercise);
 
                 return Json(new { success = true, message = "Exercise added to routine successfully" });
