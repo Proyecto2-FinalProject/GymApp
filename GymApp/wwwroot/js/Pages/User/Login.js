@@ -5,6 +5,12 @@
     var username = $("#username").val();
     var password = $("#password").val();
 
+    // Estructuramos el objeto de ResetPassword para enviar a la API
+    const data = {
+        username: username,
+        password: password
+    }
+
     var apiUrl = API_URL_BASE + "/api/Users/Login";
 
     $.ajax({
@@ -16,7 +22,7 @@
         url: apiUrl,
         contentType: "application/json;charset=utf-8",
         dataType: "json",
-        data: JSON.stringify({ username: username, password: password }),
+        data: JSON.stringify(data),
         hasContent: true
     }).done(function (data) {
         console.log(data);  // Agrega esta línea para depuración

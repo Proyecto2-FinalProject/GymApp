@@ -1,65 +1,47 @@
 ﻿@{
     ViewData["Title"] = "Register User";
 }
-
 <script src="~/js/Pages/User/RegisterUser.js" defer></script>
+<link rel="stylesheet" href="~/css/users.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap">
 
-<div class="text-center">
-    <h1 class="display-4">Create an Account</h1>
+<div class="container">
+    <main>
+        <h1 class="display-4">Create an Account</h1>
+        <div class="form-container">
+            <form id="registerUserForm" action="submit">
+                <label for="firstName">First Name</label>
+                <input id="firstName" type="text" class="form-control" required />
+
+                <label for="lastName">Last Name</label>
+                <input id="lastName" type="text" class="form-control" required />
+
+                <label for="username">Username</label>
+                <input id="username" type="text" class="form-control" required />
+
+                <label for="email">Email</label>
+                <input id="email" type="text" class="form-control" required />
+
+                <label for="password">Password</label>
+                <input id="password" type="password" class="form-control" required />
+
+                <label for="phoneNumber">Phone Number</label>
+                <input id="phoneNumber" type="number" class="form-control" required />
+
+                <label for="birthDate">Birthdate</label>
+                <input id="birthDate" type="datetime-local" class="form-control" required />
+
+                <label for="profileImage">Profile image</label>
+                <input id="profileImage" type="file" class="form-control" required />
+
+                <label for="idImage">ID image</label>
+                <input id="idImage" type="file" class="form-control" required />
+
+                <div class="button-container">
+                    <button type="submit" class="btn btn-success" id="btnCreate">CREATE ACCOUNT</button>
+                </div>
+            </form>
+        </div>
+    </main>
 </div>
-<div class="form-group row gy-2 gx-3 align-items-center">
-    <form class="frmUser" id="createUserForm">
-        <div>
-            <label for="firstName">First Name</label>
-            <input id="firstName" type="text" class="form-control" required />
-        </div>
 
-        <div>
-            <label for="lastName">Last Name</label>
-            <input id="lastName" type="text" class="form-control" required />
-        </div>
-
-        <div>
-            <label for="username">Username</label>
-            <input id="username" type="text" class="form-control" required />
-        </div>
-
-        <div>
-            <label for="email">Email</label>
-            <input id="email" type="text" class="form-control" required />
-        </div>
-
-        <div>
-            <label for="password">Password</label>
-            <input id="password" type="password" class="form-control" required />
-        </div>
-
-        <div>
-            <label for="phoneNumber">Phone Number</label>
-            <input id="phoneNumber" type="number" class="form-control" required />
-        </div>
-
-        <div>
-            <label for="birthDate">Birthdate</label>
-            <input id="birthDate" type="date" class="form-control" required />
-        </div>
-
-        <div>
-            <label for="profileImage">Profile image</label>
-            <input id="profileImage" type="file" class="form-control" required />
-        </div>
-
-        <div class="col-auto">
-            <label for="idImage">ID image</label>
-            <input id="idImage" type="file" class="form-control" required />
-        </div>
-
-        <div class="text-center">
-            <button type="button" class="btn btn-success" id="btnCreate">CREATE ACCOUNT</button>
-        </div>
-    </form>
-
-    <div class="text-center">
-        <p>Already have an account? <a asp-area="" asp-controller="User" asp-action="Login">Log in now.</a></p>
-    </div>
-</div>
