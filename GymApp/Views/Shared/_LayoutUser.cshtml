@@ -11,28 +11,18 @@
 </head>
 <body>
     <header>
-        <img src="/css/Img/LogoFitnessCenter.png" alt="Logo" class="logo">
-        <nav>
-            <a href="#">
-                <img src="/css/Img/Profile.png" alt="Profile Icon">
-                <span>Profile</span>
-            </a>
-            <a href="#">
-                <img src="/css/Img/Notifications.png" alt="Notifications Icon">
-                <span>Notifications</span>
-            </a>
-            <a asp-controller="Routine" asp-action="Create">
-                <img src="/css/Img/Routines.png" alt="Routines Icon">
-                <span>Routines</span>
-            </a>
-            <a asp-controller="#" asp-action="#">
-                <img src="/css/Img/Classes.png" alt="Classes Icon">
-                <span>Classes</span>
-            </a>
-            <a href="#">
-                <img src="/css/Img/LogOut.png" alt="Log Out Icon">
-                <span>Log Out</span>
-            </a>
+        <nav class="navbar">
+            <div class="navbar-content">
+                <a class="navbar-brand" asp-area="" asp-controller="Exercise" asp-action="Create">
+                    <div class="brand-text">
+                        <span class="brand-top">FITNESS CENTER</span>
+                    </div>
+                </a>
+                <div class="navbar-links">
+                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="RegisterUser">Register Now!</a>
+                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="Login">LOG IN</a>
+                </div>
+            </div>
         </nav>
     </header>
     <div class="container">

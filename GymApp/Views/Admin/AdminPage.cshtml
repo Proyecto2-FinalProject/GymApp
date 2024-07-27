@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Admin Page";
+    Layout = "../Shared/_LayoutExercises.cshtml";
 }
 
 <h2>Admin Page</h2>
@@ -18,7 +19,10 @@
             <!-- Roles will be loaded here -->
         </select>
     </div>
-    <button type="submit" style="font-size: 1.2em; padding: 10px 20px;">Assign Role</button>
+    <button type="submit" style="font-size: 1.2em; padding: 10px 20px; background-color: #1e4f4f; color: white; border: none; border-radius: 5px; cursor: pointer;" onmouseover="this.style.backgroundColor='#2a7b9c';" onmouseout="this.style.backgroundColor='#3ba4c7';">
+        Assign Role
+    </button>
+
 </form>
 
 @section Scripts {
