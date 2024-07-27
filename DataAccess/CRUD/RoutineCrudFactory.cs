@@ -48,7 +48,6 @@ namespace DataAccess.CRUD
             return routineList;
         }
 
-
         public override BaseClass RetrieveById(int id)
         {
             SqlOperation operation = mapper.GetRetrieveByIdStatement(id);
@@ -59,6 +58,11 @@ namespace DataAccess.CRUD
             return Routine;
 
         } 
-        
+        public void AddExerciseToRoutine(RoutineExercise routineExercise)
+        {
+            RoutineExerciseMapper exerciseMapper = new RoutineExerciseMapper();
+            SqlOperation operation = exerciseMapper.GetCreateStatement(routineExercise);
+            dao.ExecuteStoredProcedure(operation);
+        }
     }
 }

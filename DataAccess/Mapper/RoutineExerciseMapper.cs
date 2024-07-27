@@ -23,16 +23,17 @@ namespace DataAccess.Mapper
         {
             var routineExercise = new RoutineExercise
             {
-                routine_exercise_id = Convert.ToInt32(row["routine_exercise_id"]),
-                routine_id = Convert.ToInt32(row["routine_id"]),
-                exercise_id = Convert.ToInt32(row["exercise_id"]),
-                exercise_type = row["exercise_type"].ToString(),
+                routineExerciseId = Convert.ToInt32(row["routine_exercise_id"]),
+                routineId = Convert.ToInt32(row["routine_id"]),
+                exerciseId = Convert.ToInt32(row["exercise_id"]),
+                exerciseType = row["exercise_type"].ToString(),
                 sets = Convert.ToInt32(row["sets"]),
                 repetitions = Convert.ToInt32(row["repetitions"]),
                 weight = Convert.ToDecimal(row["weight"]),
-                time_duration = TimeSpan.Parse(row["time_duration"].ToString()),
-                amrap_time = TimeSpan.Parse(row["amrap_time"].ToString())
+                timeDuration = TimeSpan.Parse(row["time_duration"].ToString()),
+                amrapTime = TimeSpan.Parse(row["amrap_time"].ToString())
             };
+       
 
             return routineExercise;
         }
@@ -44,14 +45,14 @@ namespace DataAccess.Mapper
 
             RoutineExercise routineExercise = (RoutineExercise)entityDTO;
 
-            operation.AddIntegerParam("routine_id", routineExercise.routine_id);
-            operation.AddIntegerParam("exercise_id", routineExercise.exercise_id);
-            operation.AddVarcharParam("exercise_type", routineExercise.exercise_type);
+            operation.AddIntegerParam("routine_id", routineExercise.routineId);
+            operation.AddIntegerParam("exercise_id", routineExercise.exerciseId);
+            operation.AddVarcharParam("exercise_type", routineExercise.exerciseType);
             operation.AddIntegerParam("sets", routineExercise.sets);
             operation.AddIntegerParam("repetitions", routineExercise.repetitions);
             operation.AddDecimalParam("weight", routineExercise.weight);
-            operation.AddTimeSpanParam("time_duration", routineExercise.time_duration);
-            operation.AddTimeSpanParam("amrap_time", routineExercise.amrap_time);
+            operation.AddTimeSpanParam("time_duration", routineExercise.timeDuration);
+            operation.AddTimeSpanParam("amrap_time", routineExercise.amrapTime);
 
             return operation;
         }

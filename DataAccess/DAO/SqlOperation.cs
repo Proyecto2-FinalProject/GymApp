@@ -29,6 +29,10 @@ namespace DataAccess.Dao
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
+        public void AddTextParam(string parameterName, string paramValue)
+        {
+            parameters.Add(new SqlParameter("@" + parameterName, paramValue));
+        }
 
         public void AddIntegerParam(string parameterName, int paramValue)
         {
