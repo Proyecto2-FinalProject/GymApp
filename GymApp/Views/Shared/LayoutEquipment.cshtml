@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Fitness Center</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GymUI.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap">
+</head>
+<body>
+    <header>
+        <img src="/css/Img/LogoFitnessCenter.png" alt="Logo" class="logo">
+        <nav>
+            <a href="#">
+                <img src="/css/Img/Profile.png" alt="Profile Icon">
+                <span>Profile</span>
+            </a>
+            <a href="#">
+                <img src="/css/Img/Notifications.png" alt="Notifications Icon">
+                <span>Notifications</span>
+            </a>
+            <a asp-controller="Equipment" asp-action="CreateEquipment">
+                <img src="/css/Img/Equipment.png" alt="Equipment Icon">
+                <span>Equipment</span>
+            </a>
+            <a asp-controller="Equipment" asp-action="EquipmentList">
+                <img src="/css/Img/EquipmentList.png" alt="Equipment List Icon">
+                <span>Equipment List</span>
+            </a>
+            <a href="#">
+                <img src="/css/Img/LogOut.png" alt="Log Out Icon">
+                <span>Log Out</span>
+            </a>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - GymApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <!-- Incluir jQuery desde un CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

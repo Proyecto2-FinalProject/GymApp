@@ -12,15 +12,24 @@
     <None Remove="Views\User\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\js\Pages\" />
     <Folder Include="Views\User\" />
     <Folder Include="wwwroot\js\Pages\User\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Views\Equipment\Equipmets.cshtml" />
     <Content Remove="wwwroot\js\Pages\" />
     <Content Remove="wwwroot\js\Pages\User\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.7.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Equipment\Equipmets.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Equipment\Equipmets.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Equipment\Equipmets.cshtml" />
   </ItemGroup>
 </Project>
