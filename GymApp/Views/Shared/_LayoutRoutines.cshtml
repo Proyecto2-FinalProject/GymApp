@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Fitness Center</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GymUI.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap">
 
@@ -22,15 +21,14 @@
                 <img src="/css/Img/Notifications.png" alt="Notifications Icon">
                 <span>Notifications</span>
             </a>
-            <a asp-controller="Exercise" asp-action="Create">
+            <a asp-controller="Routine" asp-action="Create">
                 <img src="/css/Img/Routines.png" alt="Routines Icon">
                 <span>Routines</span>
             </a>
-            <a asp-controller="Exercise" asp-action="Select">
+            <a asp-controller="#" asp-action="#">
                 <img src="/css/Img/Classes.png" alt="Classes Icon">
                 <span>Classes</span>
             </a>
-
             <a href="#">
                 <img src="/css/Img/LogOut.png" alt="Log Out Icon">
                 <span>Log Out</span>

@@ -1,9 +1,15 @@
 ﻿const handleLogin = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    //recopilar la informacion y mandarla al Api
-    var username = $("#username").val()
-    var password = $("#password").val()
+    // Recopilar la información y enviarla al API
+    var username = $("#username").val();
+    var password = $("#password").val();
+
+    // Estructuramos el objeto de ResetPassword para enviar a la API
+    const data = {
+        username: username,
+        password: password
+    }
 
     var apiUrl = API_URL_BASE + "/api/Users/Login";
 
@@ -16,16 +22,36 @@
         url: apiUrl,
         contentType: "application/json;charset=utf-8",
         dataType: "json",
-        data: JSON.stringify({ username: username, password: password }),
+        data: JSON.stringify(data),
         hasContent: true
     }).done(function (data) {
+        console.log(data);  // Agrega esta línea para depuración
         Swal.fire({
-            title: 'Mensaje',
-            text: 'Welcome to the Fitness Center',
-            icon: 'info'
-        }).then(() => {
-            // Redirigir a la vista Create.cshtml
-            window.location.href = '/Routine/Create'; // Cambia esto según tu ruta
+            title: 'Welcome Back',
+            text: 'Fitness Center Gym',
+            icon: 'success'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir a la página basada en el rol del usuario
+                console.log(data.role)
+                switch (data.role) {
+                    case 'Admin':
+                        window.location.href = "/Admin/AdminPage";
+                        break;
+                    case 'Trainer':
+                        window.location.href = "/Exercise/Create";
+                        break;
+                    case 'Receptionist':
+                        window.location.href = "/Receptionist/Exercises";
+                        break;
+                    case 'User':
+                        window.location.href = "/Member/MemberPage";
+                        break;
+                    default:
+                        window.location.href = "/Default/DefaultPage";
+                        break;
+                }
+            }
         });
     }).fail(function (jqXHR, textStatus, errorThrown) {
         // Extraer información de error y mostrarla
@@ -44,7 +70,6 @@
             icon: 'error'
         });
     });
-}
+};
 
-
-$("#btnLogin").click(handleLogin)
+$("#btnLogin").click(handleLogin);

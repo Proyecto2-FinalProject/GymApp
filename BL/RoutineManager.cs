@@ -25,6 +25,5 @@ namespace BL
             return ex_crud.RetrieveAll<Routine>();
         }
         
-
     }
 }

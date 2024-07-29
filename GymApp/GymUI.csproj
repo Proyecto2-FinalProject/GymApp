@@ -10,15 +10,27 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'GymApp' " />
   <ItemGroup>
     <None Remove="Views\User\" />
+    <None Remove="Views\Admin\" />
+    <None Remove="Views\Member\" />
+    <None Remove="Views\Receptionist\" />
+    <None Remove="Views\Trainer\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\User\" />
     <Folder Include="wwwroot\js\Pages\User\" />
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Member\" />
+    <Folder Include="Views\Receptionist\" />
+    <Folder Include="wwwroot\js\Pages\Admin\" />
+    <Folder Include="Views\Trainer\" />
+    <Folder Include="wwwroot\js\Pages\Trainer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\Pages\" />
     <Content Remove="wwwroot\js\Pages\Exercises\createExercises.js" />
     <Content Remove="wwwroot\js\Pages\User\" />
+    <Content Remove="wwwroot\js\Pages\Admin\" />
+    <Content Remove="wwwroot\js\Pages\Trainer\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\Pages\Exercises\createExercises.js" />
