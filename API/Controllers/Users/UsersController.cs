@@ -3,66 +3,73 @@ using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BL;
 
-namespace API.Controllers.Users;
-
-[EnableCors("MyCorsPolicy")]
-[Route("api/[controller]/[action]")]
-[ApiController]
-
-public class UsersController : Controller
+namespace API.Controllers.Users
 {
-    [HttpGet]
-    public string Prueba()
+    [EnableCors("MyCorsPolicy")]
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class UsersController : Controller
     {
-        return "Hola desde el controlador de Usuarios";
-    }
-
-    //Metodo para gestirar usuarios: recibismo los datos del UI y los pasamos al User manager
-    [HttpPost]
-    public ActionResult RegisterUser(User user)
-    {
-        if (user == null)
+        [HttpPost]
+        public ActionResult RegisterUser(User user)
         {
-            return BadRequest("User data is null.");
+            UserManager manager = new UserManager();
+            manager.RegisterUser(user);
+
+            if (user == null)
+            {
+                return BadRequest("User data is null.");
+            }
+
+            return Ok(new { message = "User registered successfully" });
         }
 
-        UserManager manager = new UserManager();
-        manager.RegisterUser(user);
-
-        return Ok(new { message = "User registered successfully" });
-    }
-
-    //Metodo para Iniciar session: recibismo los datos del UI y los pasamos al User manager
-    [HttpPost]
-    public IActionResult Login([FromBody] LoginRequest request)
-    {
-        if(request == null)
+        [HttpPost]
+        public IActionResult Login([FromBody] LoginRequest request)
         {
-            return BadRequest("Invalid login request.");
+            UserManager manager = new UserManager();
+            User user = manager.Login(request.Username, request.Password);
+
+            if (request == null)
+            {
+                return BadRequest("Invalid login request.");
+            }
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var RoleName = manager.GetUserRoleName(user.Id);
+
+            return Ok(new { username = user.Username, role = RoleName });
         }
 
-       UserManager manager = new UserManager();
-       User user = manager.Login(request.Username, request.Password);
-
-        if (user == null)
+        [HttpPost]
+        public IActionResult ResetPassword([FromBody] ResetPassword request)
         {
-            return Unauthorized();
-        }          
+            if (request == null || string.IsNullOrEmpty(request.Token) || string.IsNullOrEmpty(request.NewPassword))
+            {
+                return BadRequest("Invalid password reset request.");
+            }
 
-        return Ok(user);
-    }
+            UserManager manager = new UserManager();
+            bool result = manager.UpdatePassword(request.Token, request.NewPassword);
+            if (!result)
+            {
+                return BadRequest("Invalid token or unable to reset password.");
+            }
 
-    //Metodo para obtener usuarios por Id: recibismo los datos del UI y los pasamos al User manager
-    //No esta implementado 
-    [HttpGet]
-    public User GetUser(int id)
-    {
-        UserManager manager = new UserManager();
-        User user = manager.GetUserById(id);
+            return Ok(new { message = "Password reset successfully." });
+        }
 
-        return user;
+        [HttpGet]
+        public User GetUser(int id)
+        {
+            UserManager manager = new UserManager();
+            User user = manager.GetUserById(id);
+
+            return user;
+        }
     }
 }
-
-
-

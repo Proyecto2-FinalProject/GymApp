@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Collections.Generic;
+
 namespace DataAccess.Mapper
 {
     public interface IObjectMapper
     {
-        BaseClass BuildObject(Dictionary<string, object> objectRows);
-        List<BaseClass> BuildObjects(List<Dictionary<string, object>> objectRows);
+        BaseClass BuildObject(Dictionary<string, object> row);
+        List<BaseClass> BuildObjects(List<Dictionary<string, object>> rows);
     }
 }

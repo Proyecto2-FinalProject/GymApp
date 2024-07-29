@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using DataAccess.Crud;
 using DataAccess.Dao;
@@ -9,11 +10,11 @@ namespace DataAccess.CRUD
 {
     public class UserCrudFactory : CrudFactory
     {
-        private UserMapper mapper;
+        private readonly UserMapper _mapper;
 
         public UserCrudFactory() : base()
         {
-            mapper = new UserMapper();
+            _mapper = new UserMapper();
             dao = SqlDao.GetInstance();
         }
 
@@ -24,37 +25,69 @@ namespace DataAccess.CRUD
                 Direction = ParameterDirection.Output
             };
 
-            SqlOperation operation = mapper.GetRegisterUser(entityDTO, hashedPassword, newUserIdParam);
+            SqlOperation operation = _mapper.GetRegisterUser(entityDTO, hashedPassword, newUserIdParam);
             dao.ExecuteStoredProcedure(operation);
 
             int userId = Convert.ToInt32(newUserIdParam.Value);
             return userId;
         }
 
+        public string GetUserRoleName(int id)
+        {
+            SqlOperation operation = _mapper.GetUserRoleName(id);
+            Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
+            return result.ContainsKey("role_name") ? result["role_name"].ToString() : null;
+        }
+
         public void RegisterSalt(int userId, string salt)
         {
-            SqlOperation operation = mapper.GetRegisterSalt(userId, salt);
+            SqlOperation operation = _mapper.GetRegisterSalt(userId, salt);
             dao.ExecuteStoredProcedure(operation);
         }
 
-        //Este metodo devuelve todo el usuario, se puede reutilizar para otra funcion. 
         public BaseClass RetrieveUserByUsername(string username)
         {
-            SqlOperation operation = mapper.GetRetrieveUserByUsername(username);
-
+            SqlOperation operation = _mapper.GetRetrieveUserByUsername(username);
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
-            var user = mapper.BuildObject(result);
-
+            var user = _mapper.BuildObject(result);
             return user;
         }
 
         public string RetrieveSaltByUserId(int userId)
         {
-            SqlOperation operation = mapper.GetRetrieveSaltByUserId(userId);
-
+            SqlOperation operation = _mapper.GetRetrieveSaltByUserId(userId);
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
+            return result.ContainsKey("salt") ? result["salt"].ToString() : null;
+        }
 
-            return result.ContainsKey("salt") ? result["salt"].ToString() : null; 
+        public bool AddResetToken(int userId, string token)
+        {
+            SqlOperation operation = _mapper.GetRegisterToken(userId, token);
+            dao.ExecuteStoredProcedure(operation);
+            return true;
+        }
+
+        public bool UpdatePasswordByToken(string token, string hashedPassword, string salt)
+        {
+            SqlOperation operation = _mapper.GetUpdatePasswordByToken(token, hashedPassword, salt);
+            dao.ExecuteStoredProcedure(operation);
+            return true;
+        }
+
+        public BaseClass RetrieveByEmail(string email)
+        {
+            SqlOperation operation = _mapper.GetRetrieveByEmailStatement(email);
+            Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
+            var user = _mapper.BuildObject(result);
+            return user;
+        }
+
+        public override BaseClass RetrieveById(int id)
+        {
+            SqlOperation operation = _mapper.GetRetrieveByIdStatement(id);
+            Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
+            var excercise = _mapper.BuildObject(result);
+            return excercise;
         }
 
         public override void Create(BaseClass entityDTO)
@@ -74,19 +107,32 @@ namespace DataAccess.CRUD
 
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+            SqlOperation operation = _mapper.GetRetrieveAllStatement();
+            var results = dao.ExecuteStoredProcedureWithQuery(operation);
+            var users = _mapper.BuildObjects(results);
+
+            var castedUsers = new List<T>();
+            foreach (var user in users)
+            {
+                if (user is T castedUser)
+                {
+                    castedUsers.Add(castedUser);
+                }
+            }
+
+            return castedUsers;
         }
 
-        public override BaseClass RetrieveById(int id)
+        public void AssignRole(int userId, int roleId)
         {
-            SqlOperation operation = mapper.GetRetrieveByIdStatement(id);
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.AssignUserRole"
+            };
 
-            Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
-            var excercise = mapper.BuildObject(result);
-          
-            return excercise;
+            operation.AddIntegerParam("UserId", userId);
+            operation.AddIntegerParam("RoleId", roleId);
+            dao.ExecuteStoredProcedure(operation);
         }
-
-       
     }
 }
