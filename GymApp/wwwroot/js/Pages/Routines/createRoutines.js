@@ -28,7 +28,7 @@ const handleCreateRoutine = (event) => {
             icon: "success",
         }).then(() => {
             // Redirigir a la vista para seleccionar ejercicios
-            window.location.href = '/Exercise/selectExercises';
+            window.location.href = '/Exercise/Select';
         });
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.error(textStatus, errorThrown);
