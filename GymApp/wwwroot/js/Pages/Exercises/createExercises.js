@@ -1,3 +1,34 @@
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Obtener todos los ejercicios
+    fetch(API_URL_BASE + "/api/ExerciseType/GetAllExerciseTypes")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const createExercises = document.getElementById('exercise_id');
+            if (createExercises) {
+                data.forEach(exerciseType => {
+                    const option = document.createElement('option');
+                    option.value = exerciseType.exerciseTypeId; // Asegúrate de que este campo corresponda a la propiedad id de tu modelo
+                    option.textContent = exerciseType.typeName; // Asegúrate de que este campo corresponda a la propiedad name de tu modelo
+                    createExercises.appendChild(option);
+                });
+            } else {
+                console.error('Element with ID "exercise_id" not found');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching exercises:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to fetch exercises. Please try again.',
+                icon: 'error'
+            });
+        });
 const handleCreateExercise = (event) => {
     event.preventDefault();
 

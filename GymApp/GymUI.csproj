@@ -39,4 +39,10 @@
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.7.1" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\Shared\_LayoutRoutineExercise.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

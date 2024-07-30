@@ -12,8 +12,10 @@
         <h1>Create Exercise</h1>
         <div class="form-container">
             <form id="createExerciseForm" action="submit">
-                <label for="exercise-type-id">Exercise Type Id</label>
-                <input type="text" id="exercise_type_id" name="exercise_type_id">
+                <label for="exercise_type_id">Select Exercise Type</label>
+                <select id="exercise_type_id" name="exercise_type_id">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
 
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name">
