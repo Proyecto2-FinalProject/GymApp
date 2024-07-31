@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const routineExercise = {
                 routine_id: document.getElementById('routine_id') ? document.getElementById('routine_id').value : '',
                 exercise_id: document.getElementById('exercise_id') ? document.getElementById('exercise_id').value : '',
-                exercise_type: document.getElementById('exercise_type') ? document.getElementById('exercise_type').value : '',
+                exercise_type: document.getElementById('exercise_type_id') ? document.getElementById('exercise_type_id').value : '',
                 sets: document.getElementById('sets') ? document.getElementById('sets').value : '',
                 repetitions: document.getElementById('repetitions') ? document.getElementById('repetitions').value : '',
                 weight: document.getElementById('weight') ? document.getElementById('weight').value : '',

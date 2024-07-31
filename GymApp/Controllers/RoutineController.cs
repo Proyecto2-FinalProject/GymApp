@@ -9,7 +9,7 @@ namespace GymApp.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> routinesList()
+        public async Task<IActionResult> RoutineList()
         {
             return View();
         }

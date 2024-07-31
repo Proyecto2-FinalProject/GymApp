@@ -26,7 +26,7 @@ namespace DataAccess.Mapper
                 routineExerciseId = Convert.ToInt32(row["routine_exercise_id"]),
                 routineId = Convert.ToInt32(row["routine_id"]),
                 exerciseId = Convert.ToInt32(row["exercise_id"]),
-                exerciseType = row["exercise_type"].ToString(),
+                exerciseTypeId = Convert.ToInt32(row["exercise_type_id"]),
                 sets = Convert.ToInt32(row["sets"]),
                 repetitions = Convert.ToInt32(row["repetitions"]),
                 weight = Convert.ToDecimal(row["weight"]),
@@ -47,7 +47,7 @@ namespace DataAccess.Mapper
 
             operation.AddIntegerParam("routine_id", routineExercise.routineId);
             operation.AddIntegerParam("exercise_id", routineExercise.exerciseId);
-            operation.AddVarcharParam("exercise_type", routineExercise.exerciseType);
+            operation.AddIntegerParam("exercise_type_id", routineExercise.exerciseTypeId);
             operation.AddIntegerParam("sets", routineExercise.sets);
             operation.AddIntegerParam("repetitions", routineExercise.repetitions);
             operation.AddDecimalParam("weight", routineExercise.weight);

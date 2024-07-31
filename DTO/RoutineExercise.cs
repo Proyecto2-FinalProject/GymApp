@@ -6,7 +6,7 @@ namespace DTO
         public int routineExerciseId { get; set; }
         public int routineId { get; set; }
         public int exerciseId { get; set; }
-        public string exerciseType { get; set; }
+        public int exerciseTypeId { get; set; }
         public int sets { get; set; }
         public int repetitions { get; set; }
         public decimal weight { get; set; }

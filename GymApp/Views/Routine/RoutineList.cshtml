@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Lista de Rutinas";
+    Layout = "../Shared/_LayoutUser.cshtml";
+
+    // Simulación de datos obtenidos de la base de datos
+    var routines = new List<dynamic> {
+        new { Id = 1, Name = "Rutina de Fuerza", Description = "Ejercicios de levantamiento de pesas" },
+        new { Id = 2, Name = "Rutina de Cardio", Description = "Entrenamiento cardiovascular intensivo" },
+        new { Id = 3, Name = "Rutina de Flexibilidad", Description = "Estiramientos y movilidad" }
+    };
+}
+
+<link rel="stylesheet" href="~/css/users.css" />
+<script src="~/js/Pages/User/Routines.js" defer></script>
+
+<div class="container">
+    <main>
+        <h1 class="display-4">Lista de Rutinas</h1>
+        <div class="routine-list">
+            @foreach (var routine in routines)
+            {
+                <div class="routine-item">
+                    <h2>@routine.Name</h2>
+                    <p>@routine.Description</p>
+                    <a href="@Url.Action("Results", "Routine", new { id = routine.Id })" class="btn btn-primary">Ver Resultados</a>
+                </div>
+            }
+        </div>
+    </main>
+</div>
+
