@@ -2,8 +2,8 @@
 {
     public class ExerciseType : BaseClass
     {
-        public int exerciseTypeId { get; set; }
-        public string typeName { get; set; }
+        public int ExerciseTypeId { get; set; }
+        public string TypeName { get; set; }
 
     }
 }

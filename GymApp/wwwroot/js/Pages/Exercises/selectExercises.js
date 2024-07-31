@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
     // Obtener todos los ejercicios
     fetch(API_URL_BASE + "/api/Exercise/GetAllExercises")
         .then(response => {
@@ -13,9 +12,22 @@ document.addEventListener('DOMContentLoaded', function () {
             if (exerciseSelect) {
                 data.forEach(exercise => {
                     const option = document.createElement('option');
-                    option.value = exercise.exerciseId; // Asegúrate de que este campo corresponda a la propiedad id de tu modelo
-                    option.textContent = exercise.name; // Asegúrate de que este campo corresponda a la propiedad name de tu modelo
+                    option.value = exercise.exerciseId; // Asigna el ID del ejercicio
+                    option.textContent = exercise.name; // Asigna el nombre del ejercicio
+                    option.dataset.type = exercise.exerciseType; // Asigna el tipo de ejercicio
                     exerciseSelect.appendChild(option);
+                });
+
+                // Configurar el manejador del cambio de selección
+                exerciseSelect.addEventListener('change', function () {
+                    const selectedOption = exerciseSelect.options[exerciseSelect.selectedIndex];
+                    const exerciseType = selectedOption.dataset.type;
+
+                    // Establecer el tipo de ejercicio en el campo correspondiente
+                    document.getElementById('exercise_type').value = exerciseType;
+
+                    // Actualizar la habilitación y deshabilitación de los campos
+                    updateFields(exerciseType);
                 });
             } else {
                 console.error('Element with ID "exercise_id" not found');
@@ -30,56 +42,81 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-    const form = document.getElementById('selectExercisesForm');
-    if (form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
+    function updateFields(exerciseType) {
+        const setsInput = document.getElementById('sets');
+        const repetitionsInput = document.getElementById('repetitions');
+        const weightInput = document.getElementById('weight');
+        const timeDurationInput = document.getElementById('time_duration');
+        const amrapTimeInput = document.getElementById('amrap_time');
 
-            const routineExercise = {
-                routine_id: document.getElementById('routine_id') ? document.getElementById('routine_id').value : '',
-                exercise_id: document.getElementById('exercise_id') ? document.getElementById('exercise_id').value : '',
-                exercise_type: document.getElementById('exercise_type') ? document.getElementById('exercise_type').value : '',
-                sets: document.getElementById('sets') ? document.getElementById('sets').value : '',
-                repetitions: document.getElementById('repetitions') ? document.getElementById('repetitions').value : '',
-                weight: document.getElementById('weight') ? document.getElementById('weight').value : '',
-                time_duration: document.getElementById('time_duration') ? document.getElementById('time_duration').value : '',
-                amrap_time: document.getElementById('amrap_time') ? document.getElementById('amrap_time').value : '',
-            };
+        // Reset all fields
+        setsInput.disabled = false;
+        repetitionsInput.disabled = false;
+        weightInput.disabled = false;
+        timeDurationInput.disabled = false;
+        amrapTimeInput.disabled = false;
 
-            fetch(API_URL_BASE + '/api/Routine/AddExerciseToRoutine', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ routineExercise: routineExercise })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            title: 'Success',
-                            text: 'Exercise added to routine successfully!',
-                            icon: 'success'
-                        });
-                        // Opcional: Redirigir o limpiar el formulario
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'Error: ' + data.message,
-                            icon: 'error'
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error adding exercise:', error);
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Failed to add exercise. Please try again.',
-                        icon: 'error'
-                    });
-                });
-        });
-    } else {
-        console.error('Form with ID "selectExercisesForm" not found');
+        // Disable fields based on exercise type
+        if (exerciseType === 'weight-based') {
+            timeDurationInput.value = '';
+            amrapTimeInput.value = '';
+            timeDurationInput.disabled = true;
+            amrapTimeInput.disabled = true;
+        } else if (exerciseType === 'time-based') {
+            setsInput.value = '';
+            repetitionsInput.value = '';
+            weightInput.value = '';
+            setsInput.disabled = true;
+            repetitionsInput.disabled = true;
+            weightInput.disabled = true;
+        } else if (exerciseType === 'amrap') {
+            setsInput.value = '';
+            repetitionsInput.value = '';
+            weightInput.value = '';
+            setsInput.disabled = true;
+            repetitionsInput.disabled = true;
+            weightInput.disabled = true;
+            timeDurationInput.disabled = true;
+        }
     }
-});
+    const handleCreateExercise = (event) => {
+        event.preventDefault();
+
+        // Recopilar la información y mandarla al API
+        const exercise = {
+            exerciseTypeId: $("#exercise_type_id").val(),
+            name: $("#name").val(),
+            description: $("#description").val(),
+            primarymuscle: $("#primary_muscle").val()
+        };
+
+        const apiUrl = API_URL_BASE + "/api/Exercise/CreateExercise";
+
+        $.ajax({
+            url: apiUrl,
+            method: "POST",
+            hasContent: true,
+            data: JSON.stringify(exercise),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+        }).done((result) => {
+            console.log(result);
+            Swal.fire({
+                title: "Exercise Creation",
+                text: "Exercise Created Successfully",
+                icon: "success",
+            });
+        }).fail((jqXHR, textStatus, errorThrown) => {
+            console.error(textStatus, errorThrown);
+            Swal.fire({
+                title: "Error",
+                text: "Failed to create exercise. Please try again.",
+                icon: "error",
+            });
+        });
+    };
+
+    $(document).ready(() => {
+        $("#createExerciseForm").on("submit", handleCreateExercise);
+    });
+    

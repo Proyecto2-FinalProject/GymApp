@@ -22,15 +22,15 @@ namespace DataAccess.Mapper
             return list;
         }
 
-        public BaseClass BuildObject(Dictionary<string, object> result)
+        public BaseClass BuildObject(Dictionary<string, object> row)
         {
-            var ExerciseType = new ExerciseType()
+            var exerciseType = new ExerciseType()
             {
-                exerciseTypeId = int.Parse(result["exercise_type_id"].ToString()),
-                typeName = result["type_name"].ToString(),
+                ExerciseTypeId = int.Parse(row["exercise_type_id"].ToString()),
+                TypeName = row["type_name"].ToString(),
             };
 
-            return ExerciseType;
+            return exerciseType;
         }
 
 
@@ -51,8 +51,10 @@ namespace DataAccess.Mapper
         }
         public SqlOperation GetRetrieveAllStatement()
         {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "dbo.sp_getAllExerciseTypes";
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_getAllExerciseTypes"
+            };
 
             return operation;
         }
