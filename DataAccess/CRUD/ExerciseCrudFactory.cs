@@ -60,23 +60,7 @@ namespace DataAccess.CRUD
             return exerciseList;
         }
 
-        public List<ExerciseWithType> GetAllExercisesWithType()
-        {
-            ExerciseCrudFactory ex_crud = new ExerciseCrudFactory();
-            var exercises = ex_crud.RetrieveAll<Exercise>();
-            var exerciseTypes = new ExerciseTypeCrudFactory().RetrieveAll<ExerciseType>();
 
-            var exercisesWithType = exercises.Select(e => new ExerciseWithType
-            {
-                exerciseId = e.exerciseId,
-                name = e.name,
-                description = e.description,
-                primaryMuscle = e.primaryMuscle,
-                exerciseType = exerciseTypes.FirstOrDefault(et => et.ExerciseTypeId == e.exerciseTypeId)?.TypeName ?? "Unknown"
-            }).ToList();
-
-            return exercisesWithType;
-        }
     }
 
 }
