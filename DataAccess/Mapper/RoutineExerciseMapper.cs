@@ -23,7 +23,6 @@ namespace DataAccess.Mapper
         {
             var routineExercise = new RoutineExercise
             {
-                routineExerciseId = Convert.ToInt32(row["routine_exercise_id"]),
                 routineId = Convert.ToInt32(row["routine_id"]),
                 exerciseId = Convert.ToInt32(row["exercise_id"]),
                 exerciseTypeId = Convert.ToInt32(row["exercise_type_id"]),
@@ -84,6 +83,15 @@ namespace DataAccess.Mapper
         {
             throw new NotImplementedException();
         }
+
+        public SqlOperation GetRetrieveByRoutineIdStatement(int routineId)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "dbo.sp_getExercisesByRoutineId";
+            operation.AddIntegerParam("routine_id", routineId);
+            return operation;
+        }
+
     }
 
 }

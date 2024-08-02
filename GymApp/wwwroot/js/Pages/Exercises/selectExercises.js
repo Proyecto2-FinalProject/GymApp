@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const routineId = urlParams.get('routineId');
+
+    if (routineId) {
+        document.getElementById('routine_id').value = routineId;
+    }
 
     // Obtener todos los ejercicios
     fetch(API_URL_BASE + "/api/Exercise/GetAllExercises")
@@ -13,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (exerciseSelect) {
                 data.forEach(exercise => {
                     const option = document.createElement('option');
-                    option.value = exercise.exerciseId; // Asegúrate de que este campo corresponda a la propiedad id de tu modelo
-                    option.textContent = exercise.name; // Asegúrate de que este campo corresponda a la propiedad name de tu modelo
+                    option.value = exercise.exerciseId;
+                    option.textContent = exercise.name;
                     exerciseSelect.appendChild(option);
                 });
             } else {

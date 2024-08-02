@@ -3,7 +3,6 @@ namespace DTO
 {
     public class RoutineExercise : BaseClass
     {
-        public int routineExerciseId { get; set; }
         public int routineId { get; set; }
         public int exerciseId { get; set; }
         public int exerciseTypeId { get; set; }

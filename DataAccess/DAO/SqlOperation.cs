@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace DataAccess.Dao
@@ -17,6 +18,7 @@ namespace DataAccess.Dao
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
+
         public void AddTextParam(string parameterName, string paramValue)
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
@@ -40,6 +42,15 @@ namespace DataAccess.Dao
         public void AddDecimalParam(string parameterName, Decimal paramValue)
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
+        }
+
+        // Método para agregar parámetros de salida
+        public void AddOutputParam(string parameterName, SqlDbType dbType)
+        {
+            parameters.Add(new SqlParameter("@" + parameterName, dbType)
+            {
+                Direction = ParameterDirection.Output
+            });
         }
     }
 }

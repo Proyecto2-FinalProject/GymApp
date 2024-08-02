@@ -26,7 +26,7 @@ namespace DataAccess.Mapper
         {
             var routine = new Routine()
             {
-                Id = int.Parse(result["Id"].ToString()),
+                routineId = int.Parse(result["routine_id"].ToString()),
                 memberId = int.Parse(result["member_id"].ToString()),
                 instructorId = int.Parse(result["instructor_id"].ToString()),
                 measurementAppointmentId = int.Parse(result["measurement_appointment_id"].ToString()),
@@ -37,9 +37,6 @@ namespace DataAccess.Mapper
             };
             return routine;
         }
-
-
-
 
         public SqlOperation GetCreateStatement(BaseClass entityDTO)
         {
@@ -58,10 +55,6 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        public SqlOperation GetDeleteStatement(BaseClass entityDTO)
-        {
-            throw new NotImplementedException();
-        }
 
         public SqlOperation GetRetrieveAllStatement()
         {
@@ -81,6 +74,11 @@ namespace DataAccess.Mapper
             return operation;
         }
         public SqlOperation GetUpdateStatement(BaseClass entityDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SqlOperation GetDeleteStatement(BaseClass entityDTO)
         {
             throw new NotImplementedException();
         }

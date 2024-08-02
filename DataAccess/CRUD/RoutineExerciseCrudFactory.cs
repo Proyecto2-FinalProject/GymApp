@@ -64,4 +64,12 @@ public class RoutineExerciseCrudFactory : CrudFactory
         SqlOperation operation = mapper.GetCreateStatement(routineExercise);
         dao.ExecuteStoredProcedure(operation);
     }
+
+    public List<RoutineExercise> RetrieveByRoutineId(int routineId)
+    {
+        SqlOperation operation = mapper.GetRetrieveByRoutineIdStatement(routineId);
+        var result = dao.ExecuteStoredProcedureWithQuery(operation);
+        return mapper.BuildObjects(result).Cast<RoutineExercise>().ToList();
+    }
+
 }

@@ -27,8 +27,8 @@ namespace API.Controllers.Routines
                 RoutineManager manager = new RoutineManager();
                 manager.CreateRoutine(routine);
 
-                // Devolver una respuesta JSON con un mensaje de éxito
-                return Json(new { success = true, message = "Routine created successfully" });
+                // Devolver una respuesta JSON con el ID de la rutina creada
+                return Json(new { success = true, routineId = routine.routineId, message = "Routine created successfully" });
             }
             catch (Exception ex)
             {
@@ -36,6 +36,7 @@ namespace API.Controllers.Routines
                 return Json(new { success = false, message = ex.Message });
             }
         }
+        RoutineManager manager = new RoutineManager();
 
 
         [HttpGet]
@@ -55,7 +56,7 @@ namespace API.Controllers.Routines
             return routineList;
         }
 
-        [HttpPost]
+       [HttpPost]
         public IActionResult AddExerciseToRoutine([FromBody] RoutineExercise routineExercise)
         {
             try
@@ -70,6 +71,25 @@ namespace API.Controllers.Routines
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+        [HttpGet]
+        public IActionResult GetExercisesForRoutine(int routineId)
+        {
+            try
+            {
+                RoutineExerciseManager manager = new RoutineExerciseManager();
+                List<RoutineExercise> exercises = manager.GetExercisesForRoutine(routineId);
+
+                return Ok(exercises);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
+
+
+
 
     }
 }

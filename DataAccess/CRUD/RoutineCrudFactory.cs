@@ -19,7 +19,7 @@ namespace DataAccess.CRUD
         public override void Create(BaseClass entityDTO)
         {
             SqlOperation operation = mapper.GetCreateStatement(entityDTO);
-            dao.ExecuteStoredProcedure(operation);
+            dao.ExecuteStoredProcedureWithOutputParam(operation); // Ajusta esto según cómo obtienes el ID generado
         }
         public override void Update(BaseClass entityDTO)
         {
@@ -27,8 +27,11 @@ namespace DataAccess.CRUD
         }
         public override void Delete(BaseClass entityDTO)
         {
-            throw new NotImplementedException();
+            Routine routine = (Routine)entityDTO;
+            SqlOperation operation = mapper.GetDeleteStatement(routine);
+            dao.ExecuteStoredProcedure(operation);
         }
+
         public override List<T> RetrieveAll<T>()
         {
             SqlOperation operation = mapper.GetRetrieveAllStatement();
@@ -64,5 +67,7 @@ namespace DataAccess.CRUD
             SqlOperation operation = exerciseMapper.GetCreateStatement(routineExercise);
             dao.ExecuteStoredProcedure(operation);
         }
+        
+
     }
 }

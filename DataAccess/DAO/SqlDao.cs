@@ -116,6 +116,30 @@ namespace DataAccess.Dao
             return null;
         }
 
+        public int ExecuteStoredProcedureWithOutputParam(SqlOperation operation)
+        {
+            using (SqlConnection connection = new SqlConnection(/* connection string */))
+            {
+                using (SqlCommand command = new SqlCommand(operation.ProcedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    foreach (var param in operation.parameters)
+                    {
+                        command.Parameters.Add(param);
+                    }
+
+                    SqlParameter outputParam = new SqlParameter("@OutputId", SqlDbType.Int);
+                    outputParam.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(outputParam);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    return (int)command.Parameters["@OutputId"].Value;
+                }
+            }
+        }
     }
 
 }
