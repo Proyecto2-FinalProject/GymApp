@@ -1,7 +1,7 @@
 ﻿/* Estilos para el encabezado */
 header {
     background-color: #1e4f4f; /* Color de fondo del encabezado */
-    color: #FFFFFF; /* Color del texto dentro del encabezado */
+    color: #1e4f4f; /* Color del texto dentro del encabezado */
     padding: 10px 20px;
 }
 
@@ -34,7 +34,7 @@ header {
 .brand-text {
     display: flex;
     flex-direction: column; /* Coloca los elementos en una columna */
-    align-items: center; /* Centra el texto dentro del contenedor */
+    align-items: flex-end; /* Centra el texto dentro del contenedor */
 }
 
 .brand-top {
@@ -48,13 +48,30 @@ header {
     display: flex;
     color: #000000 !important; /* Color del texto, asegura que el texto sea blanco */
     text-decoration: auto; /* Sin subrayado */
-    background-color: #E0E0E0; /* Color de fondo del botón */
+    background-color: #1e4f4f; /* Color de fondo del botón */
     padding: 10px 20px; /* Espaciado interno del botón */
     border-radius: 5px; /* Bordes redondeados */
-
 }
 
 .nav-link:hover {
     background-color: #C0C0C0; /* Color de fondo en el hover */
     text-decoration: underline; /* Subrayado al pasar el ratón */
+}
+
+/* Estilos para el encabezado */
+footer {
+    background-color: #1e4f4f; /* Color de fondo del encabezado */
+    color: #1e4f4f; /* Color del texto dentro del encabezado */
+    padding: 10px 20px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin-top: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.logo:hover {
+    transform: scale(1.1);
 }

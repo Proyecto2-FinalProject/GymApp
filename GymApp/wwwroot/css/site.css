@@ -26,19 +26,6 @@ p {
     color: black; /* Un color amarillo suave */
 }
 
-.logo {
-    width: 350px;
-    height: auto;
-    margin-top: 20px;
-    border: 3px solid black;
-    border-radius: 50%;
-    transition: transform 0.3s ease-in-out;
-}
-
-    .logo:hover {
-        transform: scale(1.1);
-    }
-
 .pb-3 {
     padding-bottom: 1rem;
 }
