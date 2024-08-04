@@ -1,118 +1,174 @@
 ﻿$(document).ready(function () {
     loadEquipments();
 
-    // Handle create equipment form submission
+    // Manejar el envío del formulario de creación de equipos
     $("#createEquipmentForm").on("submit", function (event) {
         event.preventDefault();
-        let equipment = {
+        const equipment = {
             name: $("#name").val(),
             description: $("#description").val(),
             quantity: $("#quantity").val(),
             status: $("#status").val()
         };
-        createEquipment(equipment);
+
+        if (validateEquipmentForm(equipment)) {
+            createEquipment(equipment);
+        }
     });
 
-    // Handle edit equipment form submission
+    // Manejar el envío del formulario de edición de equipos
     $("#editEquipmentForm").on("submit", function (event) {
         event.preventDefault();
-        let equipment = {
+        const equipment = {
             equipmentId: $("#editEquipmentId").val(),
             name: $("#editName").val(),
             description: $("#editDescription").val(),
             quantity: $("#editQuantity").val(),
             status: $("#editStatus").val()
         };
-        editEquipment(equipment);
+
+        if (validateEquipmentForm(equipment)) {
+            editEquipment(equipment);
+        }
     });
 
-    // Handle delete button click
+    // Manejar el clic del botón de eliminación
     $(document).on("click", ".delete-btn", function () {
-        let equipmentId = $(this).data("id");
+        const equipmentId = $(this).data("id");
         deleteEquipment(equipmentId);
     });
 
-    // Handle edit button click
+    // Manejar el clic del botón de edición
     $(document).on("click", ".edit-btn", function () {
-        let equipmentId = $(this).data("id");
-        loadEquipmentDetails(equipmentId);
+        const equipmentId = $(this).data("id");
+        const equipmentName = $(this).data("name");
+        const equipmentDescription = $(this).data("description");
+        const equipmentQuantity = $(this).data("quantity");
+        const equipmentStatus = $(this).data("status");
+
+        // Llenar el formulario de edición con los datos del equipo
+        $("#editEquipmentId").val(equipmentId);
+        $("#editName").val(equipmentName);
+        $("#editDescription").val(equipmentDescription);
+        $("#editQuantity").val(equipmentQuantity);
+        $("#editStatus").val(equipmentStatus);
+
+        // Mostrar la sección de edición
+        $("#editEquipmentSection").show();
     });
 });
 
 function loadEquipments() {
     $.ajax({
-        url: '/api/Equipments/GetAll',
+        url: 'https://localhost:7280/api/Equipments/GetAllEquipment',
         method: 'GET',
         success: function (data) {
-            renderEquipmentList(data);
+            if (data && data.length > 0) {
+                renderEquipmentList(data);
+            } else {
+                Swal.fire({
+                    title: "Información",
+                    text: "No hay equipos disponibles para mostrar.",
+                    icon: "info",
+                });
+            }
         },
         error: function (error) {
-            console.log("Error loading equipments: ", error);
+            console.error("Error al cargar los equipos: ", error);
+            Swal.fire({
+                title: "Error",
+                text: "Hubo un problema al cargar la lista de equipos.",
+                icon: "error",
+            });
         }
     });
 }
 
 function createEquipment(equipment) {
     $.ajax({
-        url: '/api/Equipments/Create',
+        url: 'https://localhost:7280/api/Equipments/CreateEquipment',
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(equipment),
         success: function (response) {
-            alert("Equipment created successfully!");
-            loadEquipments();
+            Swal.fire({
+                title: "Éxito",
+                text: "¡Equipo creado exitosamente!",
+                icon: "success",
+            }).then(() => {
+                $("#createEquipmentForm")[0].reset(); // Limpiar el formulario después de crear
+                loadEquipments();
+            });
         },
         error: function (error) {
-            console.log("Error creating equipment: ", error);
+            console.error("Error al crear el equipo: ", error);
+            Swal.fire({
+                title: "Error",
+                text: "No se pudo crear el equipo. Por favor, intente de nuevo.",
+                icon: "error",
+            });
         }
     });
 }
 
 function editEquipment(equipment) {
     $.ajax({
-        url: '/api/Equipments/Edit',
+        url: 'https://localhost:7280/api/Equipments/EditEquipment',
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(equipment),
         success: function (response) {
-            alert("Equipment updated successfully!");
-            loadEquipments();
+            Swal.fire({
+                title: "Éxito",
+                text: "¡Equipo actualizado exitosamente!",
+                icon: "success",
+            }).then(() => {
+                $("#editEquipmentSection").hide();
+                loadEquipments();
+            });
         },
         error: function (error) {
-            console.log("Error updating equipment: ", error);
+            console.error("Error al actualizar el equipo: ", error);
+            Swal.fire({
+                title: "Error",
+                text: "No se pudo actualizar el equipo. Por favor, intente de nuevo.",
+                icon: "error",
+            });
         }
     });
 }
 
 function deleteEquipment(equipmentId) {
-    $.ajax({
-        url: `/api/Equipments/Delete/${equipmentId}`,
-        method: 'DELETE',
-        success: function (response) {
-            alert("Equipment deleted successfully!");
-            loadEquipments();
-        },
-        error: function (error) {
-            console.log("Error deleting equipment: ", error);
-        }
-    });
-}
-
-function loadEquipmentDetails(equipmentId) {
-    $.ajax({
-        url: `/api/Equipments/GetById/${equipmentId}`,
-        method: 'GET',
-        success: function (data) {
-            // Populate edit form with equipment details
-            $("#editEquipmentId").val(data.equipmentId);
-            $("#editName").val(data.name);
-            $("#editDescription").val(data.description);
-            $("#editQuantity").val(data.quantity);
-            $("#editStatus").val(data.status);
-            // Show the edit modal (you need to implement this part)
-        },
-        error: function (error) {
-            console.log("Error loading equipment details: ", error);
+    Swal.fire({
+        title: "¿Está seguro?",
+        text: "Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `https://localhost:7280/api/Equipments/DeleteEquipment/${equipmentId}`,
+                method: 'DELETE',
+                success: function (response) {
+                    Swal.fire({
+                        title: "Éxito",
+                        text: "¡Equipo eliminado exitosamente!",
+                        icon: "success",
+                    }).then(() => {
+                        loadEquipments();
+                    });
+                },
+                error: function (error) {
+                    console.error("Error al eliminar el equipo: ", error);
+                    Swal.fire({
+                        title: "Error",
+                        text: "No se pudo eliminar el equipo. Por favor, intente de nuevo.",
+                        icon: "error",
+                    });
+                }
+            });
         }
     });
 }
@@ -127,10 +183,27 @@ function renderEquipmentList(equipments) {
             <td>${equipment.quantity}</td>
             <td>${equipment.status}</td>
             <td>
-                <button class="edit-btn" data-id="${equipment.equipmentId}">Edit</button>
-                <button class="delete-btn" data-id="${equipment.equipmentId}">Delete</button>
+                <button class="edit-btn btn btn-primary" 
+                        data-id="${equipment.equipmentId}" 
+                        data-name="${equipment.name}" 
+                        data-description="${equipment.description}" 
+                        data-quantity="${equipment.quantity}" 
+                        data-status="${equipment.status}">Editar</button>
+                <button class="delete-btn btn btn-danger" data-id="${equipment.equipmentId}">Eliminar</button>
             </td>
         </tr>`;
         tableBody.append(row);
     });
+}
+
+function validateEquipmentForm(equipment) {
+    if (!equipment.name || !equipment.description || equipment.quantity == null || !equipment.status) {
+        Swal.fire({
+            title: "Advertencia",
+            text: "Por favor, complete todos los campos antes de enviar.",
+            icon: "warning",
+        });
+        return false;
+    }
+    return true;
 }

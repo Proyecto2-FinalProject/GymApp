@@ -27,7 +27,6 @@
     <Folder Include="wwwroot\js\Pages\Trainer\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="Views\Equipment\Equipmets.cshtml" />
     <Content Remove="wwwroot\js\Pages\" />
     <Content Remove="wwwroot\js\Pages\Exercises\createExercises.js" />
     <Content Remove="wwwroot\js\Pages\Routines\selectExercises.js" />
@@ -43,14 +42,5 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.7.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Equipment\Equipmets.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Equipment\Equipmets.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Views\Equipment\Equipmets.cshtml" />
   </ItemGroup>
 </Project>
