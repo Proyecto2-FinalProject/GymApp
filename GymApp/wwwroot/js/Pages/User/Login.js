@@ -39,7 +39,7 @@
                         window.location.href = "/Admin/AdminPage";
                         break;
                     case 'Trainer':
-                        window.location.href = "/Exercise/Create";
+                        window.location.href = "/Trainer/TrainerPage";
                         break;
                     case 'Receptionist':
                         window.location.href = "/Receptionist/Exercises";
