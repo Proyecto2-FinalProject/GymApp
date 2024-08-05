@@ -19,18 +19,13 @@ namespace DataAccess.CRUD
         public override void Create(BaseClass entityDTO)
         {
             SqlOperation operation = mapper.GetCreateStatement(entityDTO);
-            dao.ExecuteStoredProcedureWithOutputParam(operation); // Ajusta esto según cómo obtienes el ID generado
+            dao.ExecuteStoredProcedure(operation);
         }
         public override void Update(BaseClass entityDTO)
         {
             throw new NotImplementedException();
         }
-        public override void Delete(BaseClass entityDTO)
-        {
-            Routine routine = (Routine)entityDTO;
-            SqlOperation operation = mapper.GetDeleteStatement(routine);
-            dao.ExecuteStoredProcedure(operation);
-        }
+
 
         public override List<T> RetrieveAll<T>()
         {
@@ -54,20 +49,23 @@ namespace DataAccess.CRUD
         public override BaseClass RetrieveById(int id)
         {
             SqlOperation operation = mapper.GetRetrieveByIdStatement(id);
-          
+
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
             var Routine = mapper.BuildObject(result);
 
             return Routine;
 
-        } 
+        }
         public void AddExerciseToRoutine(RoutineExercise routineExercise)
         {
             RoutineExerciseMapper exerciseMapper = new RoutineExerciseMapper();
             SqlOperation operation = exerciseMapper.GetCreateStatement(routineExercise);
             dao.ExecuteStoredProcedure(operation);
         }
-        
 
+        public override void Delete(BaseClass entityDTO)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

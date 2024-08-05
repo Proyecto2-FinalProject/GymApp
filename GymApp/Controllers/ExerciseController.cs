@@ -9,10 +9,7 @@ namespace GymApp.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Select()
-        {
-            return View();
-        }
+        
 
     }
 

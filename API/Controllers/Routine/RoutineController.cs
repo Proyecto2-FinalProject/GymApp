@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using BL;
 using Microsoft.AspNetCore.Cors;
 using DTO;
@@ -56,11 +57,16 @@ namespace API.Controllers.Routines
             return routineList;
         }
 
-       [HttpPost]
+        [HttpPost]
         public IActionResult AddExerciseToRoutine([FromBody] RoutineExercise routineExercise)
         {
             try
             {
+                if (routineExercise == null)
+                {
+                    return BadRequest(new { success = false, message = "The request body is null" });
+                }
+
                 RoutineExerciseManager manager = new RoutineExerciseManager();
                 manager.AddExerciseToRoutine(routineExercise);
 
@@ -71,6 +77,7 @@ namespace API.Controllers.Routines
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
 
         [HttpGet]
         public IActionResult GetExercisesForRoutine(int routineId)
@@ -88,6 +95,26 @@ namespace API.Controllers.Routines
             }
         }
 
+        [HttpPost]
+        public IActionResult AddRoutineResults([FromBody] RoutineResult routineResult)
+        {
+            try
+            {
+                if (routineResult == null)
+                {
+                    return BadRequest(new { success = false, message = "The request body is null" });
+                }
+
+                RoutineResultManager manager = new RoutineResultManager();
+                manager.AddRoutineResults(routineResult);
+
+                return Json(new { success = true, message = "Routine result added successfully" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
 
 
 

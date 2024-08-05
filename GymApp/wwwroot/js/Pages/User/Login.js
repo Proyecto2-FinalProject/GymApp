@@ -44,7 +44,7 @@
                     case 'Receptionist':
                         window.location.href = "/Receptionist/Exercises";
                         break;
-                    case 'User':
+                    case 'Member':
                         window.location.href = "/Member/MemberPage";
                         break;
                     default:

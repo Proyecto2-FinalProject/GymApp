@@ -29,6 +29,7 @@
     <Content Remove="wwwroot\js\Pages\" />
     <Content Remove="wwwroot\js\Pages\Exercises\createExercises.js" />
     <Content Remove="wwwroot\js\Pages\Routines\RecordResults.js" />
+    <Content Remove="wwwroot\js\Pages\Routines\Results.js" />
     <Content Remove="wwwroot\js\Pages\Routines\routineList.js" />
     <Content Remove="wwwroot\js\Pages\User\" />
     <Content Remove="wwwroot\js\Pages\Admin\" />
@@ -36,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\Pages\Exercises\createExercises.js" />
+    <None Include="wwwroot\js\Pages\Routines\Results.js" />
     <None Include="wwwroot\js\Pages\Routines\RecordResults.js" />
     <None Include="wwwroot\js\Pages\Routines\routineList.js" />
     <None Include="wwwroot\js\Pages\Routines\createRoutines.js" />

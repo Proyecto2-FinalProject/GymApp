@@ -2,7 +2,7 @@
     ViewData["Title"] = "Select Exercise";
     Layout = "../Shared/_LayoutExercises.cshtml";
 }
-<script src="~/js/pages/Exercises/selectExercises.js" defer></script>
+<script src="~/js/pages/Routines/addExerciseRoutine.js" defer></script>
 <link rel="stylesheet" href="~/css/exercises.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap">
 
@@ -11,7 +11,10 @@
         <h1>Select Exercises for Routine</h1>
         <div class="form-container">
             <form id="selectExercisesForm">
-                <input type="hidden" id="routine_id" name="routine_id" />
+                <label for="routine_id">Select Routine</label>
+                <select id="routine_id" name="routine_id">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
 
                 <label for="exercise_id">Select Exercise</label>
                 <select id="exercise_id" name="exercise_id">
@@ -31,10 +34,10 @@
                 <input type="number" id="weight" name="weight" step="0.01" min="0" required>
 
                 <label for="time_duration">Time Duration</label>
-                <input type="time" id="time_duration" name="time_duration">
+                <input type="datetime" id="time_duration" name="time_duration">
 
                 <label for="amrap_time">AMRAP Time</label>
-                <input type="time" id="amrap_time" name="amrap_time">
+                <input type="datetime" id="amrap_time" name="amrap_time">
 
                 <div class="button-container">
                     <button type="submit">Add Exercise</button>

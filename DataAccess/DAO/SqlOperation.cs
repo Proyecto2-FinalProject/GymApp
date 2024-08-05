@@ -24,33 +24,61 @@ namespace DataAccess.Dao
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
 
-        public void AddIntegerParam(string parameterName, int paramValue)
-        {
-            parameters.Add(new SqlParameter("@" + parameterName, paramValue));
-        }
-
         public void AddDateTimeParam(string parameterName, DateTime paramValue)
         {
             parameters.Add(new SqlParameter("@" + parameterName, paramValue));
         }
 
-        public void AddTimeSpanParam(string parameterName, TimeSpan paramValue)
+        public void AddTimeSpanParam(string parameterName, TimeSpan? paramValue)
         {
-            parameters.Add(new SqlParameter("@" + parameterName, paramValue));
-        }
-
-        public void AddDecimalParam(string parameterName, Decimal paramValue)
-        {
-            parameters.Add(new SqlParameter("@" + parameterName, paramValue));
-        }
-
-        // Método para agregar parámetros de salida
-        public void AddOutputParam(string parameterName, SqlDbType dbType)
-        {
-            parameters.Add(new SqlParameter("@" + parameterName, dbType)
+            if (paramValue.HasValue)
             {
-                Direction = ParameterDirection.Output
-            });
+                parameters.Add(new SqlParameter("@" + parameterName, SqlDbType.Time) { Value = paramValue.Value });
+            }
+            else
+            {
+                parameters.Add(new SqlParameter("@" + parameterName, SqlDbType.Time) { Value = DBNull.Value });
+            }
         }
+
+
+        public void AddIntegerParam(string parameterName, int? paramValue)
+        {
+            if (paramValue.HasValue)
+            {
+                parameters.Add(new SqlParameter("@" + parameterName, SqlDbType.Int) { Value = paramValue.Value });
+            }
+            else
+            {
+                parameters.Add(new SqlParameter("@" + parameterName, SqlDbType.Int) { Value = DBNull.Value });
+            }
+        }
+
+        public void AddDecimalParam(string parameterName, decimal? paramValue)
+        {
+            if (paramValue.HasValue)
+            {
+                parameters.Add(new SqlParameter("@" + parameterName, SqlDbType.Decimal)
+                {
+                    Value = paramValue.Value,
+                    Precision = 5,
+                    Scale = 2
+                });
+            }
+            else
+            {
+                parameters.Add(new SqlParameter("@" + parameterName, SqlDbType.Decimal)
+                {
+                    Value = DBNull.Value,
+                    Precision = 5,
+                    Scale = 2
+                });
+            }
+        }
+
+
+
+
+
     }
 }

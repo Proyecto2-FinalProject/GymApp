@@ -21,21 +21,12 @@ const handleCreateRoutine = (event) => {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
     }).done((result) => {
-        if (result.success && result.routineId) {
-            Swal.fire({
-                title: "Routine Creation",
-                text: "Routine Created Successfully",
-                icon: "success",
-            }).then(() => {
-                window.location.href = `/Exercise/Select?routineId=${result.routineId}`;
-            });
-        } else {
-            Swal.fire({
-                title: "Error",
-                text: "Failed to get routine ID. Please try again.",
-                icon: "error",
-            });
-        }
+        console.log(result);
+        Swal.fire({
+            title: "Routine Creation",
+            text: "Routine Created Successfully",
+            icon: "success",
+        })
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.error(textStatus, errorThrown);
         Swal.fire({
@@ -44,3 +35,8 @@ const handleCreateRoutine = (event) => {
             icon: "error",
         });
     });
+};
+
+$(document).ready(() => {
+    $("#createRoutineForm").on("submit", handleCreateRoutine);
+});
