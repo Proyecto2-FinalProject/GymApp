@@ -34,7 +34,7 @@
             if (result.isConfirmed) {
                 // Redirigir a la página basada en el rol del usuario
                 switch (data.role) {
-                    console.log(data.role)
+                    Console.log(data.role)
                     case 'Admin':
                         window.location.href = "/Admin/AdminPage";
                         break;
