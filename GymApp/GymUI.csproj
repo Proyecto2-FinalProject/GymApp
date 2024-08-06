@@ -29,6 +29,7 @@
     <Folder Include="wwwroot\js\Pages\Member\" />
     <Folder Include="wwwroot\js\Pages\Default\" />
     <Folder Include="Views\Default\" />
+    <Folder Include="wwwroot\js\Pages\Receptionist\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\Pages\" />
@@ -39,6 +40,7 @@
     <Content Remove="wwwroot\js\Pages\Trainer\" />
     <Content Remove="wwwroot\js\Pages\Member\" />
     <Content Remove="wwwroot\js\Pages\Default\" />
+    <Content Remove="wwwroot\js\Pages\Receptionist\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\Pages\Exercises\createExercises.js" />

@@ -14,6 +14,4 @@ namespace GymApp.Controllers
             return View();
         }
     }
-
-
 }
