@@ -14,14 +14,14 @@ namespace API.Controllers.Users
         public ActionResult RegisterUser(User user)
         {
             UserManager manager = new UserManager();
-            manager.RegisterUser(user);
+            string error = manager.RegisterUser(user);
 
             if (user == null)
             {
                 return BadRequest("User data is null.");
             }
 
-            return Ok(new { message = "User registered successfully" });
+            return Ok(new { errorMessage = error });
         }
 
         [HttpPost]

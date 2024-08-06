@@ -49,7 +49,7 @@ namespace DataAccess.Mapper
             return user;
         }
 
-        public SqlOperation GetRegisterUser(BaseClass entityDTO, string hashedPassword, SqlParameter newUserIdParam)
+        public SqlOperation GetRegisterUser(BaseClass entityDTO, string hashedPassword, string baseStringSalt, SqlParameter errorMessageParam)
         {
             SqlOperation operation = new SqlOperation
             {
@@ -63,26 +63,15 @@ namespace DataAccess.Mapper
             operation.AddVarcharParam("last_name", user.Last_name);
             operation.AddVarcharParam("username", user.Username);
             operation.AddVarcharParam("email", user.Email);
-            operation.AddVarcharParam("password", hashedPassword);
+            operation.AddVarcharParam("hashedPassword", hashedPassword);
             operation.AddVarcharParam("phone_number", user.Phone_number);
             operation.AddDateTimeParam("birthdate", user.Birthdate);
             operation.AddVarcharParam("profile_image", user.Profile_image);
             operation.AddVarcharParam("id_image", user.Id_image);
+            operation.AddVarcharParam("password", user.Password);
+            operation.AddVarcharParam("salt", baseStringSalt);
 
-            operation.parameters.Add(newUserIdParam);
-
-            return operation;
-        }
-
-        public SqlOperation GetRegisterSalt(int userId, string salt)
-        {
-            SqlOperation operation = new SqlOperation
-            {
-                ProcedureName = "dbo.sp_addUserSalt"
-            };
-
-            operation.AddIntegerParam("user_id", userId);
-            operation.AddVarcharParam("salt", salt);
+            operation.parameters.Add(errorMessageParam);
 
             return operation;
         }

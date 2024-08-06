@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymApp.Controllers;
 
-public class MemberController : Controller
+public class ReceptionistController : Controller
 {
    
-    public IActionResult MemberPage()
+    public IActionResult ReceptionistPage()
     {
         return View();
     }

@@ -37,22 +37,30 @@
                     data: JSON.stringify(user),
                     hasContent: true
                 }).done(function (data) {
-                    Swal.fire({
-                        title: 'Mensaje',
-                        text: 'The User was Registered Successfully',
-                        icon: 'info'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Redirigir a la página BasePage del miembro
-                            window.location.href = "/User/Login";
-                        }
-                    });
+                    if (data.errorMessage) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.errorMessage,
+                            icon: 'error'
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Mensaje',
+                            text: 'The User was Registered Successfully',
+                            icon: 'info'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Redirigir a la página para hacer login
+                                window.location.href = "/User/Login";
+                            }
+                        });
+                    } 
                 }).fail(function (xhr, status, error) {
                     let errorMessage = "Unknown error";
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    } else if (xhr.responseText) {
-                        errorMessage = xhr.responseText;
+                    if (jqXHR.responseJSON && jqXHR.responseJSON.error_message) {
+                        errorMessage = jqXHR.responseJSON.errorMessage;
+                    } else if (jqXHR.responseText) {
+                        errorMessage = jqXHR.responseText;
                     } else if (error) {
                         errorMessage = error;
                     }

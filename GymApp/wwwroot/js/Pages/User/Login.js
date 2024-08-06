@@ -33,8 +33,8 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 // Redirigir a la página basada en el rol del usuario
-                console.log(data.role)
                 switch (data.role) {
+                    console.log(data.role)
                     case 'Admin':
                         window.location.href = "/Admin/AdminPage";
                         break;
@@ -42,10 +42,13 @@
                         window.location.href = "/Trainer/TrainerPage";
                         break;
                     case 'Receptionist':
-                        window.location.href = "/Receptionist/Exercises";
+                        window.location.href = "/Receptionist/ReceptionistPage";
+                        break;
+                    case 'Member':
+                        window.location.href = "/Member/MemberPage";
                         break;
                     case 'User':
-                        window.location.href = "/Member/MemberPage";
+                        window.location.href = "/Default/DefaultPage";
                         break;
                     default:
                         window.location.href = "/Default/DefaultPage";
