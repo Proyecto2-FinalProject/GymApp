@@ -44,6 +44,17 @@ namespace DataAccess.CRUD
 
             return resultList;
         }
+        public List<T> RetrieveByRoutineId<T>(int routineId)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "RetrieveRoutineResultsByRoutineId";
+            operation.AddIntegerParam("routine_id", routineId);
+
+            List<Dictionary<string, object>> results = dao.ExecuteStoredProcedureWithQuery(operation);
+            var list = mapper.BuildObjects(results);
+            return list.Cast<T>().ToList();
+        }
+
 
         public override void Update(BaseClass entityDTO)
         {

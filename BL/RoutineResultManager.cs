@@ -11,7 +11,11 @@ namespace BL
             ex_crud.Create(routineResult);
         }
 
-        // Otros métodos como GetRoutineResultById o GetAllRoutineResults pueden ser añadidos aquí si es necesario.
+        public List<RoutineResult> GetResultsByRoutineId(int routineId)
+        {
+            RoutineResultCrudFactory crud = new RoutineResultCrudFactory();
+            return crud.RetrieveByRoutineId<RoutineResult>(routineId);
+        }
     }
 }
 

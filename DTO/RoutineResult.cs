@@ -11,6 +11,9 @@
         public TimeSpan? TimeDuration { get; set; }
         public TimeSpan? AmrapTime { get; set; }
         public DateTime ResultDate { get; set; } = DateTime.Now;
+
+
+
     }
 
 }

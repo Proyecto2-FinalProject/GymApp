@@ -95,6 +95,22 @@ namespace API.Controllers.Routines
             }
         }
 
+        [HttpGet]
+        public IActionResult GetRecordedResults(int routineId)
+        {
+            try
+            {
+                RoutineResultManager manager = new RoutineResultManager();
+                var results = manager.GetResultsByRoutineId(routineId);
+
+                return Json(new { success = true, data = results });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
         [HttpPost]
         public IActionResult AddRoutineResults([FromBody] RoutineResult routineResult)
         {
@@ -108,13 +124,14 @@ namespace API.Controllers.Routines
                 RoutineResultManager manager = new RoutineResultManager();
                 manager.AddRoutineResults(routineResult);
 
-                return Json(new { success = true, message = "Routine result added successfully" });
+                return Json(new { success = true, message = "Results recorded successfully" });
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
 
 
 

@@ -1,87 +1,56 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Obtén el ID de la rutina desde la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const routineId = urlParams.get('routineId');
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('recordResultsForm');
 
-    if (!routineId) {
-        console.error("Routine ID not provided.");
-        return;
-    }
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Evita el comportamiento por defecto del formulario
 
-    // Cargar ejercicios para la rutina seleccionada
-    fetchExercisesForRoutine(routineId);
+        // Obtén los valores del formulario
+        const exerciseId = document.getElementById('exercise_id').value;
+        const setsCompleted = parseInt(document.getElementById('sets_completed').value) || null;
+        const repetitionsCompleted = parseInt(document.getElementById('repetitions_completed').value) || null;
+        const weightUsed = parseFloat(document.getElementById('weight_used').value) || null;
+        const timeDuration = document.getElementById('time_duration').value;
+        const amrapTime = document.getElementById('amrap_time').value;
 
-    // Manejar el envío del formulario
-    const form = document.getElementById("recordResultsForm");
-    form.addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-        submitResults(routineId);
+        // Convierte el tiempo en formato ISO 8601
+        const formatTime = (time) => {
+            if (!time) return null;
+            const [hours, minutes] = time.split(':').map(num => parseInt(num));
+            return new Date(0, 0, 0, hours, minutes).toISOString().substr(11, 8);
+        };
+
+        // Construye el objeto que se enviará al backend
+        const routineResult = {
+            routineId: 12, // Suponiendo que este valor se obtiene dinámicamente
+            exerciseId: parseInt(exerciseId),
+            setsCompleted: setsCompleted,
+            repetitionsCompleted: repetitionsCompleted,
+            weightUsed: weightUsed,
+            timeDuration: formatTime(timeDuration),
+            amrapTime: formatTime(amrapTime),
+            resultDate: new Date().toISOString() // Fecha y hora actuales
+        };
+
+        try {
+            const response = await fetch('https://localhost:7280/api/Routine/AddRoutineResults', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(routineResult)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('Results recorded successfully');
+                form.reset(); // Opcional: reinicia el formulario
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        } catch (error) {
+            alert('An unexpected error occurred.');
+            console.error('Error:', error);
+        }
     });
 });
-
-function fetchExercisesForRoutine(routineId) {
-    const apiUrl = `/api/Routine/GetExercisesForRoutine?routineId=${routineId}`;
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(exercises => {
-            if (exercises && exercises.length > 0) {
-                populateExerciseDropdown(exercises);
-            } else {
-                console.error("No exercises found for the given routine.");
-            }
-        })
-        .catch(error => console.error("Error fetching exercises:", error));
-}
-
-function populateExerciseDropdown(exercises) {
-    const exerciseSelect = document.getElementById("exercise_id");
-    exerciseSelect.innerHTML = ""; // Limpiar opciones anteriores
-
-    exercises.forEach(exercise => {
-        const option = document.createElement("option");
-        option.value = exercise.exerciseId;
-        option.textContent = exercise.name;
-        exerciseSelect.appendChild(option);
-    });
-}
-
-function submitResults(routineId) {
-    // Obtener datos del formulario
-    const exerciseId = document.getElementById("exercise_id").value;
-    const setsCompleted = document.getElementById("sets_completed").value;
-    const repetitionsCompleted = document.getElementById("repetitions_completed").value;
-    const weightUsed = document.getElementById("weight_used").value;
-    const timeDuration = document.getElementById("time_duration").value;
-    const amrapTime = document.getElementById("amrap_time").value;
-
-    // Crear objeto con los datos
-    const resultsData = {
-        routineId: parseInt(routineId),
-        exerciseId: parseInt(exerciseId),
-        setsCompleted: parseInt(setsCompleted),
-        repetitionsCompleted: parseInt(repetitionsCompleted),
-        weightUsed: parseFloat(weightUsed),
-        timeDuration: timeDuration || null,
-        amrapTime: amrapTime || null
-    };
-
-    // Enviar datos al servidor
-    fetch("/api/Routine/RecordResults", { 
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(resultsData)
-    })
-        .then(response => {
-            if (response.ok) {
-                alert("Results recorded successfully.");
-                form.reset(); // Limpiar formulario
-            } else {
-                return response.json().then(errorData => {
-                    throw new Error(errorData.message || "Error recording results.");
-                });
-            }
-        })
-        .catch(error => console.error("Error recording results:", error));
-}
