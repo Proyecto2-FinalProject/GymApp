@@ -25,48 +25,53 @@
         data: JSON.stringify(data),
         hasContent: true
     }).done(function (data) {
-        console.log(data);  // Agrega esta línea para depuración
-        Swal.fire({
-            title: 'Welcome Back',
-            text: 'Fitness Center Gym',
-            icon: 'success'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirigir a la página basada en el rol del usuario
-                switch (data.role) {
-                  
-                    case 'Admin':
-                        window.location.href = "/Admin/AdminPage";
-                        break;
-                    case 'Trainer':
-                        window.location.href = "/Trainer/TrainerPage";
-                        break;
-                    case 'Receptionist':
-                        window.location.href = "/Receptionist/ReceptionistPage";
-                        break;
-                    case 'Member':
-                        window.location.href = "/Member/MemberPage";
-                        break;
-                    case 'User':
-                        window.location.href = "/Default/DefaultPage";
-                        break;
-                    default:
-                        window.location.href = "/Default/DefaultPage";
-                        break;
-                }
+        if (data.errorMessage) {
+            Swal.fire({
+                title: 'Error!',
+                text: data.errorMessage,
+                icon: 'error'
+            }); 
+            } else {
+                Swal.fire({
+                    title: 'Welcome To',
+                    text: 'Fitness Center Gym',
+                    icon: 'success'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirigir a la página basada en el rol del usuario
+                        switch (data.role) {
+
+                            case 'Admin':
+                                window.location.href = "/Admin/AdminPage";
+                                break;
+                            case 'Trainer':
+                                window.location.href = "/Trainer/TrainerPage";
+                                break;
+                            case 'Receptionist':
+                                window.location.href = "/Receptionist/ReceptionistPage";
+                                break;
+                            case 'Member':
+                                window.location.href = "/Member/MemberPage";
+                                break;
+                            case 'User':
+                                window.location.href = "/Default/DefaultPage";
+                                break;
+                            default:
+                                window.location.href = "/Default/DefaultPage";
+                                break;
+                        }
+                    }
+                });
             }
-        });
     }).fail(function (jqXHR, textStatus, errorThrown) {
-        // Extraer información de error y mostrarla
-        var errorMessage = "Unknown error";
-        if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
-            errorMessage = jqXHR.responseJSON.message;
+        let errorMessage = "Unknown error";
+        if (jqXHR.responseJSON && jqXHR.responseJSON.error_message) {
+            errorMessage = jqXHR.responseJSON.errorMessage;
         } else if (jqXHR.responseText) {
             errorMessage = jqXHR.responseText;
-        } else if (errorThrown) {
-            errorMessage = errorThrown;
+        } else if (error) {
+            errorMessage = error;
         }
-
         Swal.fire({
             title: 'Error!',
             text: errorMessage,

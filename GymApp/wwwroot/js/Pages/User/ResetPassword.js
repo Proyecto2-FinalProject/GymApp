@@ -3,6 +3,7 @@
 
     // Obtiene el password 
     const password = $("#newPassword").val()
+    const validatePassword = $("#confirmPassword").val()
 
     //Obtenemos el token de la URl 
     var token = getQueryParam('token');
@@ -11,7 +12,8 @@
     // Estructuramos el objeto de ResetPassword para enviar a la API
     const data = {
         token: token,
-        newPassword: password
+        newPassword: password,
+        confirmPassword: validatePassword
     }
 
     var apiUrl = API_URL_BASE + "/api/Users/ResetPassword";
@@ -28,22 +30,30 @@
                 data: JSON.stringify(data),
                 hasContent: true
             }).done(function (data) {
-                Swal.fire({
-                    title: 'Mensaje',
-                    text:   "Your Password have been successfully updated.",
-                    icon: 'info'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirigir a la página de log in  
-                        window.location.href = "/User/Login";
-                    }
-                });
+                if (data.errorMessage) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.errorMessage,
+                        icon: 'error'
+                    }); 
+                } else {
+                    Swal.fire({
+                        title: 'Mensaje',
+                        text: "Your Password have been successfully updated.",
+                        icon: 'info'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirigir a la página de log in  
+                            window.location.href = "/User/Login";
+                        }
+                    });
+                }
             }).fail(function (xhr, status, error) {
                 let errorMessage = "Unknown error";
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    errorMessage = xhr.responseJSON.message;
-                } else if (xhr.responseText) {
-                    errorMessage = xhr.responseText;
+                if (jqXHR.responseJSON && jqXHR.responseJSON.error_message) {
+                    errorMessage = jqXHR.responseJSON.errorMessage;
+                } else if (jqXHR.responseText) {
+                    errorMessage = jqXHR.responseText;
                 } else if (error) {
                     errorMessage = error;
                 }

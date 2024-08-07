@@ -37,12 +37,10 @@ namespace API.Controllers.Users
 
             if (user == null)
             {
-                return Unauthorized();
+                return BadRequest("Username or password are incorrect.");
             }
-
             var RoleName = manager.GetUserRoleName(user.Id);
-
-            return Ok(new { username = user.Username, role = RoleName });
+            return Ok(new { username = user.Username, role = RoleName});
         }
 
         [HttpPost]
@@ -50,9 +48,15 @@ namespace API.Controllers.Users
         {
             if (request == null || string.IsNullOrEmpty(request.Token) || string.IsNullOrEmpty(request.NewPassword))
             {
-                return BadRequest("Invalid password reset request.");
+                return BadRequest("Invalid request to reset password.");
             }
 
+            if (!request.NewPassword.Equals(request.confirmPassword))
+            {
+                Console.WriteLine(request.NewPassword);
+                return BadRequest("Passwords are different, please verify.");
+            }
+           
             UserManager manager = new UserManager();
             bool result = manager.UpdatePassword(request.Token, request.NewPassword);
             if (!result)
