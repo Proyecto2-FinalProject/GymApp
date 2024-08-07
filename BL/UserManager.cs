@@ -8,7 +8,7 @@ namespace BL
 {
     public class UserManager
     {
-        public void RegisterUser(User user)
+        public string RegisterUser(User user)
         {
             var passwordHelper = new PasswordHelper();
             byte[] salt = passwordHelper.GenerateSalt();
@@ -18,10 +18,11 @@ namespace BL
 
             UserCrudFactory us_crud = new UserCrudFactory();
             string baseStringPassword = Convert.ToBase64String(hashedPassword);
-            int userId = us_crud.RegisterUser(user, baseStringPassword);
-
             string baseStringSalt = Convert.ToBase64String(salt);
-            us_crud.RegisterSalt(userId, baseStringSalt);
+
+            string error = us_crud.RegisterUser(user, baseStringPassword, baseStringSalt);
+
+            return error; 
         }
 
         public string GetUserRoleName(int id)

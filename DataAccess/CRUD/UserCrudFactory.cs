@@ -18,18 +18,18 @@ namespace DataAccess.CRUD
             dao = SqlDao.GetInstance();
         }
 
-        public int RegisterUser(BaseClass entityDTO, string hashedPassword)
+        public string RegisterUser(BaseClass entityDTO, string hashedPassword, string baseStringSalt)
         {
-            var newUserIdParam = new SqlParameter("@NewUserId", SqlDbType.Int)
+            var errorMessage = new SqlParameter("@errorMessage", SqlDbType.VarChar, 255)
             {
                 Direction = ParameterDirection.Output
             };
 
-            SqlOperation operation = _mapper.GetRegisterUser(entityDTO, hashedPassword, newUserIdParam);
+            SqlOperation operation = _mapper.GetRegisterUser(entityDTO, hashedPassword, baseStringSalt, errorMessage);
             dao.ExecuteStoredProcedure(operation);
 
-            int userId = Convert.ToInt32(newUserIdParam.Value);
-            return userId;
+            string error = errorMessage.Value as string;
+            return error;
         }
 
         public string GetUserRoleName(int id)
@@ -37,12 +37,6 @@ namespace DataAccess.CRUD
             SqlOperation operation = _mapper.GetUserRoleName(id);
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
             return result.ContainsKey("role_name") ? result["role_name"].ToString() : null;
-        }
-
-        public void RegisterSalt(int userId, string salt)
-        {
-            SqlOperation operation = _mapper.GetRegisterSalt(userId, salt);
-            dao.ExecuteStoredProcedure(operation);
         }
 
         public BaseClass RetrieveUserByUsername(string username)

@@ -15,6 +15,7 @@
     <None Remove="Views\Member\" />
     <None Remove="Views\Receptionist\" />
     <None Remove="Views\Trainer\" />
+    <None Remove="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\User\" />
@@ -25,6 +26,10 @@
     <Folder Include="wwwroot\js\Pages\Admin\" />
     <Folder Include="Views\Trainer\" />
     <Folder Include="wwwroot\js\Pages\Trainer\" />
+    <Folder Include="wwwroot\js\Pages\Member\" />
+    <Folder Include="wwwroot\js\Pages\Default\" />
+    <Folder Include="Views\Default\" />
+    <Folder Include="wwwroot\js\Pages\Receptionist\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\Pages\" />
@@ -33,6 +38,9 @@
     <Content Remove="wwwroot\js\Pages\User\" />
     <Content Remove="wwwroot\js\Pages\Admin\" />
     <Content Remove="wwwroot\js\Pages\Trainer\" />
+    <Content Remove="wwwroot\js\Pages\Member\" />
+    <Content Remove="wwwroot\js\Pages\Default\" />
+    <Content Remove="wwwroot\js\Pages\Receptionist\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\Pages\Exercises\createExercises.js" />
