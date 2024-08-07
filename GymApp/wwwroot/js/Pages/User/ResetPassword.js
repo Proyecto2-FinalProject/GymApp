@@ -2,19 +2,20 @@
     event.preventDefault();
 
     // Obtiene el password 
-    const password = $("#newPassword").val()
-    const validatePassword = $("#confirmPassword").val()
+    const password = $("#newPassword").val();
+    const confirmPassword = $("#confirmPassword").val();
 
     //Obtenemos el token de la URl 
     var token = getQueryParam('token');
-    console.log("Token:", token);
 
     // Estructuramos el objeto de ResetPassword para enviar a la API
     const data = {
         token: token,
         newPassword: password,
-        confirmPassword: validatePassword
+        confirmPassword: confirmPassword
     }
+
+    console.log("Confirm Password:", data.confirmPassword);
 
     var apiUrl = API_URL_BASE + "/api/Users/ResetPassword";
 
