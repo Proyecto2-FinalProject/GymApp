@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title - Fitness Center</title>
+    <link rel="stylesheet" href="~/css/navigationBar.css/>
+</head>
+<body>
+    <header>
+        <img src="~/img/LogoFitnessCenter.png" alt="Logo" class="logo">
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="navbar-brand">
+                    <span class="brand-text">
+                        <span class="brand-top">GymApp</span>
+                    </span>
+                </div>
+                <div class="navbar-links">
+                    @RenderSection("NavbarLinks", required: false)
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container">
+        @RenderBody()
+    </main>
+    <footer>
+        <p>&copy; 2024 - GymApp</p>
+    </footer>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
