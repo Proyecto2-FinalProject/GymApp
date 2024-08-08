@@ -54,18 +54,49 @@ namespace DataAccess.CRUD
             return result.ContainsKey("salt") ? result["salt"].ToString() : null;
         }
 
+        //Metodo para guardar el token de recuperacion de la contraseña
         public bool AddResetToken(int userId, string token)
         {
-            SqlOperation operation = _mapper.GetRegisterToken(userId, token);
+            SqlOperation operation = _mapper.GetAddToken(userId, token);
             dao.ExecuteStoredProcedure(operation);
             return true;
         }
 
-        public bool UpdatePasswordByToken(string token, string hashedPassword, string salt)
+        //Metodo para guardar el OTP en la tabla usuarios 
+        public bool AddOtpCode(string email, string otp)
         {
-            SqlOperation operation = _mapper.GetUpdatePasswordByToken(token, hashedPassword, salt);
+            SqlOperation operation = _mapper.GetAddOtp(email, otp);
             dao.ExecuteStoredProcedure(operation);
             return true;
+        }
+
+        //Metodo para verificar el email con el OTP
+        public string VerifyAccount(string otp)
+        {
+            var errorMessage = new SqlParameter("@errorMessage", SqlDbType.VarChar, 255)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            SqlOperation operation = _mapper.VerifyAccount(otp, errorMessage);
+            dao.ExecuteStoredProcedure(operation);
+
+            string error = errorMessage.Value as string;
+            return error;
+        }
+
+        public string UpdatePasswordByToken(string token, string hashedPassword, string salt, string newPassword, string confirmPassword)
+        {
+            var errorMessage = new SqlParameter("@errorMessage", SqlDbType.VarChar, 255)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            SqlOperation operation = _mapper.GetUpdatePasswordByToken(token, hashedPassword, salt, newPassword, confirmPassword, errorMessage);
+            dao.ExecuteStoredProcedure(operation);
+
+            string error = errorMessage.Value as string;
+            return error;
         }
 
         public BaseClass RetrieveByEmail(string email)
