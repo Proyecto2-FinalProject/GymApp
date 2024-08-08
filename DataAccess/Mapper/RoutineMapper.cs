@@ -38,6 +38,9 @@ namespace DataAccess.Mapper
             return routine;
         }
 
+
+
+
         public SqlOperation GetCreateStatement(BaseClass entityDTO)
         {
             SqlOperation operation = new SqlOperation();
@@ -55,6 +58,10 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        public SqlOperation GetDeleteStatement(BaseClass entityDTO)
+        {
+            throw new NotImplementedException();
+        }
 
         public SqlOperation GetRetrieveAllStatement()
         {
@@ -74,11 +81,6 @@ namespace DataAccess.Mapper
             return operation;
         }
         public SqlOperation GetUpdateStatement(BaseClass entityDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SqlOperation GetDeleteStatement(BaseClass entityDTO)
         {
             throw new NotImplementedException();
         }

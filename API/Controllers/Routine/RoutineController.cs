@@ -16,14 +16,11 @@ namespace API.Controllers.Routines
         {
             try
             {
-                // Imprimir el valor recibido
-                Console.WriteLine($"Received creationDate: {routine.creationDate}");
+                // Asignar la fecha y hora actual automáticamente
+                routine.creationDate = DateTime.Now;
 
-                // Validar que creationDate esté dentro del rango permitido
-                if (routine.creationDate < new DateTime(1753, 1, 1) || routine.creationDate > new DateTime(9999, 12, 31))
-                {
-                    return Json(new { success = false, message = "The date must be between 1/1/1753 and 12/31/9999." });
-                }
+                // Imprimir el valor recibido
+                Console.WriteLine($"Assigned creationDate: {routine.creationDate}");
 
                 RoutineManager manager = new RoutineManager();
                 manager.CreateRoutine(routine);
@@ -37,7 +34,7 @@ namespace API.Controllers.Routines
                 return Json(new { success = false, message = ex.Message });
             }
         }
-        RoutineManager manager = new RoutineManager();
+
 
 
         [HttpGet]

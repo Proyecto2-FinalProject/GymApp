@@ -50,3 +50,13 @@ button {
     button:hover {
         background-color: #143b3b;
     }
+
+select {
+    color: black; /* Asegúrate de que el color de texto sea visible */
+    background-color: white; /* Asegúrate de que el fondo sea blanco */
+}
+
+option {
+    color: black; /* Asegúrate de que el color del texto de las opciones sea visible */
+    background-color: white; /* Asegúrate de que el fondo de las opciones sea blanco */
+}

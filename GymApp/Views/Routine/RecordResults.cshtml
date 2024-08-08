@@ -2,7 +2,7 @@
     ViewData["Title"] = "Record Routine Results";
     Layout = "../Shared/_LayoutRoutines.cshtml";
 }
-<script src="~/js/pages/Routines/recordResults.js" defer></script>
+<script src="~/js/pages/Routines/recordResult.js" defer></script>
 <link rel="stylesheet" href="~/css/recordresult.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap">
 
@@ -15,6 +15,7 @@
                 <select id="exercise_id" name="exercise_id" required>
                     <!-- Opciones para los ejercicios se llenarán aquí -->
                 </select>
+                <input type="hidden" id="exercise_type_id" name="exercise_type_id" />
 
                 <label for="sets_completed">Sets Completed</label>
                 <input type="number" id="sets_completed" name="sets_completed" min="0" required>
