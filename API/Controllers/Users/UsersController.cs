@@ -46,25 +46,29 @@ namespace API.Controllers.Users
         [HttpPost]
         public IActionResult ResetPassword([FromBody] ResetPassword request)
         {
+            UserManager manager = new UserManager();
+            string error = manager.UpdatePassword(request);
+
             if (request == null || string.IsNullOrEmpty(request.Token) || string.IsNullOrEmpty(request.NewPassword))
             {
                 return BadRequest("Invalid request to reset password.");
             }
 
-            if (!request.NewPassword.Equals(request.confirmPassword))
-            {
-                Console.WriteLine(request.NewPassword);
-                return BadRequest("Passwords are different, please verify.");
-            }
-           
+            return Ok(new { errorMessage = error });
+        }
+
+        [HttpGet]
+        public IActionResult VerifyAccount([FromQuery] string otp)
+        {
             UserManager manager = new UserManager();
-            bool result = manager.UpdatePassword(request.Token, request.NewPassword);
-            if (!result)
+            string error = manager.VerifyAccount(otp);
+
+            if (string.IsNullOrEmpty(otp) )
             {
-                return BadRequest("Invalid token or unable to reset password.");
+                return BadRequest("Invalid request to verify account.");
             }
 
-            return Ok(new { message = "Password reset successfully." });
+            return Ok(new { errorMessage = error });
         }
 
         [HttpGet]

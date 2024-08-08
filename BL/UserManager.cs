@@ -60,35 +60,50 @@ namespace BL
             }
         }
 
-        public bool UpdatePassword(string token, string newPassword)
+        public string UpdatePassword(ResetPassword request)
         {
             var passwordHelper = new PasswordHelper();
             byte[] salt = passwordHelper.GenerateSalt();
-            byte[] hashedPassword = passwordHelper.HashPassword(newPassword, salt);
+            byte[] hashedPassword = passwordHelper.HashPassword(request.NewPassword, salt);
 
             string baseStringPassword = Convert.ToBase64String(hashedPassword);
             string baseStringSalt = Convert.ToBase64String(salt);
 
             UserCrudFactory us_crud = new UserCrudFactory();
-            return us_crud.UpdatePasswordByToken(token, baseStringPassword, baseStringSalt);
+            return us_crud.UpdatePasswordByToken(request.Token, baseStringPassword, baseStringSalt, request.NewPassword, request.confirmPassword);
         }
 
-        public User GetUserByEmail(string email)
-        {
-            UserCrudFactory us_crud = new UserCrudFactory();
-            return (User)us_crud.RetrieveByEmail(email);
-        }
-
+        //Metodo para agregar el Token de recuperacion de contraseña
         public bool AddResetToken(int userId, string token)
         {
             UserCrudFactory us_crud = new UserCrudFactory();
             return us_crud.AddResetToken(userId, token);
         }
 
+        //Metodo para agregar el Otp a la tabal de usuario
+        public bool AddOtpCode(string email, string otp)
+        {
+            UserCrudFactory us_crud = new UserCrudFactory();
+            return us_crud.AddOtpCode(email, otp);
+        }
+
+        //Metodo para verificar Email con el OTP 
+        public string VerifyAccount(string otp)
+        {
+            UserCrudFactory us_crud = new UserCrudFactory();
+            return us_crud.VerifyAccount(otp);
+        }
+
         public User GetUserByUsername(string username)
         {
             UserCrudFactory us_crud = new UserCrudFactory();
             return (User)us_crud.RetrieveByEmail(username);
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            UserCrudFactory us_crud = new UserCrudFactory();
+            return (User)us_crud.RetrieveByEmail(email);
         }
 
         public User GetUserById(int id)

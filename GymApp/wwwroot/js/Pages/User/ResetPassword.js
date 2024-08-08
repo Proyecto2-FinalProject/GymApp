@@ -15,8 +15,6 @@
         confirmPassword: confirmPassword
     }
 
-    console.log("Confirm Password:", data.confirmPassword);
-
     var apiUrl = API_URL_BASE + "/api/Users/ResetPassword";
 
             $.ajax({
@@ -40,7 +38,7 @@
                 } else {
                     Swal.fire({
                         title: 'Mensaje',
-                        text: "Your Password have been successfully updated.",
+                        text: "Your Password have been updated successfully.",
                         icon: 'info'
                     }).then((result) => {
                         if (result.isConfirmed) {
@@ -49,7 +47,7 @@
                         }
                     });
                 }
-            }).fail(function (xhr, status, error) {
+            }).fail(function (jqXHR, status, error) {
                 let errorMessage = "Unknown error";
                 if (jqXHR.responseJSON && jqXHR.responseJSON.error_message) {
                     errorMessage = jqXHR.responseJSON.errorMessage;

@@ -46,12 +46,44 @@
                     } else {
                         Swal.fire({
                             title: 'Mensaje',
-                            text: 'The User was Registered Successfully',
+                            text: "We've sent you a verification code, please check your email to verify your account!",
                             icon: 'info'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                // Redirigir a la página para hacer login
-                                window.location.href = "/User/Login";
+                                // Llamar a la API para enviar el correo de verificación
+
+                                var apiUrl = API_URL_BASE + "/api/Emails/SendVerifyAccountEmail";
+
+                                $.ajax({
+                                    headers: {
+                                        'Accept': "application/json",
+                                        'Content-Type': "application/json"
+                                    },
+                                    method: "POST",
+                                    url: apiUrl,
+                                    contentType: "application/json;charset=utf-8",
+                                    dataType: "json",
+                                    data: JSON.stringify({ email: user.Email }),
+                                    hasContent: true
+                                }).done(function (data) {
+                                    // Redirigir a la página para ingresar el OTP
+                                    window.location.href = "/User/VerifyAccount";
+
+                                }).fail(function (jqXHR, status, error) {
+                                    let errorMessage = "Unknown error";
+                                    if (jqXHR.responseJSON && jqXHR.responseJSON.error_message) {
+                                        errorMessage = jqXHR.responseJSON.errorMessage;
+                                    } else if (jqXHR.responseText) {
+                                        errorMessage = jqXHR.responseText;
+                                    } else if (error) {
+                                        errorMessage = error;
+                                    }
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: errorMessage,
+                                        icon: 'error'
+                                    });
+                                });
                             }
                         });
                     } 
