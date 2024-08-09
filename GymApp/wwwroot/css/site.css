@@ -15,7 +15,7 @@
 h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: black; /* Un rojo vibrante */
+    color: black; 
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -23,7 +23,7 @@ h1 {
 p {
     font-size: 1.2em;
     margin-bottom: 20px;
-    color: black; /* Un color amarillo suave */
+    color: black;
 }
 
 .pb-3 {
