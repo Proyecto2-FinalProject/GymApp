@@ -97,8 +97,10 @@ namespace DataAccess.CRUD
 
         public override void Update(BaseClass entityDTO)
         {
-            throw new NotImplementedException();
+            SqlOperation operation = _mapper.GetUpdateStatement((User)entityDTO);
+                dao.ExecuteStoredProcedure(operation);
         }
+
 
         public override void Delete(BaseClass entityDTO)
         {

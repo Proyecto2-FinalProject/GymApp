@@ -8,13 +8,20 @@ namespace API.Controllers.Users
     [EnableCors("MyCorsPolicy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UsersController : Controller
+    public class UsersController : ControllerBase
     {
+        private readonly UserManager _userManager;
+
+        // Constructor
+        public UsersController()
+        {
+            _userManager = new UserManager();
+        }
+
         [HttpPost]
         public ActionResult RegisterUser(User user)
         {
-            UserManager manager = new UserManager();
-            manager.RegisterUser(user);
+            _userManager.RegisterUser(user);
 
             if (user == null)
             {
@@ -25,10 +32,32 @@ namespace API.Controllers.Users
         }
 
         [HttpPost]
+        public IActionResult UpdateUser([FromBody] UpdateUserRequest user)
+        {
+            var existingUser = _userManager.GetUserById(user.Id);
+            if (existingUser == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // Solo actualizar los campos que se envían en la solicitud
+            existingUser.First_name = user.First_name;
+            existingUser.Last_name = user.Last_name;
+            existingUser.Username = user.Username;
+            existingUser.Email = user.Email;
+            existingUser.Phone_number = user.Phone_number;
+            existingUser.Birthdate = user.Birthdate;
+
+            _userManager.UpdateUser(existingUser);
+
+            return Ok(new { message = "User updated successfully" });
+        }
+
+
+        [HttpPost]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            UserManager manager = new UserManager();
-            User user = manager.Login(request.Username, request.Password);
+            User user = _userManager.Login(request.Username, request.Password);
 
             if (request == null)
             {
@@ -40,7 +69,7 @@ namespace API.Controllers.Users
                 return Unauthorized();
             }
 
-            var RoleName = manager.GetUserRoleName(user.Id);
+            var RoleName = _userManager.GetUserRoleName(user.Id);
 
             return Ok(new { username = user.Username, role = RoleName });
         }
@@ -53,8 +82,7 @@ namespace API.Controllers.Users
                 return BadRequest("Invalid password reset request.");
             }
 
-            UserManager manager = new UserManager();
-            bool result = manager.UpdatePassword(request.Token, request.NewPassword);
+            bool result = _userManager.UpdatePassword(request.Token, request.NewPassword);
             if (!result)
             {
                 return BadRequest("Invalid token or unable to reset password.");
@@ -64,12 +92,22 @@ namespace API.Controllers.Users
         }
 
         [HttpGet]
+        public IActionResult GetAllUsers()
+        {
+            var users = _userManager.GetAllUsers();
+
+            if (users == null || users.Count == 0)
+            {
+                return NotFound("No users found.");
+            }
+
+            return Ok(users);
+        }
+
+        [HttpGet]
         public User GetUser(int id)
         {
-            UserManager manager = new UserManager();
-            User user = manager.GetUserById(id);
-
-            return user;
+            return _userManager.GetUserById(id);
         }
     }
 }

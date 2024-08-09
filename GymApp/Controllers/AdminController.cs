@@ -8,5 +8,18 @@ namespace GymApp.Controllers
         {
             return View();
         }
+
+        public IActionResult AssignRoles()
+        {
+            return View();
+        }
+
+        public IActionResult ManageUsers()
+        {
+            return View();
+        }
+
+
     }
+
 }

@@ -1,28 +1,33 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace GymApp.Controllers;
-
-public class UserController : Controller
+namespace GymApp.Controllers
 {
-    public IActionResult Login()
+    public class UserController : Controller
     {
-        return View();
-    }
+        public IActionResult Login()
+        {
+            return View();
+        }
 
-    public IActionResult RegisterUser()
-    {
-        return View();
-    }
+        public IActionResult RegisterUser()
+        {
+            return View();
+        }
 
-    public IActionResult ResetPasswordRequest()
-    {
-        return View();
-    }
+        public IActionResult ResetPasswordRequest()
+        {
+            return View();
+        }
 
-    public IActionResult ResetPassword()
-    {
-        return View();
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        public IActionResult ManageUsers()
+        {
+            return View();
+        }
+
     }
 }
-

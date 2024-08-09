@@ -5,53 +5,11 @@
 <h2>Admin Page</h2>
 <p>Welcome, Administrator!</p>
 
-<form id="assignRoleForm">
-    <div style="margin-bottom: 20px;">
-        <label for="selectUser" style="display: block; font-size: 1.2em;">Select User:</label>
-        <select id="selectUser" name="userId" style="width: 100%; padding: 10px; font-size: 1.2em;">
-            <!-- Users will be loaded here -->
-        </select>
-    </div>
-    <div style="margin-bottom: 20px;">
-        <label for="selectRole" style="display: block; font-size: 1.2em;">Select Role:</label>
-        <select id="selectRole" name="roleId" style="width: 100%; padding: 10px; font-size: 1.2em;">
-            <!-- Roles will be loaded here -->
-        </select>
-    </div>
-    <button type="submit" style="font-size: 1.2em; padding: 10px 20px;">Assign Role</button>
-</form>
+<a href="@Url.Action("AssignRoles", "Admin")" class="btn btn-primary" style="font-size: 1.2em; padding: 10px 20px;">
+    Go to Assign Roles
+</a>
 
-@section Scripts {
-    <script src="~/js/Pages/Admin/Admin.js"></script>
-}
+<a href="@Url.Action("ManageUsers", "Admin")" class="btn btn-secondary" style="font-size: 1.2em; padding: 10px 20px; margin-left: 10px;">
+    Manage Users
+</a>
 
-
-@*View para cuando se haga el drop down menu*@
-
-<!--@{
-    // ViewData["Title"] = "Admin Page";
-}
-
-<h2>Admin Page</h2>
-<p>Welcome, Administrator!</p>
-
-<form id="assignRoleForm">
-    <div style="margin-bottom: 20px;">
-        <label for="selectUser" style="display: block; font-size: 1.2em;">Select User:</label>
-        <select id="selectUser" name="userId" style="width: 100%; padding: 10px; font-size: 1.2em;">
-            <option value="" disabled selected>Choose a user</option>-->
-<!-- Users will be loaded here -->
-<!--</select>
-</div>
-<div style="margin-bottom: 20px;">
-    <label for="selectRole" style="display: block; font-size: 1.2em;">Select Role:</label>
-    <select id="selectRole" name="roleId" style="width: 100%; padding: 10px; font-size: 1.2em;">
-        <option value="" disabled selected>Choose a role</option>-->
-<!-- Roles will be loaded here -->
-<!--</select>
-    </div>
-    <button type="submit" style="font-size: 1.2em; padding: 10px 20px;">Assign Role</button>
-</form>-->
-@*@section Scripts {
-        <script src="~/js/Pages/Admin/Admin.js"></script>
-    }*@
