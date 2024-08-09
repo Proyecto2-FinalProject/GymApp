@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BL;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace API.Controllers.Users
 {
@@ -71,7 +72,7 @@ namespace API.Controllers.Users
 
             var RoleName = _userManager.GetUserRoleName(user.Id);
 
-            return Ok(new { username = user.Username, role = RoleName });
+            return Ok(new { userId = user.Id, username = user.Username, role = RoleName });
         }
 
         [HttpPost]

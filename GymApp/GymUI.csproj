@@ -30,6 +30,7 @@
     <Folder Include="wwwroot\js\Pages\Default\" />
     <Folder Include="Views\Default\" />
     <Folder Include="wwwroot\js\Pages\Receptionist\" />
+    <Folder Include="wwwroot\js\Pages\Membership\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\Pages\" />
@@ -44,6 +45,7 @@
     <Content Remove="Views\Admin\AssignRoles.cshtml" />
     <Content Remove="Views\Admin\ManageUsers.cshtml" />
     <Content Remove="wwwroot\js\Pages\Admin\ManageUsers.js" />
+    <Content Remove="wwwroot\js\Pages\Membership\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\Pages\Exercises\createExercises.js" />

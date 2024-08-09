@@ -31,8 +31,7 @@
                 text: data.errorMessage,
                 icon: 'error'
             }); 
-        } else {
-            localStorage.setItem('userId', data.userId);
+            } else {
                 Swal.fire({
                     title: 'Welcome To',
                     text: 'Fitness Center Gym',
