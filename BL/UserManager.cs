@@ -118,6 +118,13 @@ namespace BL
             return us_crud.RetrieveAll<User>();
         }
 
+        public void UpdateUser(User user)
+        {
+            UserCrudFactory us_crud = new UserCrudFactory();
+            us_crud.Update(user);
+        }
+
+
         public void AssignRole(int userId, int roleId)
         {
             UserCrudFactory us_crud = new UserCrudFactory();
