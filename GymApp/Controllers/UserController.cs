@@ -29,10 +29,11 @@ namespace GymApp.Controllers
             return View();
         }
 
-    }
+        public IActionResult VerifyAccount()
+        {
+            return View();
+        }
 
-    public IActionResult VerifyAccount()
-    {
-        return View();
     }
+   
 }
