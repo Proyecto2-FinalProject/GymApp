@@ -77,18 +77,15 @@ namespace API.Controllers.Users
         [HttpPost]
         public IActionResult ResetPassword([FromBody] ResetPassword request)
         {
+            UserManager manager = new UserManager();
+            string error = manager.UpdatePassword(request);
+
             if (request == null || string.IsNullOrEmpty(request.Token) || string.IsNullOrEmpty(request.NewPassword))
             {
-                return BadRequest("Invalid password reset request.");
+                return BadRequest("Invalid request to reset password.");
             }
 
-            bool result = _userManager.UpdatePassword(request.Token, request.NewPassword);
-            if (!result)
-            {
-                return BadRequest("Invalid token or unable to reset password.");
-            }
-
-            return Ok(new { message = "Password reset successfully." });
+            return Ok(new { errorMessage = error });
         }
 
         [HttpGet]
