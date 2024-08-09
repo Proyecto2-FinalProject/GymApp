@@ -102,6 +102,20 @@ namespace API.Controllers.Users
         }
 
         [HttpGet]
+        public IActionResult VerifyAccount([FromQuery] string otp)
+        {
+            UserManager manager = new UserManager();
+            string error = manager.VerifyAccount(otp);
+
+            if (string.IsNullOrEmpty(otp))
+            {
+                return BadRequest("Invalid request to verify account.");
+            }
+
+            return Ok(new { errorMessage = error });
+        }
+
+        [HttpGet]
         public User GetUser(int id)
         {
             return _userManager.GetUserById(id);
