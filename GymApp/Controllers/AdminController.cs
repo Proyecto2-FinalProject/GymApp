@@ -9,12 +9,12 @@ namespace GymApp.Controllers
             return View();
         }
 
-        public IActionResult AssignRoles()
+        public IActionResult AssignRole()
         {
             return View();
         }
 
-        public IActionResult ManageUsers()
+        public IActionResult ManageUser()
         {
             return View();
         }
