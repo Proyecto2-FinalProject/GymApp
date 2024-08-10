@@ -1,14 +1,16 @@
-﻿body {
+﻿/* Estilo general */
+body {
     font-family: 'Lora', serif;
-    background-color: #1e4f4f;
+    background-color: #1e4f4f; /* Fondo verde oscuro para todo el cuerpo */
     color: white;
     margin: 0;
     padding: 0;
 }
 
+/* Hero Section */
 .hero-section {
     position: relative;
-    background-image: url('/css/Img/background.png'); 
+    background-image: url('/css/Img/background.png');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -17,9 +19,7 @@
     align-items: center;
     text-align: center;
     color: white;
-    
 }
-hero_section
 
 .overlay {
     position: absolute;
@@ -48,10 +48,14 @@ hero_section
         font-size: 1.5em;
     }
 
+/* Sección de precios */
 .pricing-section {
     display: flex;
     justify-content: space-around;
     margin-top: 50px;
+    background-color: #1e4f4f; /* Fondo gris para la sección de precios */
+    padding: 50px 20px;
+    border-radius: 10px;
 }
 
 .pricing-card {
@@ -87,10 +91,14 @@ hero_section
     font-size: 0.5em;
 }
 
+/* Sección de contacto */
 .contact-section {
     display: flex;
     justify-content: space-around;
     margin-top: 50px;
+    background-color: lightgray; /* Mantiene el fondo verde oscuro para la sección de contacto */
+    padding: 50px 20px;
+    border-radius: 10px;
 }
 
     .contact-section div {
@@ -138,3 +146,8 @@ hero_section
     .btn-success:hover {
         background-color: #333;
     }
+
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 12000px;
+}
+}
