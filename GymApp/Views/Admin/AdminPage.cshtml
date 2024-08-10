@@ -1,39 +1,15 @@
 ﻿@{
     ViewData["Title"] = "Admin Page";
-    Layout = "../Shared/_LayoutAdmin.cshtml";
 }
 
-<script src="~/js/Pages/Admin/Admin.js" defer></script>
-<link rel="stylesheet" href="~/css/routines.css" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap">
+<h2>Admin Page</h2>
+<p>Welcome, Administrator!</p>
 
-<div class="container">
-    <main>
-        <h2>Welcome Administrator!</h2>
-        <div class="form-container">
-            <form id="assignRoleForm" action="submit">
-                <div style="margin-bottom: 20px;">
-                    <label for="selectUser" style="display: block; font-size: 1.2em;">Select User:</label>
-                    <select id="selectUser" name="userId" style="width: 100%; padding: 10px; font-size: 1.2em;">
-                        <!-- Users will be loaded here -->
-                    </select>
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label for="selectRole" style="display: block; font-size: 1.2em;">Select Role:</label>
-                    <select id="selectRole" name="roleId" style="width: 100%; padding: 10px; font-size: 1.2em;">
-                        <!-- Roles will be loaded here -->
-                    </select>
-                </div>
-                <div class="button-container">
-                    <button type="submit" style="font-size: 1.2em; padding: 10px 20px; background-color: #1e4f4f; color: white; border: none; border-radius: 5px; cursor: pointer;" onmouseover="this.style.backgroundColor='#2a7b9c';" onmouseout="this.style.backgroundColor='#3ba4c7';">
-                        Assign Role
-                    </button>
-                </div>
-            </form>
-        </div>
-    </main>
-</div>
+<a href="@Url.Action("AssignRole", "Admin")" class="btn btn-primary" style="font-size: 1.2em; padding: 10px 20px;">
+    Go to Assign Roles
+</a>
 
-
-
+<a href="@Url.Action("ManageUser", "Admin")" class="btn btn-secondary" style="font-size: 1.2em; padding: 10px 20px; margin-left: 10px;">
+    Manage Users
+</a>
 

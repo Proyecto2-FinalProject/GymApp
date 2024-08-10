@@ -41,6 +41,9 @@
     <Content Remove="wwwroot\js\Pages\Member\" />
     <Content Remove="wwwroot\js\Pages\Default\" />
     <Content Remove="wwwroot\js\Pages\Receptionist\" />
+    <Content Remove="Views\Admin\AssignRoles.cshtml" />
+    <Content Remove="Views\Admin\ManageUsers.cshtml" />
+    <Content Remove="wwwroot\js\Pages\Admin\ManageUsers.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\Pages\Exercises\createExercises.js" />

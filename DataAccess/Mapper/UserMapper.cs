@@ -76,6 +76,20 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+
+        public SqlOperation GetRegisterSalt(int userId, string salt)
+        {
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_addUserSalt"
+            };
+
+            operation.AddIntegerParam("user_id", userId);
+            operation.AddVarcharParam("salt", salt);
+
+            return operation;
+        }
+
         public SqlOperation GetUserRoleName(int id)
         {
             SqlOperation operation = new SqlOperation
@@ -137,6 +151,20 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        public SqlOperation GetUpdatePasswordByToken(string token, string hashedPassword, string salt)
+        {
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_updateUserPassword"
+            };
+
+            operation.AddVarcharParam("token", token);
+            operation.AddVarcharParam("hashedPassword", hashedPassword);
+            operation.AddVarcharParam("salt", salt);
+
+            return operation;
+        }
+
         public SqlOperation GetAddOtp(string email, string otp)
         {
             SqlOperation operation = new SqlOperation
@@ -181,14 +209,14 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        public SqlOperation GetRetrieveByIdStatement(int id)
+        public SqlOperation GetRetrieveByIdStatement(int userId)
         {
             SqlOperation operation = new SqlOperation
             {
                 ProcedureName = "dbo.sp_getUserById"
             };
 
-            operation.AddIntegerParam("Id", id);
+            operation.AddIntegerParam("user_id", userId); // Cambiado 'Id' a 'user_id'
 
             return operation;
         }
@@ -212,6 +240,27 @@ namespace DataAccess.Mapper
 
             operation.AddIntegerParam("UserId", userId);
             operation.AddIntegerParam("RoleId", roleId);
+
+            return operation;
+        }
+
+        public SqlOperation GetUpdateStatement(User user)
+        {
+            SqlOperation operation = new SqlOperation
+            {
+                ProcedureName = "dbo.sp_updateUser"
+            };
+
+            operation.AddIntegerParam("user_id", user.Id);
+            operation.AddVarcharParam("first_name", user.First_name);
+            operation.AddVarcharParam("last_name", user.Last_name);
+            operation.AddVarcharParam("username", user.Username);
+            operation.AddVarcharParam("email", user.Email);
+            operation.AddVarcharParam("phone_number", user.Phone_number);
+            operation.AddDateTimeParam("birthdate", user.Birthdate);
+            operation.AddVarcharParam("password", user.Password);
+            operation.AddVarcharParam("id_image", user.Id_image);
+            operation.AddVarcharParam("profile_image", user.Profile_image);
 
             return operation;
         }
