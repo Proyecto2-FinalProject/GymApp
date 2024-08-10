@@ -26,6 +26,7 @@ namespace DataAccess.Mapper
             {
                 routineId = Convert.ToInt32(row["routine_id"]),
                 exerciseId = Convert.ToInt32(row["exercise_id"]),
+                exerciseName = row["exercise_name"].ToString(),
                 exerciseTypeId = Convert.ToInt32(row["exercise_type_id"]),
                 sets = row["sets"] != DBNull.Value ? Convert.ToInt32(row["sets"]) : (int?)null,
                 repetitions = row["repetitions"] != DBNull.Value ? Convert.ToInt32(row["repetitions"]) : (int?)null,
@@ -36,6 +37,7 @@ namespace DataAccess.Mapper
 
             return routineExercise;
         }
+
 
 
         public SqlOperation GetCreateStatement(BaseClass entityDTO)
@@ -56,8 +58,6 @@ namespace DataAccess.Mapper
 
             return operation;
         }
-
-
 
 
         public SqlOperation GetDeleteStatement(BaseClass entityDTO)

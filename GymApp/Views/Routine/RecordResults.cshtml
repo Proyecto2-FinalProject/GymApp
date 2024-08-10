@@ -19,19 +19,20 @@
                 <input type="hidden" id="routine_id" name="routine_id" /> <!-- Campo oculto para routineId -->
 
                 <label for="sets_completed">Sets Completed</label>
-                <input type="number" id="sets_completed" name="sets_completed" min="0" required>
+                <input type="number" id="sets_completed" name="sets_completed" min="0">
 
                 <label for="repetitions_completed">Repetitions Completed</label>
-                <input type="number" id="repetitions_completed" name="repetitions_completed" min="0" required>
+                <input type="number" id="repetitions_completed" name="repetitions_completed" min="0">
 
                 <label for="weight_used">Weight Used</label>
-                <input type="number" id="weight_used" name="weight_used" step="0.01" min="0" required>
+                <input type="number" id="weight_used" name="weight_used" step="0.01" min="0">
 
                 <label for="time_duration">Time Duration</label>
-                <input type="time" id="time_duration" name="time_duration">
+                <input type="text" id="time_duration" name="time_duration" placeholder="HH:MM:SS">
+
 
                 <label for="amrap_time">AMRAP Time</label>
-                <input type="time" id="amrap_time" name="amrap_time">
+                <input type="text" id="amrap_time" name="amrap_time" placeholder="HH:MM:SS">
 
                 <div class="button-container">
                     <button type="submit">Submit Results</button>

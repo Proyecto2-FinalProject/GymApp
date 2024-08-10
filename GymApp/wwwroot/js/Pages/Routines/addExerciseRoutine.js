@@ -72,8 +72,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 repetitions: document.getElementById('repetitions').value ? parseInt(document.getElementById('repetitions').value) : null,
                 weight: document.getElementById('weight').value ? parseFloat(document.getElementById('weight').value) : null,
                 timeDuration: document.getElementById('time_duration').value || null,
-                amrapTime: document.getElementById('amrap_time').value || null,
+                amrapTime: document.getElementById('amrap_time').value || null
             };
+
 
             fetch(API_URL_BASE + '/api/Routine/AddExerciseToRoutine', {
                 method: 'POST',

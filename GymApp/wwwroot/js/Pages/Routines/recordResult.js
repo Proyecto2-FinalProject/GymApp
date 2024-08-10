@@ -16,7 +16,7 @@ function getRoutineIdFromUrl() {
 }
 
 function fetchExercisesForRoutine(routineId) {
-    const apiUrl = API_URL_BASE + "/api/Routine/GetExercisesForRoutine?routineId=" + routineId;
+    const apiUrl = "https://localhost:7280/api/Routine/GetExercisesForRoutine?routineId=" + routineId;
     fetch(apiUrl)
         .then(response => response.json())
         .then(exercises => {
@@ -32,70 +32,44 @@ function populateExerciseSelect(exercises) {
     exercises.forEach(exercise => {
         const option = document.createElement("option");
         option.value = exercise.exerciseId;
-        option.textContent = exercise.ExerciseName;
+        option.textContent = exercise.exerciseName;
         selectElement.appendChild(option);
     });
 
     // Manejar el cambio de selección del ejercicio
     selectElement.addEventListener("change", function () {
         const selectedExerciseId = this.value;
+        console.log("Selected exercise ID:", selectedExerciseId); // Depuración
         const selectedExercise = exercises.find(exercise => exercise.exerciseId == selectedExerciseId);
         if (selectedExercise) {
             document.getElementById("exercise_type_id").value = selectedExercise.exerciseTypeId;
-            handleExerciseTypeChange(selectedExercise.exerciseTypeId);
         }
     });
 }
 
-function handleExerciseTypeChange(exerciseTypeId) {
-    const exerciseType = getExerciseTypeById(exerciseTypeId); // Suponiendo que tienes una función para obtener el tipo de ejercicio
-    const timeDurationField = document.getElementById("time_duration");
-    const amrapTimeField = document.getElementById("amrap_time");
-
-    switch (exerciseType) {
-        case "AMRAP":
-            timeDurationField.disabled = true;
-            amrapTimeField.disabled = false;
-            break;
-        case "Time-Based":
-            timeDurationField.disabled = false;
-            amrapTimeField.disabled = true;
-            break;
-        case "Weight-Based":
-            timeDurationField.disabled = true;
-            amrapTimeField.disabled = true;
-            break;
-        default:
-            timeDurationField.disabled = false;
-            amrapTimeField.disabled = false;
-            break;
-    }
-}
-
-function getExerciseTypeById(exerciseTypeId) {
-    // Deberías tener un objeto o lista con los tipos de ejercicio
-    const exerciseTypes = {
-        1: "AMRAP",
-        2: "Time-Based",
-        3: "Weight-Based"
-    };
-    return exerciseTypes[exerciseTypeId] || "Unknown";
-}
-
 function submitResults() {
     const formData = new FormData(document.getElementById("recordResultsForm"));
+
+    // Formatear el tiempo a HH:MM:SS
+    let timeDuration = formData.get("time_duration");
+    if (timeDuration && timeDuration.split(':').length === 2) {
+        timeDuration += ":00"; // Añadir segundos si no están presentes
+    }
+
     const data = {
         routineId: formData.get("routine_id"),
         exerciseId: formData.get("exercise_id"),
-        setsCompleted: formData.get("sets_completed"),
-        repetitionsCompleted: formData.get("repetitions_completed"),
-        weightUsed: formData.get("weight_used"),
-        timeDuration: formData.get("time_duration") ? new Date("1970-01-01T" + formData.get("time_duration") + "Z").toISOString() : null,
-        amrapTime: formData.get("amrap_time") ? new Date("1970-01-01T" + formData.get("amrap_time") + "Z").toISOString() : null,
+        setsCompleted: formData.get("sets_completed") || null,
+        repetitionsCompleted: formData.get("repetitions_completed") || null,
+        weightUsed: formData.get("weight_used") || null,
+        timeDuration: timeDuration || null,
+        amrapTime: formData.get("amrap_time") || null,
         resultDate: new Date().toISOString()
     };
 
-    fetch(API_URL_BASE + "/api/Routine/SubmitResults", {
+    console.log("Form data to submit:", data); // Depuración
+
+    fetch("https://localhost:7280/api/Routine/SubmitResults", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -112,3 +86,5 @@ function submitResults() {
         })
         .catch(error => console.error("Error submitting results:", error));
 }
+
+

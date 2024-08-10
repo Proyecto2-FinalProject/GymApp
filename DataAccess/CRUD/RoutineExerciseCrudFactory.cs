@@ -66,6 +66,7 @@ public class RoutineExerciseCrudFactory : CrudFactory
     }
 
 
+
     public List<RoutineExercise> RetrieveByRoutineId(int routineId)
     {
         SqlOperation operation = mapper.GetRetrieveByRoutineIdStatement(routineId);

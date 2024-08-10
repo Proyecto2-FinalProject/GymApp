@@ -10,8 +10,9 @@ namespace BL
         public void AddExerciseToRoutine(RoutineExercise routineExercise)
         {
             RoutineExerciseCrudFactory ex_crud = new RoutineExerciseCrudFactory();
-            ex_crud.Create(routineExercise);
+            ex_crud.AddExerciseToRoutine(routineExercise);  // Asegúrate de que este método esté implementado
         }
+
         public List<RoutineExercise> GetExercisesForRoutine(int routineId)
         {
             RoutineExerciseCrudFactory factory = new RoutineExerciseCrudFactory();

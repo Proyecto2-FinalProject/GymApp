@@ -55,14 +55,27 @@ namespace API.Controllers.Routines
         }
 
         [HttpPost]
-        public IActionResult AddExerciseToRoutine([FromBody] RoutineExercise routineExercise)
+        public IActionResult AddExerciseToRoutine([FromBody] RoutineExerciseCreate routineExerciseDTO)
         {
             try
             {
-                if (routineExercise == null)
+                if (routineExerciseDTO == null)
                 {
                     return BadRequest(new { success = false, message = "The request body is null" });
                 }
+
+                // Convertir el DTO a RoutineExercise
+                RoutineExercise routineExercise = new RoutineExercise
+                {
+                    routineId = routineExerciseDTO.RoutineId,
+                    exerciseId = routineExerciseDTO.ExerciseId,
+                    exerciseTypeId = routineExerciseDTO.ExerciseTypeId,
+                    sets = routineExerciseDTO.Sets,
+                    repetitions = routineExerciseDTO.Repetitions,
+                    weight = routineExerciseDTO.Weight,
+                    timeDuration = routineExerciseDTO.TimeDuration,
+                    amrapTime = routineExerciseDTO.AmrapTime
+                };
 
                 RoutineExerciseManager manager = new RoutineExerciseManager();
                 manager.AddExerciseToRoutine(routineExercise);
@@ -76,21 +89,37 @@ namespace API.Controllers.Routines
         }
 
 
+
+
         [HttpGet]
         public IActionResult GetExercisesForRoutine(int routineId)
         {
             try
             {
                 RoutineExerciseManager manager = new RoutineExerciseManager();
-                List<RoutineExercise> exercises = manager.GetExercisesForRoutine(routineId);
+                var exercises = manager.GetExercisesForRoutine(routineId);
 
-                return Ok(exercises);
+                // Asumiendo que RoutineExercise contiene los campos correctos, mapeamos los datos.
+                var exercise = exercises.Select(e => new
+                {
+                    exerciseId = e.exerciseId,
+                    exerciseName = e.exerciseName,
+                    exerciseTypeId = e.exerciseTypeId,
+                    sets = e.sets,
+                    repetitions = e.repetitions,
+                    weight = e.weight,
+                    timeDuration = e.timeDuration,
+                    amrapTime = e.amrapTime,
+                }).ToList();
+
+                return Ok(exercise);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { success = false, message = ex.Message });
             }
         }
+
 
         [HttpGet]
         public IActionResult GetRecordedResults(int routineId)
@@ -138,24 +167,24 @@ namespace API.Controllers.Routines
         }
 
         [HttpPost]
-public IActionResult SubmitResults([FromBody] RoutineResult routineResult)
-{
-    try
+    public IActionResult SubmitResults([FromBody] RoutineResult routineResult)
     {
-        RoutineResultManager manager = new RoutineResultManager();
-        manager.CreateRoutineResult(routineResult);
+        try
+        {
+            RoutineResultManager manager = new RoutineResultManager();
+            manager.CreateRoutineResult(routineResult);
 
-        // Devolver una respuesta JSON con un mensaje de éxito
-        return Json(new { success = true, message = "Routine results submitted successfully" });
+            // Devolver una respuesta JSON con un mensaje de éxito
+            return Json(new { success = true, message = "Routine results submitted successfully" });
+        }
+        catch (Exception ex)
+        {
+            // Manejar el error y devolver una respuesta JSON con un mensaje de error
+            return Json(new { success = false, message = ex.Message });
+        }
     }
-    catch (Exception ex)
-    {
-        // Manejar el error y devolver una respuesta JSON con un mensaje de error
-        return Json(new { success = false, message = ex.Message });
-    }
-}
 
 
 
-    }
+   }
 }

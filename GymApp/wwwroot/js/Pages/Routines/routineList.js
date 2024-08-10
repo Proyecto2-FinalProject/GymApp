@@ -32,6 +32,11 @@ function fetchRoutineExercises(routine) {
 function populateRoutineTable(routine, exercises) {
     const routineList = document.getElementById("routine-list");
 
+    // Formatear la fecha de creación de la rutina
+    const creationDate = new Date(routine.creationDate);
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    const formattedDate = creationDate.toLocaleDateString('es-ES', options);
+
     // Crear la fila para la rutina
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -39,7 +44,7 @@ function populateRoutineTable(routine, exercises) {
         <td>${routine.instructorUsername}</td>
         <td>${routine.name}</td>
         <td>${routine.description}</td>
-        <td>${routine.creationDate}</td>
+        <td>${formattedDate}</td> <!-- Usar la fecha formateada -->
         <td>
             <a href="/Routine/Results?routineId=${routine.routineId}" class="btn btn-primary">Results</a>
             <a href="/Routine/RecordResults?routineId=${routine.routineId}" class="btn btn-secondary">Record Results</a>
@@ -49,10 +54,10 @@ function populateRoutineTable(routine, exercises) {
 
     if (exercises && exercises.length) {
         exercises.forEach(exercise => {
-            let exerciseContent = `<strong>Exercise:</strong> ${exercise.name || 'N/A'}`;
+            let exerciseContent = `<strong>Exercise:</strong> ${exercise.exerciseName || 'N/A'}`;
 
             if (exercise.TypeName !== null) {
-                exerciseContent += `, <strong>Type:</strong> ${exercise.TypeName || 'N/A'}`;
+                exerciseContent += `, <strong>Type:</strong> ${exercise.exerciseTypeId || 'N/A'}`;
             }
             if (exercise.sets !== null) {
                 exerciseContent += `, <strong>Sets:</strong> ${exercise.sets}`;
@@ -83,5 +88,5 @@ function populateRoutineTable(routine, exercises) {
         noExerciseRow.innerHTML = `<td colspan="7" style="padding-left: 20px;">No exercises found for this routine.</td>`;
         routineList.appendChild(noExerciseRow);
     }
-
 }
+
