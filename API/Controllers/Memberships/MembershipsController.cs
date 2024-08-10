@@ -21,25 +21,52 @@ namespace API.Controllers.Memberships
         [HttpPost]
         public ActionResult ProcessPayment()
         {
-            var payment = new PaymentInfo
+            if (!Request.Form.Files.Any())
             {
-                UserId = int.Parse(Request.Form["userId"]),
-                MembershipType = Request.Form["membershipType"],
-                Amount = decimal.Parse(Request.Form["amount"]),
-                PaymentMethod = Request.Form["paymentMethod"],
-                ReceiptImage = Request.Form["receiptImage"],
-            };
- 
-            if (payment.UserId == null || payment.ReceiptImage == null)
+                return BadRequest("No file uploaded.");
+            }
+
+            var userIdString = Request.Form["userId"];
+            var membershipType = Request.Form["membershipType"];
+            var paymentMethod = Request.Form["paymentMethod"];
+            var amountString = Request.Form["amount"];
+            var receiptImageBase64 = Request.Form["receiptImageBase64"];
+
+            if (string.IsNullOrEmpty(userIdString) || string.IsNullOrEmpty(membershipType) ||
+                string.IsNullOrEmpty(paymentMethod) || string.IsNullOrEmpty(amountString) ||
+                string.IsNullOrEmpty(receiptImageBase64))
             {
                 return BadRequest("Missing required fields.");
             }
 
+            if (!int.TryParse(userIdString, out var userId))
+            {
+                return BadRequest("Invalid user ID.");
+            }
+
+            if (!decimal.TryParse(amountString, out var amount))
+            {
+                return BadRequest("Invalid amount.");
+            }
+
+            var payment = new PaymentInfo
+            {
+                UserId = userId,
+                MembershipType = membershipType,
+                Amount = amount,
+                PaymentMethod = paymentMethod,
+                ReceiptImage = receiptImageBase64, // Base64 string for receipt image
+            };
+
             string errorMessage = _membershipManager.ProcessPayment(payment);
 
-            return Ok(new { error = errorMessage });
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                return Ok(new { error = errorMessage });
+            }
+
+            return Ok(new { success = true });
         }
 
-       
     }
 }
