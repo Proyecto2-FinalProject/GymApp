@@ -6,7 +6,8 @@ namespace DataAccess.Dao
     public class SqlDao
     {
         private static SqlDao instance = new SqlDao();
-        private string _connString = "Server=localhost;Database=FitnessCenterDB;Trusted_Connection=True";
+        private string _connString = "Server=DESKTOP-001594K\\SQLEXPRESS;Database=FitnessCenterDB;Trusted_Connection=True";
+
 
         public static SqlDao GetInstance()
         {
@@ -116,7 +117,6 @@ namespace DataAccess.Dao
             return null;
         }
 
-     
     }
 
 }

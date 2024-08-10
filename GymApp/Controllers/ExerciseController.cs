@@ -2,7 +2,7 @@
 
 namespace GymApp.Controllers
 {
-    public class ExerciseController : Controller
+    public class ExercisesController : Controller
     {
 
         public async Task<IActionResult> Create()
@@ -12,6 +12,4 @@ namespace GymApp.Controllers
         
 
     }
-
-
 }

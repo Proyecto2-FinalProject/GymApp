@@ -10,11 +10,18 @@ namespace API.Controllers.Users
     [ApiController]
     public class UsersController : Controller
     {
+        private readonly UserManager _userManager;
+
+        // Constructor
+        public UsersController()
+        {
+            _userManager = new UserManager();
+        }
+
         [HttpPost]
         public ActionResult RegisterUser(User user)
         {
-            UserManager manager = new UserManager();
-            manager.RegisterUser(user);
+            _userManager.RegisterUser(user);
 
             if (user == null)
             {
@@ -25,10 +32,32 @@ namespace API.Controllers.Users
         }
 
         [HttpPost]
+        public IActionResult UpdateUser([FromBody] UpdateUserRequest user)
+        {
+            var existingUser = _userManager.GetUserById(user.Id);
+            if (existingUser == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // Solo actualizar los campos que se envían en la solicitud
+            existingUser.First_name = user.First_name;
+            existingUser.Last_name = user.Last_name;
+            existingUser.Username = user.Username;
+            existingUser.Email = user.Email;
+            existingUser.Phone_number = user.Phone_number;
+            existingUser.Birthdate = user.Birthdate;
+
+            _userManager.UpdateUser(existingUser);
+
+            return Ok(new { message = "User updated successfully" });
+        }
+
+
+        [HttpPost]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            UserManager manager = new UserManager();
-            User user = manager.Login(request.Username, request.Password);
+            User user = _userManager.Login(request.Username, request.Password);
 
             if (request == null)
             {
@@ -40,36 +69,56 @@ namespace API.Controllers.Users
                 return Unauthorized();
             }
 
-            var RoleName = manager.GetUserRoleName(user.Id);
+            var RoleName = _userManager.GetUserRoleName(user.Id);
 
-            return Ok(new { username = user.Username, role = RoleName });
+            return Ok(new { userId = user.Id, username = user.Username, role = RoleName });
         }
 
         [HttpPost]
         public IActionResult ResetPassword([FromBody] ResetPassword request)
         {
+            UserManager manager = new UserManager();
+            string error = manager.UpdatePassword(request);
+
             if (request == null || string.IsNullOrEmpty(request.Token) || string.IsNullOrEmpty(request.NewPassword))
             {
-                return BadRequest("Invalid password reset request.");
+                return BadRequest("Invalid request to reset password.");
             }
 
-            UserManager manager = new UserManager();
-            bool result = manager.UpdatePassword(request.Token, request.NewPassword);
-            if (!result)
+            return Ok(new { errorMessage = error });
+        }
+
+        [HttpGet]
+        public IActionResult GetAllUsers()
+        {
+            var users = _userManager.GetAllUsers();
+
+            if (users == null || users.Count == 0)
             {
-                return BadRequest("Invalid token or unable to reset password.");
+                return NotFound("No users found.");
             }
 
-            return Ok(new { message = "Password reset successfully." });
+            return Ok(users);
+        }
+
+        [HttpGet]
+        public IActionResult VerifyAccount([FromQuery] string otp)
+        {
+            UserManager manager = new UserManager();
+            string error = manager.VerifyAccount(otp);
+
+            if (string.IsNullOrEmpty(otp))
+            {
+                return BadRequest("Invalid request to verify account.");
+            }
+
+            return Ok(new { errorMessage = error });
         }
 
         [HttpGet]
         public User GetUser(int id)
         {
-            UserManager manager = new UserManager();
-            User user = manager.GetUserById(id);
-
-            return user;
+            return _userManager.GetUserById(id);
         }
     }
 }

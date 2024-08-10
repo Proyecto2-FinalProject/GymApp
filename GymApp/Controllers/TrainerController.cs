@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 
-namespace GymApp.Controllers
+namespace GymApp.Controllers;
+
+public class TrainerController : Controller
 {
-    public class TrainerController : Controller
+   
+    public IActionResult TrainerPage()
     {
-        public IActionResult TrainerPage()
-        {
-            return View();
-        }
+        return View();
     }
 }
+

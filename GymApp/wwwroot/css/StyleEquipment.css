@@ -1,0 +1,123 @@
+﻿
+
+/* General styles */
+body {
+    font-family: 'Lora', serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header styles */
+header {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 0;
+}
+
+    header .logo {
+        width: 150px;
+        margin: 0 20px;
+        vertical-align: middle;
+    }
+
+    header nav {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+            header nav a img {
+                width: 24px;
+                height: 24px;
+                vertical-align: middle;
+                margin-right: 8px;
+            }
+
+/* Main content styles */
+main {
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Form styles */
+.form-container {
+    margin-bottom: 20px;
+}
+
+    .form-container form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-container label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-container input {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+/* Button styles */
+.button-container {
+    text-align: right;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+/* Footer styles */
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+    footer a {
+        color: white;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            text-decoration: underline;
+        }

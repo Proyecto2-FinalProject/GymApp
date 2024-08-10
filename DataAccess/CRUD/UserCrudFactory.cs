@@ -18,18 +18,18 @@ namespace DataAccess.CRUD
             dao = SqlDao.GetInstance();
         }
 
-        public int RegisterUser(BaseClass entityDTO, string hashedPassword)
+        public string RegisterUser(BaseClass entityDTO, string hashedPassword, string baseStringSalt)
         {
-            var newUserIdParam = new SqlParameter("@NewUserId", SqlDbType.Int)
+            var errorMessage = new SqlParameter("@errorMessage", SqlDbType.VarChar, 255)
             {
                 Direction = ParameterDirection.Output
             };
 
-            SqlOperation operation = _mapper.GetRegisterUser(entityDTO, hashedPassword, newUserIdParam);
+            SqlOperation operation = _mapper.GetRegisterUser(entityDTO, hashedPassword, baseStringSalt, errorMessage);
             dao.ExecuteStoredProcedure(operation);
 
-            int userId = Convert.ToInt32(newUserIdParam.Value);
-            return userId;
+            string error = errorMessage.Value as string;
+            return error;
         }
 
         public string GetUserRoleName(int id)
@@ -37,12 +37,6 @@ namespace DataAccess.CRUD
             SqlOperation operation = _mapper.GetUserRoleName(id);
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
             return result.ContainsKey("role_name") ? result["role_name"].ToString() : null;
-        }
-
-        public void RegisterSalt(int userId, string salt)
-        {
-            SqlOperation operation = _mapper.GetRegisterSalt(userId, salt);
-            dao.ExecuteStoredProcedure(operation);
         }
 
         public BaseClass RetrieveUserByUsername(string username)
@@ -60,18 +54,49 @@ namespace DataAccess.CRUD
             return result.ContainsKey("salt") ? result["salt"].ToString() : null;
         }
 
+        //Metodo para guardar el token de recuperacion de la contraseña
         public bool AddResetToken(int userId, string token)
         {
-            SqlOperation operation = _mapper.GetRegisterToken(userId, token);
+            SqlOperation operation = _mapper.GetAddToken(userId, token);
             dao.ExecuteStoredProcedure(operation);
             return true;
         }
 
-        public bool UpdatePasswordByToken(string token, string hashedPassword, string salt)
+        //Metodo para guardar el OTP en la tabla usuarios 
+        public bool AddOtpCode(string email, string otp)
         {
-            SqlOperation operation = _mapper.GetUpdatePasswordByToken(token, hashedPassword, salt);
+            SqlOperation operation = _mapper.GetAddOtp(email, otp);
             dao.ExecuteStoredProcedure(operation);
             return true;
+        }
+
+        //Metodo para verificar el email con el OTP
+        public string VerifyAccount(string otp)
+        {
+            var errorMessage = new SqlParameter("@errorMessage", SqlDbType.VarChar, 255)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            SqlOperation operation = _mapper.VerifyAccount(otp, errorMessage);
+            dao.ExecuteStoredProcedure(operation);
+
+            string error = errorMessage.Value as string;
+            return error;
+        }
+
+        public string UpdatePasswordByToken(string token, string hashedPassword, string salt, string newPassword, string confirmPassword)
+        {
+            var errorMessage = new SqlParameter("@errorMessage", SqlDbType.VarChar, 255)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            SqlOperation operation = _mapper.GetUpdatePasswordByToken(token, hashedPassword, salt, newPassword, confirmPassword, errorMessage);
+            dao.ExecuteStoredProcedure(operation);
+
+            string error = errorMessage.Value as string;
+            return error;
         }
 
         public BaseClass RetrieveByEmail(string email)
@@ -97,8 +122,10 @@ namespace DataAccess.CRUD
 
         public override void Update(BaseClass entityDTO)
         {
-            throw new NotImplementedException();
+            SqlOperation operation = _mapper.GetUpdateStatement((User)entityDTO);
+                dao.ExecuteStoredProcedure(operation);
         }
+
 
         public override void Delete(BaseClass entityDTO)
         {

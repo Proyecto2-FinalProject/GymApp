@@ -10,9 +10,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//configuracion de Api para enviar emails 
 builder.Services.Configure<BrevoSettings>(builder.Configuration.GetSection("Brevo"));
 builder.Services.AddScoped<EmailManager>();
 
+//configuracion del cors policy 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "MyCorsPolicy",
@@ -24,6 +26,19 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Configuracion del uso de sesiones
+builder.Services.AddDistributedMemoryCache(); // Necesario para la sesión
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Configura el tiempo de expiración de la sesión
+    options.Cookie.HttpOnly = true; // Configuración de seguridad para cookies
+    options.Cookie.IsEssential = true; // Necesario para GDPR compliance
+});
+
+// Agregar Razor Pages, MVC, etc.
+builder.Services.AddControllersWithViews();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,13 +48,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseCors("MyCorsPolicy");
+
+app.UseSession(); 
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseCors("MyCorsPolicy");
 
 app.Run();
 
