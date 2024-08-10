@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BL;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace API.Controllers.Users
 {
     [EnableCors("MyCorsPolicy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : Controller
     {
         private readonly UserManager _userManager;
 

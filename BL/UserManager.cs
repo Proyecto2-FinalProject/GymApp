@@ -20,9 +20,7 @@ namespace BL
             string baseStringPassword = Convert.ToBase64String(hashedPassword);
             string baseStringSalt = Convert.ToBase64String(salt);
 
-            string error = us_crud.RegisterUser(user, baseStringPassword, baseStringSalt);
-
-            return error; 
+            return us_crud.RegisterUser(user, baseStringPassword, baseStringSalt);
         }
 
         public string GetUserRoleName(int id)

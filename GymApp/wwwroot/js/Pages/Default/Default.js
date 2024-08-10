@@ -1,5 +1,6 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     const membershipButtons = document.querySelectorAll(".membership-button");
+    const userId = localStorage.getItem('userId');
 
     membershipButtons.forEach(button => {
         button.addEventListener("click", function () {
@@ -31,25 +32,39 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     const formData = result.value;
+                    const receiptImageFile = formData.get('receiptImage');
 
-                    $.ajax({
-                        url: '/YourController/ProcessPayment',
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function (data) {
-                            if (data.success) {
-                                Swal.fire('Success!', 'Your payment has been submitted.', 'success');
-                            } else {
-                                Swal.fire('Error!', 'There was an error processing your payment.', 'error');
-                            }
-                        },
-                        error: function (error) {
-                            console.error('Error:', error);
-                            Swal.fire('Error!', 'There was an error processing your payment.', 'error');
-                        }
-                    });
+                    if (receiptImageFile) {
+                        const reader = new FileReader();
+
+                        reader.onload = function () {
+                            // Añadir la imagen codificada en Base64 al FormData
+                            formData.append('receiptImageBase64', reader.result.split(',')[1]);
+                            formData.append('userId', userId); // Añadir userId al formData
+                           
+                            // Enviar los datos al servidor
+                            $.ajax({
+                                url: '/Membership/ProcessPayment',
+                                type: 'POST',
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function (data) {
+                                    if (data.success) {
+                                        Swal.fire('Success!', 'Your payment has been submitted.', 'success');
+                                    } else {
+                                        Swal.fire('Error!', 'There was an error processing your payment.', 'error');
+                                    }
+                                },
+                                error: function (error) {
+                                    console.error('Error:', error);
+                                    Swal.fire('Error!', 'There was an error processing your payment.', 'error');
+                                }
+                            });
+                        };
+
+                        reader.readAsDataURL(receiptImageFile);
+                    }
                 }
             });
         });
