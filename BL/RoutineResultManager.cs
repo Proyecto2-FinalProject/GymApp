@@ -16,6 +16,14 @@ namespace BL
             RoutineResultCrudFactory crud = new RoutineResultCrudFactory();
             return crud.RetrieveByRoutineId<RoutineResult>(routineId);
         }
+ 
+        public void CreateRoutineResult(RoutineResult routineResult)
+        {
+             RoutineResultCrudFactory resultCrud = new RoutineResultCrudFactory();
+             resultCrud.Create(routineResult);
+        }
+        
+
     }
 }
 

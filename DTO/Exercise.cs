@@ -9,3 +9,4 @@
         public string primaryMuscle { get; set; }
     }
 }
+

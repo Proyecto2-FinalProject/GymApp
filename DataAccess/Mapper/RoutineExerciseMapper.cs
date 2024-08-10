@@ -6,6 +6,7 @@ namespace DataAccess.Mapper
 {
     public class RoutineExerciseMapper : ICrudStatements, IObjectMapper
     {
+
         public List<BaseClass> BuildObjects(List<Dictionary<string, object>> objectRows)
         {
             var list = new List<BaseClass>();

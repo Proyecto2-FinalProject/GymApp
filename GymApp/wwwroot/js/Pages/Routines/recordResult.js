@@ -1,88 +1,114 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Obtener el ID de la rutina desde la URL
+document.addEventListener("DOMContentLoaded", function () {
+    const routineId = getRoutineIdFromUrl();
+    document.getElementById("routine_id").value = routineId;
+    fetchExercisesForRoutine(routineId);
+
+    // Manejar el envío del formulario
+    document.getElementById("recordResultsForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        submitResults();
+    });
+});
+
+function getRoutineIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    const routineId = urlParams.get('routineId');
+    return urlParams.get("routineId");
+}
 
-    if (!routineId) {
-        console.error('Routine ID not found in the URL');
-        return;
-    }
-
-    // Obtener los ejercicios de la rutina
-    fetch(`https://localhost:7280/api/Routine/GetExercisesForRoutine?routineId=${routineId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
+function fetchExercisesForRoutine(routineId) {
+    const apiUrl = API_URL_BASE + "/api/Routine/GetExercisesForRoutine?routineId=" + routineId;
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(exercises => {
+            populateExerciseSelect(exercises);
         })
-        .then(data => {
-            const exerciseSelect = document.getElementById('exercise_id');
-            if (exerciseSelect) {
-                data.forEach(exercise => {
-                    const option = document.createElement('option');
-                    option.value = exercise.exerciseId;
-                    option.textContent = exercise.name;
-                    option.dataset.type = exercise.exerciseTypeId;
-                    exerciseSelect.appendChild(option);
-                });
-            } else {
-                console.error('Element with ID "exercise_id" not found');
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching exercises for the routine:', error);
-        });
+        .catch(error => console.error("Error fetching exercises:", error));
+}
 
-    // Manejar el cambio de selección del ejercicio
-    document.getElementById('exercise_id').addEventListener('change', function () {
-        const selectedOption = this.options[this.selectedIndex];
-        const exerciseTypeId = selectedOption.dataset.type;
-        const exerciseTypeIdInput = document.getElementById('exercise_type_id');
+function populateExerciseSelect(exercises) {
+    const selectElement = document.getElementById("exercise_id");
+    selectElement.innerHTML = ""; // Limpiar opciones actuales
 
-        if (exerciseTypeIdInput) {
-            exerciseTypeIdInput.value = exerciseTypeId;
-            toggleFieldsBasedOnType(exerciseTypeId);
-        } else {
-            console.error('Element with ID "exercise_type_id" not found');
-        }
+    exercises.forEach(exercise => {
+        const option = document.createElement("option");
+        option.value = exercise.exerciseId;
+        option.textContent = exercise.ExerciseName;
+        selectElement.appendChild(option);
     });
 
-    // Función para habilitar/deshabilitar campos según el tipo de ejercicio
-    function toggleFieldsBasedOnType(exerciseTypeId) {
-        const timeDurationField = document.getElementById('time_duration');
-        const amrapTimeField = document.getElementById('amrap_time');
-        const setsField = document.getElementById('sets_completed');
-        const repetitionsField = document.getElementById('repetitions_completed');
-        const weightField = document.getElementById('weight_used');
-
-        // Resetear los campos
-        timeDurationField.disabled = false;
-        amrapTimeField.disabled = false;
-        setsField.disabled = false;
-        repetitionsField.disabled = false;
-        weightField.disabled = false;
-
-        switch (parseInt(exerciseTypeId)) {
-            case 1: // Weight-Based
-                timeDurationField.disabled = true;
-                amrapTimeField.disabled = true;
-                break;
-            case 2: // Time-Based
-                setsField.disabled = true;
-                repetitionsField.disabled = true;
-                weightField.disabled = true;
-                amrapTimeField.disabled = true;
-                break;
-            case 3: // AMRAP
-                setsField.disabled = true;
-                repetitionsField.disabled = true;
-                weightField.disabled = true;
-                timeDurationField.disabled = true;
-                break;
-            default:
-                console.warn('Unknown exercise type ID:', exerciseTypeId);
-                break;
+    // Manejar el cambio de selección del ejercicio
+    selectElement.addEventListener("change", function () {
+        const selectedExerciseId = this.value;
+        const selectedExercise = exercises.find(exercise => exercise.exerciseId == selectedExerciseId);
+        if (selectedExercise) {
+            document.getElementById("exercise_type_id").value = selectedExercise.exerciseTypeId;
+            handleExerciseTypeChange(selectedExercise.exerciseTypeId);
         }
+    });
+}
+
+function handleExerciseTypeChange(exerciseTypeId) {
+    const exerciseType = getExerciseTypeById(exerciseTypeId); // Suponiendo que tienes una función para obtener el tipo de ejercicio
+    const timeDurationField = document.getElementById("time_duration");
+    const amrapTimeField = document.getElementById("amrap_time");
+
+    switch (exerciseType) {
+        case "AMRAP":
+            timeDurationField.disabled = true;
+            amrapTimeField.disabled = false;
+            break;
+        case "Time-Based":
+            timeDurationField.disabled = false;
+            amrapTimeField.disabled = true;
+            break;
+        case "Weight-Based":
+            timeDurationField.disabled = true;
+            amrapTimeField.disabled = true;
+            break;
+        default:
+            timeDurationField.disabled = false;
+            amrapTimeField.disabled = false;
+            break;
     }
-});
+}
+
+function getExerciseTypeById(exerciseTypeId) {
+    // Deberías tener un objeto o lista con los tipos de ejercicio
+    const exerciseTypes = {
+        1: "AMRAP",
+        2: "Time-Based",
+        3: "Weight-Based"
+    };
+    return exerciseTypes[exerciseTypeId] || "Unknown";
+}
+
+function submitResults() {
+    const formData = new FormData(document.getElementById("recordResultsForm"));
+    const data = {
+        routineId: formData.get("routine_id"),
+        exerciseId: formData.get("exercise_id"),
+        setsCompleted: formData.get("sets_completed"),
+        repetitionsCompleted: formData.get("repetitions_completed"),
+        weightUsed: formData.get("weight_used"),
+        timeDuration: formData.get("time_duration") ? new Date("1970-01-01T" + formData.get("time_duration") + "Z").toISOString() : null,
+        amrapTime: formData.get("amrap_time") ? new Date("1970-01-01T" + formData.get("amrap_time") + "Z").toISOString() : null,
+        resultDate: new Date().toISOString()
+    };
+
+    fetch(API_URL_BASE + "/api/Routine/SubmitResults", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert(result.message);
+            } else {
+                alert("Error: " + result.message);
+            }
+        })
+        .catch(error => console.error("Error submitting results:", error));
+}

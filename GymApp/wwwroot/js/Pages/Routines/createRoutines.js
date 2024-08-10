@@ -33,7 +33,7 @@ const loadMembers = () => {
         memberSelect.empty(); // Limpiar opciones anteriores
         memberSelect.append(new Option("Select a Member", "")); // Añadir opción por defecto
         result.forEach(member => {
-            memberSelect.append(new Option(member.username, member.member_id));
+            memberSelect.append(new Option(member.username, member.member_id)); // Asegúrate de que el valor es el ID
         });
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.error(textStatus, errorThrown);
@@ -45,11 +45,11 @@ const handleCreateRoutine = (event) => {
     event.preventDefault();
 
     const routine = {
-        memberId: $("#member_id").val(),
+        memberId: $("#member_id").val(), // Esto debería ser el ID del miembro seleccionado
         instructorId: $("#instructor_id").val(),
         name: $("#name").val(),
-        description: $("#description").val(),
-        creationDate: $("#creation_date").val()
+        description: $("#description").val()
+        // No incluir creationDate aquí
     };
 
     const apiUrl = `${API_URL_BASE}/api/Routine/CreateRoutine`;
@@ -57,7 +57,6 @@ const handleCreateRoutine = (event) => {
     $.ajax({
         url: apiUrl,
         method: "POST",
-        hasContent: true,
         data: JSON.stringify(routine),
         contentType: "application/json;charset=utf-8",
         dataType: "json",

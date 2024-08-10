@@ -35,7 +35,7 @@ namespace API.Controllers.Routines
             }
         }
 
-
+  
 
         [HttpGet]
         public Routine GetRoutine(int id)
@@ -129,6 +129,31 @@ namespace API.Controllers.Routines
             }
         }
 
+        [HttpGet]
+        public List<RoutineList> GetAllRoutineList()
+        {
+            RoutineListManager manager = new RoutineListManager();
+            List<RoutineList> routineList = manager.GetAllRoutineList();
+            return routineList;
+        }
+
+        [HttpPost]
+public IActionResult SubmitResults([FromBody] RoutineResult routineResult)
+{
+    try
+    {
+        RoutineResultManager manager = new RoutineResultManager();
+        manager.CreateRoutineResult(routineResult);
+
+        // Devolver una respuesta JSON con un mensaje de éxito
+        return Json(new { success = true, message = "Routine results submitted successfully" });
+    }
+    catch (Exception ex)
+    {
+        // Manejar el error y devolver una respuesta JSON con un mensaje de error
+        return Json(new { success = false, message = ex.Message });
+    }
+}
 
 
 

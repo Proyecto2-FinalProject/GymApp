@@ -30,7 +30,7 @@ namespace DataAccess.Mapper
                 SetsCompleted = row["sets_completed"] != DBNull.Value ? Convert.ToInt32(row["sets_completed"]) : (int?)null,
                 RepetitionsCompleted = row["repetitions_completed"] != DBNull.Value ? Convert.ToInt32(row["repetitions_completed"]) : (int?)null,
                 WeightUsed = row["weight_used"] != DBNull.Value ? Convert.ToDecimal(row["weight_used"]) : (decimal?)null,
-                TimeDuration = row["time_duration"] != DBNull.Value ? TimeSpan.Parse(row["time_duration"].ToString()) : (TimeSpan?)null,
+                TimeDuration = row["time_duratdocument.addEventListener('DOMContentLoaded', function () {\r\n    const urlParams = new URLSearchParams(window.location.search);\r\n    const routineId = urlParams.get('routineId');\r\n\r\n    if (routineId) {\r\n        document.getElementById('routine_id').value = routineId;\r\n    } else {\r\n        console.error('Routine ID not found in URL');\r\n    }\r\n});\r\nion"] != DBNull.Value ? TimeSpan.Parse(row["time_duration"].ToString()) : (TimeSpan?)null,
                 AmrapTime = row["amrap_time"] != DBNull.Value ? TimeSpan.Parse(row["amrap_time"].ToString()) : (TimeSpan?)null,
                 ResultDate = Convert.ToDateTime(row["result_date"])
             };
@@ -41,7 +41,7 @@ namespace DataAccess.Mapper
         public SqlOperation GetCreateStatement(BaseClass entityDTO)
         {
             SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "AddRoutineResults";
+            operation.ProcedureName = "dbo.sp_addRoutineResults";
 
             var routineResult = (RoutineResult)entityDTO;
 

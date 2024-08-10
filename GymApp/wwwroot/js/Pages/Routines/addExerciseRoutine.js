@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
     fetch('https://localhost:7280/api/Routine/GetAllRoutines') //Realiza una solicitud a la API para obtener todas las rutinas.
         .then(response => {
@@ -136,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 repetitionsField.disabled = true;
                 weightField.disabled = true;
                 amrapTimeField.disabled = true;
-                timeDurationField.disabled = false; 
+                timeDurationField.disabled = false;
                 break;
             case 3: // AMRAP
                 setsField.disabled = true;

@@ -22,5 +22,7 @@ namespace BL
             ExerciseCrudFactory ex_crud = new ExerciseCrudFactory();
             return ex_crud.RetrieveAll<Exercise>();
         }
+
+
     }
 }

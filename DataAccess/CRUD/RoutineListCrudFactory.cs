@@ -2,30 +2,18 @@
 using DataAccess.Dao;
 using DataAccess.Mapper;
 using DTO;
-using Microsoft.VisualBasic;
 
 namespace DataAccess.CRUD
 {
-    public class RoutineCrudFactory : CrudFactory
+    public class RoutineListCrudFactory : CrudFactory
     {
-        private RoutineMapper mapper;
+        private RoutineListMapper mapper;
 
-        public RoutineCrudFactory() : base()
+        public RoutineListCrudFactory() : base()
         {
-            mapper = new RoutineMapper();
+            mapper = new RoutineListMapper();
             dao = SqlDao.GetInstance();
         }
-
-        public override void Create(BaseClass entityDTO)
-        {
-            SqlOperation operation = mapper.GetCreateStatement(entityDTO);
-            dao.ExecuteStoredProcedure(operation);
-        }
-        public override void Update(BaseClass entityDTO)
-        {
-            throw new NotImplementedException();
-        }
-
 
         public override List<T> RetrieveAll<T>()
         {
@@ -51,23 +39,24 @@ namespace DataAccess.CRUD
             SqlOperation operation = mapper.GetRetrieveByIdStatement(id);
 
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
-            var Routine = mapper.BuildObject(result);
+            var routine = mapper.BuildObject(result);
 
-            return Routine;
-
+            return routine;
         }
-        public void AddExerciseToRoutine(RoutineExercise routineExercise)
+
+        public override void Create(BaseClass entityDTO)
         {
-            RoutineExerciseMapper exerciseMapper = new RoutineExerciseMapper();
-            SqlOperation operation = exerciseMapper.GetCreateStatement(routineExercise);
-            dao.ExecuteStoredProcedure(operation);
+            throw new NotImplementedException("Not applicable for RoutineList");
+        }
+
+        public override void Update(BaseClass entityDTO)
+        {
+            throw new NotImplementedException();
         }
 
         public override void Delete(BaseClass entityDTO)
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

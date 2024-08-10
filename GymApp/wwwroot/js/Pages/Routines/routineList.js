@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 }); // Carga del DOM y Fetch de Rutinas
 
 function fetchRoutines() {
-    const apiUrl = API_URL_BASE + "/api/Routine/GetAllRoutines"; // Define la URL de la API para obtener todas las rutinas
+    const apiUrl = API_URL_BASE + "/api/Routine/GetAllRoutineList"; // Define la URL de la API para obtener todas las rutinas
     fetch(apiUrl) // Realiza una solicitud HTTP a la URL de la API definida.
         .then(response => response.json()) // Convierte la respuesta en formato JSON.
         .then(routines => {
@@ -16,7 +16,7 @@ function fetchRoutines() {
             }
         })
         .catch(error => console.error("Error fetching routines:", error)); // Maneja los datos obtenidos de la API, Si hay rutinas disponibles, se llama a fetchRoutineExercises para cada rutina
-        // Si no hay rutinas, se muestra un error en la consola.
+    // Si no hay rutinas, se muestra un error en la consola.
 }
 
 function fetchRoutineExercises(routine) {
@@ -35,8 +35,8 @@ function populateRoutineTable(routine, exercises) {
     // Crear la fila para la rutina
     const row = document.createElement("tr");
     row.innerHTML = `
-        <td>${routine.username || 'N/A'}</td> <!-- Mostrar el username en lugar de memberId -->
-        <td>${routine.instructorId}</td>
+        <td>${routine.memberUsername || 'N/A'}</td> <!-- Mostrar el username en lugar de memberId -->
+        <td>${routine.instructorUsername}</td>
         <td>${routine.name}</td>
         <td>${routine.description}</td>
         <td>${routine.creationDate}</td>
@@ -83,4 +83,5 @@ function populateRoutineTable(routine, exercises) {
         noExerciseRow.innerHTML = `<td colspan="7" style="padding-left: 20px;">No exercises found for this routine.</td>`;
         routineList.appendChild(noExerciseRow);
     }
+
 }
