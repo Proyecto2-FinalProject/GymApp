@@ -8,33 +8,33 @@
 
 
     <div class="container">
-        <main>
-            <h1>Create Routine</h1>
-            <div class="form-container">
-                <form id="createRoutineForm" action="submit">
-                    <label for="exercise-name">Member ID</label>
-                    <input type="text" id="member_id" name="member_id">
+    <main>
+        <h1>Create Routine</h1>
+        <div class="form-container">
+            <form id="createRoutineForm" action="submit">
+                <label for="member_id">Member</label>
+                <select id="member_id" name="member_id">
+                    <option value="">Select a Member</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
 
-                    <label for="instructor_id">Instructor ID</label>
-                    <input type="text" id="instructor_id" name="instructor_id">
+                <label for="instructor_id">Instructor</label>
+                <select id="instructor_id" name="instructor_id">
+                    <option value="">Select an Instructor</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
 
-                    <label for="measurement_appointment_id">Measurement Appointment ID</label>
-                    <input type="text" id="measurement_appointment_id" name="measurement_appointment_id">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name">
 
-                    <label for="sets">Name</label>
-                    <input type="text" id="name" name="name">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" required>
 
-                    <label for="description">Description</label>
-                    <input type="text" id="description" name="description">
+                <div class="button-container">
+                    <button type="submit">Create</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
 
-                    <label for="creation_date">Creation Date</label>
-                <input type="datetime-local" id="creation_date" name="creation_date">
-
-
-                    <div class="button-container">
-                        <button type="submit">Create</button>
-                    </div>
-                </form>
-            </div>
-        </main>
-    </div>

@@ -12,5 +12,8 @@ namespace DataAccess.Crud
         public abstract void Delete(BaseClass entityDTO);
         public abstract List<T> RetrieveAll<T>();
         public abstract BaseClass RetrieveById(int id);
+
+
+
     }
 }

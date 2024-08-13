@@ -37,7 +37,9 @@
   <ItemGroup>
     <Content Remove="wwwroot\js\Pages\" />
     <Content Remove="wwwroot\js\Pages\Exercises\createExercises.js" />
-    <Content Remove="wwwroot\js\Pages\Routines\selectExercises.js" />
+    <Content Remove="wwwroot\js\Pages\Routines\recordedResults.js" />
+    <Content Remove="wwwroot\js\Pages\Routines\recordResult.js" />
+    <Content Remove="wwwroot\js\Pages\Routines\routineList.js" />
     <Content Remove="wwwroot\js\Pages\User\" />
     <Content Remove="wwwroot\js\Pages\Admin\" />
     <Content Remove="wwwroot\js\Pages\Trainer\" />
@@ -51,11 +53,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\Pages\Exercises\createExercises.js" />
-    <None Include="wwwroot\js\Pages\Routines\selectExercises.js" />
+    <None Include="wwwroot\js\Pages\Routines\recordedResults.js" />
+    <None Include="wwwroot\js\Pages\Routines\recordResult.js" />
+    <None Include="wwwroot\js\Pages\Routines\routineList.js" />
     <None Include="wwwroot\js\Pages\Routines\createRoutines.js" />
-    <None Include="wwwroot\js\Pages\Routines\routinesList.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.7.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\Shared\_LayoutRoutineExercise.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 </Project>

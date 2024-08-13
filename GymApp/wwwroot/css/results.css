@@ -1,0 +1,27 @@
+.container {
+    font-family: 'Lora', serif;
+    padding: 20px;
+}
+
+h1 {
+    color: #1e4f4f;
+}
+
+.results-container {
+    margin-top: 20px;
+}
+
+#resultsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    #resultsTable th, #resultsTable td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #resultsTable th {
+        background-color: #1e4f4f;
+        color: white;
+    }

@@ -1,3 +1,33 @@
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('https://localhost:7280/api/ExerciseType/GetAllExerciseTypes')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const exerciseTypeSelect = document.getElementById('exercise_type_id');
+            if (exerciseTypeSelect) {
+                data.forEach(exerciseType => {
+                    const option = document.createElement('option');
+                    option.value = exerciseType.exerciseTypeId;
+                    option.textContent = exerciseType.typeName;
+                    exerciseTypeSelect.appendChild(option);
+                });
+            } else {
+                console.error('Element with ID "exercise_type_id" not found');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching exercise types:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to fetch exercise types. Please try again.',
+                icon: 'error'
+            });
+        });
+});
 const handleCreateExercise = (event) => {
     event.preventDefault();
 

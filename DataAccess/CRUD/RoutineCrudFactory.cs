@@ -25,10 +25,8 @@ namespace DataAccess.CRUD
         {
             throw new NotImplementedException();
         }
-        public override void Delete(BaseClass entityDTO)
-        {
-            throw new NotImplementedException();
-        }
+
+
         public override List<T> RetrieveAll<T>()
         {
             SqlOperation operation = mapper.GetRetrieveAllStatement();
@@ -51,12 +49,25 @@ namespace DataAccess.CRUD
         public override BaseClass RetrieveById(int id)
         {
             SqlOperation operation = mapper.GetRetrieveByIdStatement(id);
-          
+
             Dictionary<string, object> result = dao.ExecuteStoredProcedureWithUniqueResult(operation);
             var Routine = mapper.BuildObject(result);
 
             return Routine;
 
-        } 
+        }
+        public void AddExerciseToRoutine(RoutineExercise routineExercise)
+        {
+            RoutineExerciseMapper exerciseMapper = new RoutineExerciseMapper();
+            SqlOperation operation = exerciseMapper.GetCreateStatement(routineExercise);
+            dao.ExecuteStoredProcedure(operation);
+        }
+
+        public override void Delete(BaseClass entityDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

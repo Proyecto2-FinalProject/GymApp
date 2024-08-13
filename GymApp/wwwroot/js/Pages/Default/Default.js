@@ -58,7 +58,7 @@
                                 } else {
                                     Swal.fire({
                                         title: 'Success!',
-                                        text: 'Your payment has been submitted.',
+                                        text: 'Your payment has been sent and is pending approval!',
                                         icon: 'success'
                                     }).then(() => {
                                         // Redirigir a la página de confirmación o de inicio

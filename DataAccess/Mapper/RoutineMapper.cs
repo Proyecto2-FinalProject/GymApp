@@ -26,7 +26,7 @@ namespace DataAccess.Mapper
         {
             var routine = new Routine()
             {
-                Id = int.Parse(result["Id"].ToString()),
+                routineId = int.Parse(result["routine_id"].ToString()),
                 memberId = int.Parse(result["member_id"].ToString()),
                 instructorId = int.Parse(result["instructor_id"].ToString()),
                 measurementAppointmentId = int.Parse(result["measurement_appointment_id"].ToString()),
