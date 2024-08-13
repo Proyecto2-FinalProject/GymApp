@@ -16,6 +16,7 @@
     <None Remove="Views\Receptionist\" />
     <None Remove="Views\Trainer\" />
     <None Remove="Views\Default\" />
+    <None Remove="Views\Membership\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\User\" />
@@ -31,6 +32,7 @@
     <Folder Include="Views\Default\" />
     <Folder Include="wwwroot\js\Pages\Receptionist\" />
     <Folder Include="wwwroot\js\Pages\Membership\" />
+    <Folder Include="Views\Membership\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\Pages\" />
