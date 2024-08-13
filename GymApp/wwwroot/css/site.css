@@ -1,8 +1,8 @@
 ﻿/* Estilo general */
 body {
     font-family: 'Lora', serif;
-    background-color: #1e4f4f; /* Fondo verde oscuro para todo el cuerpo */
-    color: white;
+    background-color:red; /* Fondo verde oscuro para todo el cuerpo */
+    color: #1e4f4f;
     margin: 0;
     padding: 0;
 }
@@ -111,7 +111,7 @@ body {
 
 .contact-info a {
     display: block;
-    color: white;
+    color: #1e4f4f;
     margin-bottom: 10px;
 }
 
