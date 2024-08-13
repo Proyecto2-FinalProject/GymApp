@@ -258,9 +258,6 @@ namespace DataAccess.Mapper
             operation.AddVarcharParam("email", user.Email);
             operation.AddVarcharParam("phone_number", user.Phone_number);
             operation.AddDateTimeParam("birthdate", user.Birthdate);
-            operation.AddVarcharParam("password", user.Password);
-            operation.AddVarcharParam("id_image", user.Id_image);
-            operation.AddVarcharParam("profile_image", user.Profile_image);
 
             return operation;
         }
