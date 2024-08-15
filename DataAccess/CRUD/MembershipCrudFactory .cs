@@ -32,6 +32,35 @@ namespace DataAccess.CRUD
             return error;
         }
 
+        public string ApproveMembershipPayment(BaseClass entityDTO)
+        {
+            var errorMessage = new SqlParameter("@errorMessage", SqlDbType.VarChar, 255)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            SqlOperation operation = mapper.GetApproveMembershipPayment(entityDTO, errorMessage);
+            dao.ExecuteStoredProcedure(operation);
+
+            string error = errorMessage.Value as string;
+            return error;
+        }
+
+        public string UploadPaymentReceipt(BaseClass entityDTO)
+        {
+            var errorMessage = new SqlParameter("@errorMessage", SqlDbType.VarChar, 255)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            SqlOperation operation = mapper.GetUploadPaymentReceipt(entityDTO, errorMessage);
+            dao.ExecuteStoredProcedure(operation);
+
+            string error = errorMessage.Value as string;
+            return error;
+        }
+
+
         public override void Create(BaseClass entityDTO)
         {
             throw new NotImplementedException();
@@ -53,17 +82,17 @@ namespace DataAccess.CRUD
 
             List<Dictionary<string, object>> result = dao.ExecuteStoredProcedureWithQuery(operation);
 
-            List<BaseClass> mappedRoutines = mapper.BuildObjects(result);
+            List<BaseClass> mappedMembership = mapper.BuildObjects(result);
 
-            List<T> routineList = new List<T>();
+            List<T> membershipList = new List<T>();
 
-            foreach (var routine in mappedRoutines)
+            foreach (var membership in mappedMembership)
             {
-                var convertedRoutine = (T)Convert.ChangeType(routine, typeof(T));
-                routineList.Add(convertedRoutine);
+                var convertedRoutine = (T)Convert.ChangeType(membership, typeof(T));
+                membershipList.Add(convertedRoutine);
             }
 
-            return routineList;
+            return membershipList;
         }
 
         public override BaseClass RetrieveById(int id)
