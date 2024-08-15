@@ -106,7 +106,7 @@ button {
 footer {
     background-color: #343a40;
     color: white;
-    padding: 10px 0;
+    padding: 7px 0;
     text-align: center;
     position: fixed;
     width: 100%;
@@ -121,3 +121,7 @@ footer {
         footer a:hover {
             text-decoration: underline;
         }
+
+div.container.text-center {
+    color: white;
+}

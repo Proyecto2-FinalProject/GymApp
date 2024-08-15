@@ -2,7 +2,7 @@
 body {
     font-family: 'Lora', serif;
     background-color: lightgray;
-    color: white;
+    color: #1e4f4f;
     margin: 0;
     padding: 0;
 }
@@ -10,7 +10,6 @@ body {
 /* Contenedor principal */
 .container {
     width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;

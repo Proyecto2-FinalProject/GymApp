@@ -1,0 +1,62 @@
+﻿/* Estilo general */
+body {
+    font-family: 'Lora', serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center; /* Centra el texto y los botones */
+}
+
+h2 {
+    font-size: 2.5em;
+    color: #1e4f4f;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Estilo para los botones */
+a.btn {
+    display: inline-block;
+    padding: 20px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    font-size: 1.5em;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 250px; /* Tamaño fijo de los botones */
+    margin: 10px; /* Espaciado entre botones */
+}
+
+a.btn-primary {
+    background-color: #1e4f4f;
+    color: white;
+}
+
+    a.btn-primary:hover {
+        background-color: #164242;
+        transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+a.btn-secondary {
+    background-color: #C4C4C4;
+    color: #333;
+}
+
+    a.btn-secondary:hover {
+        background-color: #b3b3b3;
+        transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
