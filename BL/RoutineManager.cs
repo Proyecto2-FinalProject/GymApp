@@ -25,6 +25,13 @@ namespace BL
             return ex_crud.RetrieveAll<Routine>();
         }
 
+        public void DeleteRoutine(int routineId)
+        {
+            RoutineCrudFactory crudFactory = new RoutineCrudFactory();
+            Routine routine = new Routine { routineId = routineId };
+            crudFactory.Delete(routine);
+        }
+
 
     }
 }

@@ -132,6 +132,9 @@ document.addEventListener('DOMContentLoaded', function () {
             case 1: // Weight-Based
                 timeDurationField.disabled = true;
                 amrapTimeField.disabled = true;
+                setsField.disabled = false;
+                repetitionsField.disabled = false;
+                weightField.disabled = false;
                 break;
             case 2: // Time-Based
                 setsField.disabled = true;

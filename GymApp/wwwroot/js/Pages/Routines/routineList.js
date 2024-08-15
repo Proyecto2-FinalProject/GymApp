@@ -40,14 +40,15 @@ function populateRoutineTable(routine, exercises) {
     // Crear la fila para la rutina
     const row = document.createElement("tr");
     row.innerHTML = `
-        <td>${routine.memberUsername || 'N/A'}</td> <!-- Mostrar el username en lugar de memberId -->
+        <td>${routine.memberUsername || 'N/A'}</td>
         <td>${routine.instructorUsername}</td>
         <td>${routine.name}</td>
         <td>${routine.description}</td>
-        <td>${formattedDate}</td> <!-- Usar la fecha formateada -->
+        <td>${formattedDate}</td>
         <td>
             <a href="/Routine/Results?routineId=${routine.routineId}" class="btn btn-primary">Results</a>
             <a href="/Routine/RecordResults?routineId=${routine.routineId}" class="btn btn-secondary">Record Results</a>
+            <button class="btn btn-danger" onclick="deleteRoutine(${routine.routineId})">Delete</button>
         </td>
     `;
     routineList.appendChild(row);
@@ -90,3 +91,64 @@ function populateRoutineTable(routine, exercises) {
     }
 }
 
+// Definir la función deleteRoutine fuera de populateRoutineTable
+function deleteRoutine(routineId) {
+    const apiUrl = `https://localhost:7280/api/Routine/DeleteRoutine/${routineId}`;
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Perform the delete operation
+            fetch(apiUrl, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        swalWithBootstrapButtons.fire(
+                            "Deleted!",
+                            "The routine has been deleted.",
+                            "success"
+                        ).then(() => {
+                            // Reload the list of routines after deletion
+                            fetchRoutines();
+                        });
+                    } else {
+                        swalWithBootstrapButtons.fire(
+                            "Error!",
+                            "There was an error deleting the routine.",
+                            "error"
+                        );
+                    }
+                })
+                .catch(error => {
+                    console.error("Error deleting routine:", error);
+                    swalWithBootstrapButtons.fire(
+                        "Error!",
+                        "There was an error deleting the routine.",
+                        "error"
+                    );
+                });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire(
+                "Cancelled",
+                "The routine is safe :)",
+                "error"
+            );
+        }
+    });
+}

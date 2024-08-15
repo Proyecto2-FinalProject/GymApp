@@ -1,83 +1,110 @@
-// Función para cargar los instructores en el dropdown
-const loadInstructors = () => {
-    const apiUrl = `${API_URL_BASE}/api/Instructor/GetAllInstructors`;
-
-    $.ajax({
-        url: apiUrl,
-        method: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-    }).done((result) => {
-        const instructorSelect = $("#instructor_id");
-        instructorSelect.empty(); // Limpiar opciones anteriores
-        instructorSelect.append(new Option("Select an Instructor", "")); // Añadir opción por defecto
-        result.forEach(instructor => {
-            instructorSelect.append(new Option(instructor.username, instructor.instructorId));
-        });
-    }).fail((jqXHR, textStatus, errorThrown) => {
-        console.error(textStatus, errorThrown);
-    });
-};
-
-// Función para cargar los miembros en el dropdown
-const loadMembers = () => {
-    const apiUrl = `${API_URL_BASE}/api/Member/GetAllMembers`;
-
-    $.ajax({
-        url: apiUrl,
-        method: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-    }).done((result) => {
-        const memberSelect = $("#member_id");
-        memberSelect.empty(); // Limpiar opciones anteriores
-        memberSelect.append(new Option("Select a Member", "")); // Añadir opción por defecto
-        result.forEach(member => {
-            memberSelect.append(new Option(member.username, member.member_id)); // Asegúrate de que el valor es el ID
-        });
-    }).fail((jqXHR, textStatus, errorThrown) => {
-        console.error(textStatus, errorThrown);
-    });
-};
-
-// Función para manejar la creación de la rutina
-const handleCreateRoutine = (event) => {
-    event.preventDefault();
-
-    const routine = {
-        memberId: $("#member_id").val(), // Esto debería ser el ID del miembro seleccionado
-        instructorId: $("#instructor_id").val(),
-        name: $("#name").val(),
-        description: $("#description").val()
-        // No incluir creationDate aquí
-    };
-
-    const apiUrl = `${API_URL_BASE}/api/Routine/CreateRoutine`;
-
-    $.ajax({
-        url: apiUrl,
-        method: "POST",
-        data: JSON.stringify(routine),
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-    }).done((result) => {
-        Swal.fire({
-            title: "Routine Creation",
-            text: "Routine Created Successfully",
-            icon: "success",
-        });
-    }).fail((jqXHR, textStatus, errorThrown) => {
-        Swal.fire({
-            title: "Error",
-            text: "Failed to create Routine. Please try again.",
-            icon: "error",
-        });
-    });
-};
-
-// Inicializar la carga de instructores y miembros al cargar el documento
-$(document).ready(() => {
+$(document).ready(function () {
+    // Load members and instructors when the page is ready
+    console.log("Page loaded");
+    loadMembers();
     loadInstructors();
-    loadMembers(); // Cargar miembros
-    $("#createRoutineForm").on("submit", handleCreateRoutine);
+
+    // Handle form submission
+    $('#submitRoutine').click(function () {
+        console.log("Submit button clicked");
+        createRoutine();
+    });
 });
+
+function loadMembers() {
+    $.ajax({
+        type: "GET",
+        url: "https://localhost:7280/api/Member/GetAllMembers",
+        success: function (response) {
+            console.log("Members loaded:", response);
+            var $memberDropdown = $('#member_id');
+            $memberDropdown.empty().append('<option value="">Select a member</option>');
+            $.each(response, function (index, member) {
+                $memberDropdown.append(new Option(member.username, member.member_id));
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error loading members:", error);
+        }
+    });
+}
+
+function loadInstructors() {
+    $.ajax({
+        type: "GET",
+        url: "https://localhost:7280/api/Instructor/GetAllInstructors",
+        success: function (response) {
+            console.log("Instructors loaded:", response);
+            var $instructorDropdown = $('#instructor_id');
+            $instructorDropdown.empty().append('<option value="">Select an instructor</option>');
+            $.each(response, function (index, instructor) {
+                $instructorDropdown.append(new Option(instructor.username, instructor.instructorId));
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error loading instructors:", error);
+        }
+    });
+}
+
+function createRoutine() {
+    var memberId = parseInt($("#member_id").val(), 10);
+    var instructorId = parseInt($("#instructor_id").val(), 10);
+    var name = $("#name").val().trim();
+    var description = $("#description").val().trim();
+
+    console.log("Creating routine with:", {
+        memberId: memberId,
+        instructorId: instructorId,
+        name: name,
+        description: description
+    });
+
+    // Ensure memberId and instructorId are valid integers
+    if (isNaN(memberId) || isNaN(instructorId) || memberId <= 0 || instructorId <= 0) {
+        $("#responseMessage").text("Please select a valid member and instructor.");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "https://localhost:7280/api/Routine/CreateRoutine",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            memberId: memberId,
+            instructorId: instructorId,
+            name: name,
+            description: description
+        }),
+        success: function (response) {
+            console.log("Routine created:", response);
+            if (response.success) {
+                // Show SweetAlert on success
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Routine created successfully',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                // Show SweetAlert on error
+                Swal.fire({
+                    title: 'Error!',
+                    text: response.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error creating routine:", error);
+            // Show SweetAlert on AJAX error
+            Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while creating the routine.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}

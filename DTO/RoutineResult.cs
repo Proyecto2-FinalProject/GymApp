@@ -2,7 +2,6 @@
 {
     public class RoutineResult: BaseClass
     {
-        public int ResultId { get; set; }
         public int RoutineId { get; set; }
         public int ExerciseId { get; set; }
         public int? SetsCompleted { get; set; }

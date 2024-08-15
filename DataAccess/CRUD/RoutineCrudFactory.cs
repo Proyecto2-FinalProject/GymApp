@@ -65,8 +65,11 @@ namespace DataAccess.CRUD
 
         public override void Delete(BaseClass entityDTO)
         {
-            throw new NotImplementedException();
+            Routine routine = (Routine)entityDTO;
+            SqlOperation operation = mapper.GetDeleteStatement(routine);
+            dao.ExecuteStoredProcedure(operation);
         }
+
 
 
     }

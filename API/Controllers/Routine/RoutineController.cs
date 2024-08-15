@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BL;
 using Microsoft.AspNetCore.Cors;
 using DTO;
+using DataAccess.CRUD;
 
 namespace API.Controllers.Routines
 {
@@ -16,26 +17,49 @@ namespace API.Controllers.Routines
         {
             try
             {
-                // Asignar la fecha y hora actual automáticamente
                 routine.creationDate = DateTime.Now;
 
-                // Imprimir el valor recibido
-                Console.WriteLine($"Assigned creationDate: {routine.creationDate}");
+                MeasurementAppointmentCrudFactory crudFactory = new MeasurementAppointmentCrudFactory();
+                var measurementAppointment = crudFactory.GetMeasurementAppointment(routine.memberId, routine.instructorId);
 
-                RoutineManager manager = new RoutineManager();
-                manager.CreateRoutine(routine);
+                if (measurementAppointment == null)
+                {
+                    return Json(new { success = false, message = "No measurement appointment found for this member and instructor." });
+                }
 
-                // Devolver una respuesta JSON con el ID de la rutina creada
+                routine.measurementAppointmentId = measurementAppointment.MeasurementAppointmentId;
+
+                RoutineCrudFactory routineCrud = new RoutineCrudFactory();
+                routineCrud.Create(routine);
+
                 return Json(new { success = true, routineId = routine.routineId, message = "Routine created successfully" });
             }
             catch (Exception ex)
             {
-                // Manejar el error y devolver una respuesta JSON con un mensaje de error
                 return Json(new { success = false, message = ex.Message });
             }
         }
 
-  
+        [HttpGet]
+        public IActionResult GetMeasurementAppointment(int memberId, int instructorId)
+        {
+            try
+            {
+                MeasurementAppointmentCrudFactory crudFactory = new MeasurementAppointmentCrudFactory();
+                var measurementAppointment = crudFactory.GetMeasurementAppointment(memberId, instructorId);
+
+                if (measurementAppointment == null)
+                {
+                    return Json(new { measurementAppointmentId = (int?)null });
+                }
+
+                return Json(new { measurementAppointmentId = measurementAppointment.MeasurementAppointmentId });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
 
         [HttpGet]
         public Routine GetRoutine(int id)
@@ -183,8 +207,22 @@ namespace API.Controllers.Routines
             return Json(new { success = false, message = ex.Message });
         }
     }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteRoutine(int id)
+        {
+            try
+            {
+                RoutineManager manager = new RoutineManager();
+                manager.DeleteRoutine(id);
+
+                return Json(new { success = true, message = "Routine deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
 
 
-
-   }
+    }
 }

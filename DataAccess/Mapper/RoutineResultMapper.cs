@@ -24,7 +24,6 @@ namespace DataAccess.Mapper
         {
             var routineResult = new RoutineResult
             {
-                ResultId = Convert.ToInt32(row["result_id"]),
                 RoutineId = Convert.ToInt32(row["routine_id"]),
                 ExerciseId = Convert.ToInt32(row["exercise_id"]),
                 SetsCompleted = row["sets_completed"] != DBNull.Value ? Convert.ToInt32(row["sets_completed"]) : (int?)null,
@@ -72,7 +71,7 @@ namespace DataAccess.Mapper
         public SqlOperation GetRetrieveByIdStatement(int id)
         {
             SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "RetrieveRoutineResultById";
+            operation.ProcedureName = "dbo.sp_RetrieveRoutineResultsByRoutineId";
 
             operation.AddIntegerParam("result_id", id);
             return operation;

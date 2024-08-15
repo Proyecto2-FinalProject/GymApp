@@ -13,11 +13,13 @@
             <form id="selectExercisesForm">
                 <label for="routine_id">Select Routine</label>
                 <select id="routine_id" name="routine_id">
+                    <option value="">Select a Routine</option>
                     <!-- Options will be populated by JavaScript -->
                 </select>
 
                 <label for="exercise_id">Select Exercise</label>
                 <select id="exercise_id" name="exercise_id">
+                    <option value="">Select a Exercise</option>
                     <!-- Options will be populated by JavaScript -->
                 </select>
 
@@ -34,10 +36,10 @@
                 <input type="number" id="weight" name="weight" step="0.01" min="0" required>
 
                 <label for="time_duration">Time Duration</label>
-                <input type="datetime" id="time_duration" name="time_duration">
+                <input type="datetime" id="time_duration" name="time_duration" placeholder="HH:MM:SS">
 
                 <label for="amrap_time">AMRAP Time</label>
-                <input type="datetime" id="amrap_time" name="amrap_time">
+                <input type="datetime" id="amrap_time" name="amrap_time" placeholder="HH:MM:SS">
 
                 <div class="button-container">
                     <button type="submit">Add Exercise</button>
