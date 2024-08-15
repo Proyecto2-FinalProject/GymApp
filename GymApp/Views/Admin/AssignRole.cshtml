@@ -1,23 +1,28 @@
 ﻿@{
     ViewData["Title"] = "Assign Roles";
+    Layout = "../Shared/_LayoutUser.cshtml";
 }
 
 <script src="~/js/Pages/Admin/Admin.js" defer></script>
+<link rel="stylesheet" href="~/css/admin.css" />
 
-<h2>Assign Roles</h2>
-<form id="assignRoleForm">
-    <div style="margin-bottom: 20px;">
-        <label for="selectUser" style="display: block; font-size: 1.2em;">Select User:</label>
-        <select id="selectUser" name="userId" style="width: 100%; padding: 10px; font-size: 1.2em;">
-            <!-- Users will be loaded here -->
-        </select>
-    </div>
-    <div style="margin-bottom: 20px;">
-        <label for="selectRole" style="display: block; font-size: 1.2em;">Select Role:</label>
-        <select id="selectRole" name="roleId" style="width: 100%; padding: 10px; font-size: 1.2em;">
-            <!-- Roles will be loaded here -->
-        </select>
-    </div>
-    <button type="submit" style="font-size: 1.2em; padding: 10px 20px;">Assign Role</button>
-</form>
+<div class="background-container">
+    <h2>Assign Roles</h2>
+    <form id="assignRoleForm">
+        <div>
+            <label for="selectUser">Select User:</label>
+            <select id="selectUser" name="userId">
+                <!-- Users will be loaded here -->
+            </select>
+        </div>
+        <div>
+            <label for="selectRole">Select Role:</label>
+            <select id="selectRole" name="roleId">
+                <!-- Roles will be loaded here -->
+            </select>
+        </div>
+        <button type="submit">Assign Role</button>
+    </form>
+</div>
+
 

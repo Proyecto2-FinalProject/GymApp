@@ -1,6 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Manage Users";
+
+    Layout = "../Shared/_LayoutUser.cshtml";
+
 }
+
+
+<script src="~/js/Pages/Admin/ManageUser.js" defer></script>
+
+<link rel="stylesheet" href="~/css/manageUser.css" />
 
 <h2>Manage Users</h2>
 
@@ -26,6 +34,3 @@
     </tbody>
 </table>
 
-@section Scripts {
-    <script src="~/js/Pages/Admin/ManageUsers.js"></script>
-}

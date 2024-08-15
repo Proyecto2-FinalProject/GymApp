@@ -6,14 +6,16 @@
 <link rel="stylesheet" href="~/css/admin.css" />
 
 
-<h2>Admin Page</h2>
-<p>Welcome, Administrator!</p>
 
-<a href="@Url.Action("AssignRole", "Admin")" class="btn btn-primary" style="font-size: 1.2em; padding: 10px 20px;">
-    Go to Assign Roles
-</a>
+<div class="background-container">
+    <h2>Admin Page</h2>
+    <p>Welcome, Administrator!</p>
 
-<a href="@Url.Action("ManageUser", "Admin")" class="btn btn-secondary" style="font-size: 1.2em; padding: 10px 20px; margin-left: 10px;">
-    Manage Users
-</a>
+    <a href="@Url.Action("AssignRole", "Admin")" class="btn btn-primary">
+        Go to Assign Roles
+    </a>
 
+    <a href="@Url.Action("ManageUser", "Admin")" class="btn btn-secondary">
+        Manage Users
+    </a>
+</div>
