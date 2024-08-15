@@ -1,60 +1,48 @@
-﻿/* Estilos para el encabezado */
-header {
-    background-color: #1e4f4f; /* Color de fondo del encabezado */
-    color: #FFFFFF; /* Color del texto dentro del encabezado */
-    padding: 10px 20px;
-}
-
+﻿/* Estilo de la barra de navegación */
 .navbar {
-    display: flex;
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center; /* Centra el contenido verticalmente */
-    position: relative; /* Necesario para el posicionamiento de elementos internos */
+    background-color: #1e4f4f;
+    padding: 0px 15px; /* Reduce el tamaño de padding para hacer la barra más pequeña */
 }
 
-/* Contenedor para los elementos de la barra de navegación */
-.navbar-content {
-    display: flex;
-    justify-content: space-between; /* Espacio entre los elementos */
-    align-items: center; /* Centra los elementos verticalmente */
-    width: 100%;
-    max-width: 1200px; /* Ajusta según el ancho deseado */
+.navbar-brand .logo {
+    width: 100px; /* Reduce el tamaño del logo */
+    height: auto;
 }
 
-/* Estilos para el logo de la marca */
-.navbar-brand {
-    display: flex;
-    flex-direction: column; /* Coloca los elementos en una columna */
-    align-items: center; /* Centra el texto dentro del contenedor */
-    text-align: center; /* Centra el texto */
-    margin: 0 auto; /* Asegura que el elemento se centre horizontalmente */
+.navbar-nav {
+    margin-left: auto; /* Mueve los enlaces de navegación a la derecha */
 }
 
-/* Estilos para el texto de la marca */
-.brand-text {
-    display: flex;
-    flex-direction: column; /* Coloca los elementos en una columna */
-    align-items: center; /* Centra el texto dentro del contenedor */
+    .navbar-nav .nav-link {
+        color: white;
+        font-size: 16px; /* Reduce el tamaño de la fuente */
+        margin-left: 15px;
+    }
+
+        .navbar-nav .nav-link:hover {
+            color: #C0C0C0;
+            text-decoration: underline;
+        }
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28128, 128, 128, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-.brand-top {
-    font-size: 1.5em; /* Ajusta el tamaño de la fuente según sea necesario */
-    font-weight: bold; /* Ajusta el peso de la fuente según sea necesario */
-    color: #FFFFFF; /* Asegura que el color del texto sea blanco */
+.footer {
+    background-color: #1e4f4f;
+    color: white;
+    padding: 20px 0;
 }
 
-/* Estilos para los enlaces de navegación */
-.navbar-links {
-    display: flex;
-    color: #000000 !important; /* Color del texto, asegura que el texto sea blanco */
-    text-decoration: auto; /* Sin subrayado */
-    background-color: #E0E0E0; /* Color de fondo del botón */
-    padding: 10px 20px; /* Espaciado interno del botón */
-    border-radius: 5px; /* Bordes redondeados */
+    .footer a {
+        color: #C0C0C0;
+        text-decoration: none;
+    }
 
-}
+        .footer a:hover {
+            text-decoration: underline;
+        }
 
-.nav-link:hover {
-    background-color: #C0C0C0; /* Color de fondo en el hover */
-    text-decoration: underline; /* Subrayado al pasar el ratón */
+div.container.text-center {
+    color: white;
 }

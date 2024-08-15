@@ -1,7 +1,7 @@
 ﻿/* Estilo general */
 body {
     font-family: 'Lora', serif;
-    background-color:red; /* Fondo verde oscuro para todo el cuerpo */
+    background-color: #1e4f4f; /* Fondo verde oscuro para todo el cuerpo */
     color: #1e4f4f;
     margin: 0;
     padding: 0;
@@ -147,7 +147,10 @@ body {
         background-color: #333;
     }
 
+div.container.text-center {
+ color: white;
+}
+
 .container, .container-lg, .container-md, .container-sm, .container-xl {
     max-width: 12000px;
-}
 }
