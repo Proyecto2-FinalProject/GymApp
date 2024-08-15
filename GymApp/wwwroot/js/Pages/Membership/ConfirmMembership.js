@@ -77,7 +77,7 @@ function renderMembershipList(memberships) {
         } else {
             Swal.fire({
                 title: "Error",
-                text: "Please, select one image.",
+                text: "Please select one image.",
                 icon: "error"
             });
         }
@@ -106,18 +106,18 @@ function uploadReceiptImage(paymentId, receiptImageBase64) {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         data: JSON.stringify(data),
-        success: function (response) {
+        success: function (data) {
             if (data.error) {
                 Swal.fire({
-                    title: "Success",
+                    title: "Error",
                     text: data.error,
-                    icon: "success"
+                    icon: "error"
                 });
             } else {
                 Swal.fire({
-                    title: "Error",
-                    text: 'We can not approved your membership, please contact the administrator!',
-                    icon: "error"
+                    title: "Success",
+                    text: "The payment receipt has been successfully uploaded!",
+                    icon: "success"
                 }).then(() => {
                     loadMemberships();
                 });
@@ -150,15 +150,16 @@ function approvePayment(userId, paymentId, membershipId) {
         success: function (data) {
             if (data.error) {
                 Swal.fire({
-                    title: "Success",
+                    title: "Error",
                     text: data.error,
-                    icon: "success"
+                    icon: "error"
+                    
                 });
             } else {
                 Swal.fire({
-                    title: "Error",
-                    text: 'We can not upload the payment receipt, please contact the administrator!',
-                    icon: "error"
+                    title: "Success",
+                    text: "The payment has been successfully approved!",
+                    icon: "success"
                 }).then(() => {
                     loadMemberships();
                 });

@@ -76,7 +76,7 @@ namespace API.Controllers.Memberships
 
             var errorMessage = _membershipManager.ApproveMembershipPayment(payment);
 
-            if (!string.IsNullOrEmpty(errorMessage))
+            if (string.IsNullOrEmpty(errorMessage))
             {
                 return Ok(new { error = errorMessage });
             }
@@ -95,7 +95,7 @@ namespace API.Controllers.Memberships
 
             var errorMessage = _membershipManager.UploadPaymentReceipt(payment);
 
-            if (!string.IsNullOrEmpty(errorMessage))
+            if (string.IsNullOrEmpty(errorMessage))
             {
                 return Ok(new { error = errorMessage });
             }
