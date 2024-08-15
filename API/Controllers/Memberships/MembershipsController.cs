@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BL;
+using Microsoft.AspNetCore.Identity;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace API.Controllers.Memberships
 {
@@ -18,14 +20,10 @@ namespace API.Controllers.Memberships
             _membershipManager = new MembershipManager();
         }
 
+        //Metodo para registrar el pago de la membresia 
         [HttpPost]
         public ActionResult ProcessPayment()
         {
-            if (!Request.Form.Files.Any())
-            {
-                return BadRequest("No file uploaded.");
-            }
-
             var userIdString = Request.Form["userId"];
             var membershipType = Request.Form["membershipType"];
             var paymentMethod = Request.Form["paymentMethod"];
@@ -33,8 +31,7 @@ namespace API.Controllers.Memberships
             var receiptImageBase64 = Request.Form["receiptImageBase64"];
 
             if (string.IsNullOrEmpty(userIdString) || string.IsNullOrEmpty(membershipType) ||
-                string.IsNullOrEmpty(paymentMethod) || string.IsNullOrEmpty(amountString) ||
-                string.IsNullOrEmpty(receiptImageBase64))
+                string.IsNullOrEmpty(paymentMethod) || string.IsNullOrEmpty(amountString) )
             {
                 return BadRequest("Missing required fields.");
             }
@@ -66,6 +63,58 @@ namespace API.Controllers.Memberships
             }
 
             return Ok(new { success = true });
+        }
+
+        // Método para aprobar el pago de la membresia 
+        [HttpPost]
+        public IActionResult ApproveMembershipPayment([FromBody] ApprovePaymentRequest payment)
+        {
+            if (payment == null)
+            {
+              return BadRequest("Apporve payment request data is null.");
+            }
+
+            var errorMessage = _membershipManager.ApproveMembershipPayment(payment);
+
+            if (string.IsNullOrEmpty(errorMessage))
+            {
+                return Ok(new { error = errorMessage });
+            }
+
+            return Ok(new { success = true });
+        }
+
+        // Método para subir el recibo del pago de la membresia 
+        [HttpPost]
+        public IActionResult UploadPaymentReceipt([FromBody] UploadPaymentRecipt payment)
+        {
+            if (payment == null)
+            {
+                return BadRequest("Upload receipt payment request data is null.");
+            }
+
+            var errorMessage = _membershipManager.UploadPaymentReceipt(payment);
+
+            if (string.IsNullOrEmpty(errorMessage))
+            {
+                return Ok(new { error = errorMessage });
+            }
+
+            return Ok(new { success = true });
+        }
+
+        //Metodo para obtener la informacion de todas las membresias 
+        [HttpGet]
+        public IActionResult GetAllMemberships()
+        {
+            var memberships = _membershipManager.GetAllMemberships();
+
+            if (memberships == null || memberships.Count == 0)
+            {
+                return NotFound("No memberships found.");
+            }
+
+            return Ok(memberships);
         }
 
     }
