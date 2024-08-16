@@ -12,22 +12,23 @@
         <h1 class="display-4">Welcome to your fitness account!</h1>
 
         <section class="function-section container">
-            <a asp-controller="Member" asp-action="MeasurementAppointment" class="function-card">
+
+            <button type="submit" class="function-card" id="btnAppointment">
                 <h2>Measurement Appointment</h2>
 
                 <p>Get your measurement appointment before starting training.</p>
-            </a>
+            </button>
 
             <a asp-controller="Routine" asp-action="RecordResults" class="function-card">
-                <h2>Record Excercise Results</h2>
+                <h2>Record Excercise</h2>
 
-                <p>In this section, you can keep a record of training results.</p>
+                <p>In this section, you can keep a record of your trainings.</p>
             </a>
 
             <a asp-controller="Routine" asp-action="Results" class="function-card">
-                <h2>Excercise Results List</h2>
+                <h2>Excercise Results</h2>
 
-                <p>In this section, you can see the results of all your trainings.</p>
+                <p>In this section, you can see the results of your trainings.</p>
             </a>
         </section>
 
