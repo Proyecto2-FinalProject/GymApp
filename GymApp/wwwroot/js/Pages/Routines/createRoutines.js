@@ -85,6 +85,9 @@ function createRoutine() {
                     text: 'Routine created successfully',
                     icon: 'success',
                     confirmButtonText: 'OK'
+                }).then(() => {
+                    // Redirigir a la página de confirmación o de inicio
+                    window.location.href = "/Routine/Create";
                 });
             } else {
                 // Show SweetAlert on error

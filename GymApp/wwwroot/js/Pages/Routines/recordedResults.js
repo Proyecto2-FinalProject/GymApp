@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Obtén el routineId de la URL
+    // Obtï¿½n el routineId de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const routineId = urlParams.get('routineId');
 
-    // Verifica si routineId es válido antes de proceder
+    // Verifica si routineId es vï¿½lido antes de proceder
     if (routineId) {
         fetch(`https://localhost:7280/api/Routine/GetRecordedResults?routineId=${routineId}`)
             .then(response => response.json())
@@ -26,11 +26,27 @@ document.addEventListener("DOMContentLoaded", function () {
                         tbody.appendChild(row);
                     });
                 } else {
-                    console.error(data.message);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error)
+                Swal.fire({
+                    title: 'Error!',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
     } else {
-        console.error('routineId is not defined');
+    Swal.fire({
+        title: 'Error!',
+        text: 'routineId is not defined',
+        icon: 'error',
+        confirmButtonText: 'OK'
+    });
     }
 });

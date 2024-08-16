@@ -88,10 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.success) {
                         Swal.fire({
                             title: 'Success',
-                            text: 'Exercise added to routine successfully!',
+                            text: 'Exercise successfully added to the routine!',
                             icon: 'success'
+                        }).then(() => {
+                            // Redirigir a la página de confirmación o de inicio
+                            window.location.href = "/Routine/addExerciseRoutine";
                         });
-                        // Opcional: Redirigir o limpiar el formulario
                     } else {
                         Swal.fire({
                             title: 'Error',
@@ -104,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Error adding exercise:', error);
                     Swal.fire({
                         title: 'Error',
-                        text: 'Failed to add exercise. Please try again.',
+                        text: 'There was an error adding exercise. Please try again.',
                         icon: 'error'
                     });
                 });
@@ -127,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const repetitionsField = document.getElementById('repetitions');
         const weightField = document.getElementById('weight');
 
-        // Configuraci�n basada en el ID del tipo de ejercicio
+        // Configuraci�n basada en el ID del tipo de ejercicio
         switch (parseInt(exerciseTypeId)) {
             case 1: // Weight-Based
                 timeDurationField.disabled = true;
@@ -144,9 +146,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 timeDurationField.disabled = false;
                 break;
             case 3: // AMRAP
-                setsField.disabled = true;
-                repetitionsField.disabled = true;
-                weightField.disabled = true;
+                setsField.disabled = false;
+                repetitionsField.disabled = false;
+                weightField.disabled = false;
                 timeDurationField.disabled = true;
                 break;
             default:

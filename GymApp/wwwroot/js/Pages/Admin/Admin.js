@@ -46,11 +46,19 @@
             contentType: 'application/json',
             data: JSON.stringify({ UserId: userId, RoleId: roleId }),
             success: function (response) {
-                alert('Role assigned successfully!');
+                Swal.fire({
+                    title: "Success",
+                    text: "The role has been successfully assigned!",
+                    icon: "success"
+                });
             },
             error: function (error) {
                 console.error('Error assigning role:', error);
-                alert('Failed to assign role.');
+                Swal.fire({
+                    title: "Error",
+                    text: "The was a problem assigning the role!",
+                    icon: "error"
+                });
             }
         });
     });

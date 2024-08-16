@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("routine_id").value = routineId;
     fetchExercisesForRoutine(routineId);
 
-    // Manejar el envío del formulario
+    // Manejar el envï¿½o del formulario
     document.getElementById("recordResultsForm").addEventListener("submit", function (event) {
         event.preventDefault();
         submitResults();
@@ -36,10 +36,10 @@ function populateExerciseSelect(exercises) {
         selectElement.appendChild(option);
     });
 
-    // Manejar el cambio de selección del ejercicio
+    // Manejar el cambio de selecciï¿½n del ejercicio
     selectElement.addEventListener("change", function () {
         const selectedExerciseId = this.value;
-        console.log("Selected exercise ID:", selectedExerciseId); // Depuración
+        console.log("Selected exercise ID:", selectedExerciseId); // Depuraciï¿½n
         const selectedExercise = exercises.find(exercise => exercise.exerciseId == selectedExerciseId);
         if (selectedExercise) {
             document.getElementById("exercise_type_id").value = selectedExercise.exerciseTypeId;
@@ -53,7 +53,7 @@ function submitResults() {
     // Formatear el tiempo a HH:MM:SS
     let timeDuration = formData.get("time_duration");
     if (timeDuration && timeDuration.split(':').length === 2) {
-        timeDuration += ":00"; // Añadir segundos si no están presentes
+        timeDuration += ":00"; // Aï¿½adir segundos si no estï¿½n presentes
     }
 
     const data = {
@@ -67,7 +67,7 @@ function submitResults() {
         resultDate: new Date().toISOString()
     };
 
-    console.log("Form data to submit:", data); // Depuración
+    console.log("Form data to submit:", data); // Depuraciï¿½n
 
     fetch("https://localhost:7280/api/Routine/SubmitResults", {
         method: "POST",
@@ -79,9 +79,21 @@ function submitResults() {
         .then(response => response.json())
         .then(result => {
             if (result.success) {
-                alert(result.message);
+                Swal.fire({
+                    title: 'Success!',
+                    text: result.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+             
             } else {
-                alert("Error: " + result.message);
+                Swal.fire({
+                    title: 'Error!',
+                    text: result.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+          
             }
         })
         .catch(error => console.error("Error submitting results:", error));

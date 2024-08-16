@@ -54,7 +54,11 @@
                     contentType: 'application/json',
                     data: JSON.stringify(user),
                     success: function () {
-                        alert('User updated successfully!');
+                        Swal.fire({
+                            title: "Success",
+                            text: "The user has been successfully updated!",
+                            icon: "success"
+                        });
                         row.find('input').each(function (index) {
                             var text = $(this).val();
                             $(this).parent().text(text);
@@ -64,7 +68,11 @@
                     },
                     error: function (error) {
                         console.error('Error updating user:', error);
-                        alert('Failed to update user.');
+                        Swal.fire({
+                            title: "Error",
+                            text: "There was a problem updating the user!",
+                            icon: "error"
+                        });
                     }
                 });
             });
