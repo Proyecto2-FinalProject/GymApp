@@ -27,7 +27,12 @@ main {
     main h1 {
         font-size: 32px;
         margin-bottom: 20px;
+        color: #1e4f4f;
     }
+
+.display-4 {
+    font-size: 2.5rem;
+}
 
 .form-container {
     background: linear-gradient(to right, #c4c4c4, #ffffff);
