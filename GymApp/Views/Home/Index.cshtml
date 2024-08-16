@@ -10,12 +10,15 @@
         <div class="hero-content">
             <h1>YOUR FITNESS JOURNEY STARTS TODAY.</h1>
             <p>READY FOR YOUR FIRST CLASS?</p>
+            <a asp-controller="User" asp-action="RegisterUser" class="button-container">
+                <button type="submit" class="btn btn-success" id="btnCreate">SUBSCRIBE NOW!</button>
+            </a>
         </div>
     </div>
 </section>
 
 <section class="pricing-section container">
-    <div class="pricing-card">
+    <a asp-controller="User" asp-action="RegisterUser" class="pricing-card">
         <h2>LET'S GO BASIC</h2>
         <div class="price">
             <span class="currency">USD</span>
@@ -23,9 +26,9 @@
             <span class="cents">,00</span>
         </div>
         <p>Get full access to all training equipment</p>
-    </div>
-
-    <div class="pricing-card">
+    </a>
+    
+    <a asp-controller="User" asp-action="RegisterUser" class="pricing-card">
         <h2>LET'S GO REGULAR</h2>
         <div class="price">
             <span class="currency">USD</span>
@@ -33,9 +36,9 @@
             <span class="cents">,00</span>
         </div>
         <p>Get full access to all training equipment PLUS 2 group classes per week</p>
-    </div>
+    </a>
 
-    <div class="pricing-card">
+    <a asp-controller="User" asp-action="RegisterUser" class="pricing-card">
         <h2>LET'S GO PREMIUM</h2>
         <div class="price">
             <span class="currency">USD</span>
@@ -43,7 +46,8 @@
             <span class="cents">,00</span>
         </div>
         <p>Get full access to all training equipment PLUS unlimited access to group classes</p>
-    </div>
+    </a>  
+
 </section>
 
 <section class="contact-section container">

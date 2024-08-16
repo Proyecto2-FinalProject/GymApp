@@ -68,3 +68,23 @@ button[type="submit"] {
     button[type="submit"]:hover {
         background-color: #164242;
     }
+
+.function-section {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    background-color: white; /* Fondo gris para la sección de precios */
+    padding: 50px 20px;
+    border-radius: 10px;
+}
+
+.function-card {
+    background: #1e4f4f;
+    color:white;
+    padding: 50px;
+    border-radius: 10px;
+    text-align: center;
+    width: 30%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}

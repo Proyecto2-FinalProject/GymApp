@@ -8,7 +8,7 @@
 
 <div class="container">
     <main>
-        <h1 class="display-4">Create an Account</h1>
+        <h1 class="display-4">Create Your Account</h1>
         <div class="form-container">
             <form id="registerUserForm" action="submit">
                 <label for="firstName">First Name</label>
@@ -40,6 +40,10 @@
 
                 <div class="button-container">
                     <button type="submit" class="btn btn-success" id="btnCreate">CREATE ACCOUNT</button>
+                </div>
+
+                <div class="text-center">
+                    <p>Already have an account? <a asp-area="" asp-controller="User" asp-action="Login">Log in now.</a></p>
                 </div>
             </form>
         </div>

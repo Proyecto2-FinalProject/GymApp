@@ -6,16 +6,24 @@
 <link rel="stylesheet" href="~/css/admin.css" />
 
 
+<div class="container">
+    <main>
+        <h1 class="display-4">Welcome Administrator!</h1>
 
-<div class="background-container">
-    <h2>Admin Page</h2>
-    <p>Welcome, Administrator!</p>
+        <section class="function-section container">
+            <a asp-controller="Admin" asp-action="AssignRole" class="function-card">
+                <h2>Assign Roles</h2>
 
-    <a href="@Url.Action("AssignRole", "Admin")" class="btn btn-primary">
-        Go to Assign Roles
-    </a>
+                <p>In this section, you can assign roles to all user</p>
+            </a>
 
-    <a href="@Url.Action("ManageUser", "Admin")" class="btn btn-secondary">
-        Manage Users
-    </a>
+            <a asp-controller="Admin" asp-action="ManageUser" class="function-card">
+                <h2>Manage Users</h2>
+
+                <p>In this section, you can update the user information.</p>
+            </a>
+        </section>
+        
+
+    </main>
 </div>

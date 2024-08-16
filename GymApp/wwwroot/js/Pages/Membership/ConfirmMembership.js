@@ -49,9 +49,10 @@ function renderMembershipList(memberships) {
                     ${membership.receipt_image ? `<img src="/css/Img/Receipt.png" alt="Receipt" height="50" />` : '<input type="file" class="upload-receipt" />'}
                 </td>
                 <td>
-                    ${membership.receipt_image ?
-                            `<button class="approve-btn btn btn-success" 
-                        data-payment-id="${membership.payment_id}">Approve</button>` :
+                    ${membership.receipt_image ? `<button class="approve-btn btn btn-success" 
+                            data-user-id="${membership.user_id}" 
+                            data-payment-id="${membership.payment_id}" 
+                            data-membership-id="${membership.membership_id}">Aprobar</button>` :
                             `<button class="upload-receipt-btn btn btn-primary" 
                         data-payment-id="${membership.payment_id}">Upload receipt</button>`}
                 </td>
@@ -140,6 +141,8 @@ function approvePayment(userId, paymentId, membershipId) {
         Payment_id: paymentId,
         Membership_id: membershipId
     };
+
+
 
     $.ajax({
         url: `${API_URL_BASE}/api/Memberships/ApproveMembershipPayment`,
