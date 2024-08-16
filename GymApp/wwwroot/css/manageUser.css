@@ -102,3 +102,9 @@ button {
         .footer a:hover {
             text-decoration: underline;
         }
+
+.btn-primary {
+    color: #fff;
+    background-color: #1e4f4f;
+    border-color: #1e4f4f;
+}
