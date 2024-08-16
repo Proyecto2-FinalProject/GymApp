@@ -10,6 +10,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'GymApp' " />
   <ItemGroup>
+    <None Remove="Views\Shared\_LayoutUser cshtml" />
     <None Remove="Views\User\" />
     <None Remove="Views\Admin\" />
     <None Remove="Views\Member\" />
