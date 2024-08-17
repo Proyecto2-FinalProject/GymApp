@@ -17,40 +17,48 @@ body {
 }
 
 /* Encabezado */
-main h1 {
+h1.display-4 {
     color: #1e4f4f;
     font-size: 2.5rem;
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Tabla */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+/* Sección de funciones (tarjetas) */
+.function-section {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Permite que las tarjetas se ajusten en pantallas más pequeñas */
+    gap: 20px; /* Espacio entre las tarjetas */
+    margin-top: 20px;
+    padding: 20px;
 }
 
-    table thead th {
-        background-color: #1e4f4f;
-        color: #fff;
-        font-weight: bold;
-        padding: 10px;
-        text-align: left;
-        border-bottom: 2px solid #ddd;
+.function-card {
+    background-color: #1e4f4f;
+    color: white;
+    padding: 21px;
+    border-radius: 10px;
+    text-align: center;
+    width: 22%; /* Ajusta el ancho de las tarjetas según sea necesario */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra suave para las tarjetas */
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+    .function-card:hover {
+        transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Incrementa la sombra al pasar el mouse */
     }
 
-    table tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
+    .function-card h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
     }
 
-    table tbody tr:hover {
-        background-color: #e0f7fa;
-    }
-
-    table tbody td {
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
+    .function-card p {
+        font-size: 1.2em;
+        margin-bottom: 0;
     }
 
 /* Botón para agregar ejercicios */
@@ -138,4 +146,15 @@ footer {
                 text-align: left;
                 font-weight: bold;
             }
+
+    /* Ajustes para las tarjetas en dispositivos móviles */
+    .function-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .function-card {
+        width: 80%;
+        margin-bottom: 20px;
+    }
 }
