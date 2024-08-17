@@ -35,7 +35,7 @@
             localStorage.setItem('userId', data.userId);
                 Swal.fire({
                     title: 'Welcome To',
-                    text: 'Fitness Center Gym',
+                    text: 'Your Fitness Center Acount',
                     icon: 'success'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -75,7 +75,7 @@
         }
         Swal.fire({
             title: 'Error!',
-            text: errorMessage,
+            text: 'Incorrect password, please check your password.',
             icon: 'error'
         });
     });

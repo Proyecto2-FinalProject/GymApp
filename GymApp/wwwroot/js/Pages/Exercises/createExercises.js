@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const handleCreateExercise = (event) => {
     event.preventDefault();
 
-    // Recopilar la informaci�n y mandarla al API
+    // Recopilar la informaci�n y mandarla al API
     const exercise = {
         exerciseTypeId: $("#exercise_type_id").val(),
         name: $("#name").val(),
@@ -52,8 +52,11 @@ const handleCreateExercise = (event) => {
         console.log(result);
         Swal.fire({
             title: "Exercise Creation",
-            text: "Exercise Created Successfully",
+            text: "Exercise has been Successfully register!",
             icon: "success",
+        }).then(() => {
+            // Redirigir a la página de confirmación o de inicio
+            window.location.href = "/Exercise/Create";
         });
     }).fail((jqXHR, textStatus, errorThrown) => {
         console.error(textStatus, errorThrown);

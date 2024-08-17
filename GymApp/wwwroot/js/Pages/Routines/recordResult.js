@@ -84,6 +84,9 @@ function submitResults() {
                     text: result.message,
                     icon: 'success',
                     confirmButtonText: 'OK'
+                }).then(() => {
+                    // Redirigir a la página de confirmación o de inicio
+                    window.location.href = "/Routine/RecordResults";
                 });
              
             } else {
